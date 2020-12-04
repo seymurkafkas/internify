@@ -12,3 +12,11 @@ const instance = firebase.auth();
 export async function createUser(email: string, password: string) {
   return instance.createUserWithEmailAndPassword(email, password);
 }
+
+export function logInWithEmailAndPassword(email: string, password: string) {
+  return instance.signInWithEmailAndPassword(email, password);
+}
+
+export function signOut() {
+  return instance.signOut();
+}
