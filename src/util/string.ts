@@ -18,7 +18,7 @@ export function isEmailValid(email: string) {
  * @param {string} string2 - The second string
  * @returns {boolean} - The strings are equal
  */
-export function isEqual(string1: string, string2: string) {
+export function areEqual(string1: string, string2: string) {
   if (string1 === "" || string2 === "") {
     return false;
   }
