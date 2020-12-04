@@ -12,10 +12,11 @@ export function isEmailValid(email: string) {
   }
   return false;
 }
+
 /**
- * @param {string} string1 -- The first string
- * @param {string} string2 -- The second string
- * @returns {boolean} -- The strings are equal
+ * @param {string} string1 - The first string
+ * @param {string} string2 - The second string
+ * @returns {boolean} - The strings are equal
  */
 export function isEqual(string1: string, string2: string) {
   if (string1 === "" || string2 === "") {
