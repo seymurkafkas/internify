@@ -1,0 +1,16 @@
+.logInBox {
+  width: 25em;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.inside {
+  margin-top: 15px;
+}
