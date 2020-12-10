@@ -33,7 +33,7 @@ export default function SignUpForm() {
     setSecondPassword(event.target.value);
   }
 
-  async function handleSubmit(event: React.MouseEvent) {
+  function handleSubmit(event: React.MouseEvent) {
     event.preventDefault();
     (async () => {
       try {

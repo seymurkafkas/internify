@@ -13,7 +13,7 @@ export async function createUser(email: string, password: string) {
   return instance.createUserWithEmailAndPassword(email, password);
 }
 
-export function signIn(email: string, password: string) {
+export function logIn(email: string, password: string) {
   return instance.signInWithEmailAndPassword(email, password);
 }
 
