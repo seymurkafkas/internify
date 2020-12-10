@@ -49,7 +49,6 @@ export default function SignUpForm() {
     <Card elevation={Elevation.THREE} className={styles.logInBox}>
       <InputGroup
         disabled={false}
-        large={true}
         placeholder="Enter your email address..."
         small={false}
         onChange={handleEmailChange}
@@ -59,7 +58,6 @@ export default function SignUpForm() {
       <InputGroup
         className={styles.inside}
         disabled={false}
-        large={true}
         placeholder="Enter your password..."
         small={false}
         onChange={handlePasswordChange}
@@ -69,7 +67,6 @@ export default function SignUpForm() {
       <InputGroup
         className={styles.inside}
         disabled={false}
-        large={true}
         placeholder="Enter your password..."
         small={false}
         value={secondPassword}
