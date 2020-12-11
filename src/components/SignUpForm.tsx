@@ -8,6 +8,8 @@ import {
   Card,
   Popover,
   Elevation,
+  Radio,
+  RadioGroup,
   Position,
   PopoverInteractionKind,
   Intent,
@@ -18,6 +20,7 @@ export default function SignUpForm() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [secondPassword, setSecondPassword] = React.useState("");
+  const [userType, setUserType] = React.useState("Student");
   const emailIsValid = FormUtil.isEmailValid(email);
   const passwordIsValid = FormUtil.areEqual(password, secondPassword);
   const entriesAreValid = emailIsValid && passwordIsValid;
@@ -45,9 +48,23 @@ export default function SignUpForm() {
     })();
   }
 
+  function handleUserTypeChange(event: React.FormEvent<HTMLInputElement>) {
+    setUserType(event.currentTarget.value);
+  }
+
   return (
     <Card elevation={Elevation.THREE} className={styles.logInBox}>
+      <RadioGroup
+        name="User Type"
+        className={styles.form}
+        inline={true}
+        onChange={handleUserTypeChange}
+        selectedValue={userType}>
+        <Radio label="Student" value="Student" />
+        <Radio label="Employer" value="Employer" />
+      </RadioGroup>
       <InputGroup
+        className={styles.inside}
         disabled={false}
         placeholder="Enter your email address..."
         small={false}
