@@ -4,6 +4,13 @@
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 /* Write your own custom base styles here */
 
+body {
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
 /* h1 {
 }
 
