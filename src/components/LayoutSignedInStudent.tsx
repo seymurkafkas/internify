@@ -1,5 +1,4 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { PropsWithChildren } from "react";
 import {
   Menu,
   Alignment,
@@ -15,7 +14,9 @@ import {
   NavbarHeading,
 } from "@blueprintjs/core";
 
-export default function LayoutSignedIn(props) {
+interface Props {}
+
+export default function LayoutSignedIn(props: PropsWithChildren<Props>) {
   function handleSignOut() {}
   const settings = (
     <Menu>
@@ -54,7 +55,3 @@ export default function LayoutSignedIn(props) {
     </>
   );
 }
-
-LayoutSignedIn.propTypes = {
-  children: PropTypes.element.isRequired,
-};

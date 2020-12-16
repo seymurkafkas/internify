@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Card, Elevation } from "@blueprintjs/core";
+
 export default function Home() {
   return (
     <div className="absolute w-full h-full bg-auth-background">
