@@ -1,4 +1,5 @@
 import React from "react";
+import classnames from "classnames";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
 import {
@@ -56,7 +57,7 @@ export default function SignUpForm() {
     <Card elevation={Elevation.THREE} className={styles.logInBox}>
       <RadioGroup
         name="User Type"
-        className={styles.form}
+        className={classnames(styles.form)}
         inline={true}
         onChange={handleUserTypeChange}
         selectedValue={userType}>
