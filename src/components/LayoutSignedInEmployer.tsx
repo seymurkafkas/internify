@@ -42,7 +42,6 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
           <Popover content={applicationContent} minimal position={Position.TOP}>
             <Button className={Classes.MINIMAL} icon="application" text="Listings" />
           </Popover>
-          <Button className={Classes.MINIMAL} icon="people" text="Applicants" />
           <Button className={Classes.MINIMAL} icon="mugshot" text="Profile" />
           <NavbarDivider />
           <Button className={Classes.MINIMAL} icon="eye-open" text="Explore" />
