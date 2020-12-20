@@ -35,8 +35,8 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
   );
   return (
     <>
-      <Navbar>
-        <NavbarGroup align={Alignment.LEFT}>
+      <Navbar className="h-16">
+        <NavbarGroup className="w-full h-full" align={Alignment.LEFT}>
           <NavbarHeading>INTERNIFY</NavbarHeading>
           <NavbarDivider />
           <Popover content={applicationContent} minimal position={Position.TOP}>
