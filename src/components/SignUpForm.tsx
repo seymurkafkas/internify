@@ -2,6 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
+import { useRouter } from "next/router";
 import {
   Button,
   Callout,
@@ -22,6 +23,7 @@ export default function SignUpForm() {
   const [password, setPassword] = React.useState("");
   const [secondPassword, setSecondPassword] = React.useState("");
   const [userType, setUserType] = React.useState("Student");
+  const router = useRouter();
   const emailIsValid = FormUtil.isEmailValid(email);
   const passwordIsValid = FormUtil.areEqual(password, secondPassword);
   const entriesAreValid = emailIsValid && passwordIsValid;
@@ -42,7 +44,8 @@ export default function SignUpForm() {
     (async () => {
       try {
         await Auth.createUser(email, password);
-        console.log("Success");
+        alert("Success");
+        router.push("/Home");
       } catch (err) {
         console.log("Unknown Error");
       }

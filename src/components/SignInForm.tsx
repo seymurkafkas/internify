@@ -2,12 +2,15 @@ import React from "react";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
 import styles from "./SignInForm.module.css";
+import { useRouter } from "next/router";
 import { Button, InputGroup, Intent, Card, Elevation, Tooltip } from "@blueprintjs/core";
 
 export default function SignInForm() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [showPassword, setShowPassword] = React.useState(false);
+  const router = useRouter();
+
   function handleEmailChange(event: React.ChangeEvent<HTMLInputElement>) {
     setEmail(event.target.value);
   }
@@ -22,7 +25,8 @@ export default function SignInForm() {
     (async () => {
       try {
         await Auth.logIn(email, password);
-        console.log("Success");
+        alert("Success");
+        router.push("/Home");
       } catch (err) {
         console.log("Unknown Error");
       }
