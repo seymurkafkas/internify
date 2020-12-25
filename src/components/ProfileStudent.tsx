@@ -17,9 +17,9 @@ export default function ProfileStudent() {
   return (
     <>
       <img
-        className=" rounded-full absolute h-36 w-36 mt-20 ml-14"
-        src="https://cdn.1000kitap.com/resimler/yazarlar/351934_65f06_1547785702.jpg"></img>
-      <div className="flex flex-col  justify-between absolute w-5/6 h-4/6 ml-56 ml-60 mt-20">
+        className=" rounded-full absolute h-36 w-36 mt-20 ml-24"
+        src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
+      <div className="flex flex-col  justify-between absolute w-3/6 h-4/6 ml-96 mt-20">
         <div>
           <div>Name</div>
           <EditableText
