@@ -1,37 +1,45 @@
-
-
-
-
-.ApplicantsContainer > div+div {
-    margin: 12px 0;
+.ListContainer > div + div {
+  margin: 12px 0;
 }
 
-.ApplicantsPage {
-
-    max-width: 1200px;
-    margin: auto;
-    margin-top: 96px;
+.ApplicantsPage,
+.SearchPage {
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 96px;
 }
 
 .ApplicantsPage > * {
-    width: 40%;
+  width: 40%;
 }
 
 .titleLarge {
-    font-size: 2em;
-    font-weight: bold;
+  font-size: 2em;
+  font-weight: bold;
 }
 
 .mb16 {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .mb32 {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
+}
+
+.mr32 {
+    margin-right: 32px;
 }
 
 .btnNoOutline {
-    border:none !important;
-    font-weight: bold;
+  border: none !important;
+  font-weight: bold;
 }
 
+.JobListingContainer {
+  max-width: 600px;
+}
+
+
+.searchBar {
+  max-width: 600px;
+}
