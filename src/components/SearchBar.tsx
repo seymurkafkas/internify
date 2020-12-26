@@ -21,7 +21,6 @@ class SearchBar extends React.Component<any, any> {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className={[styles.searchBar, "mb32"].join(" ")}>
         <h2 className={[styles.titleLarge, styles.mb16].join(" ")}>Search</h2>
