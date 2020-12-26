@@ -13,11 +13,14 @@ import {
   NavbarGroup,
   NavbarHeading,
 } from "@blueprintjs/core";
+import { signOut } from "../services/auth/index";
 
 interface Props {}
 
 export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
-  function handleSignOut() {}
+  function handleSignOut() {
+    signOut();
+  }
   const settings = (
     <Menu>
       <MenuItem icon="settings" text="Settings" />
