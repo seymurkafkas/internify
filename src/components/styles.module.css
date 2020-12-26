@@ -1,0 +1,37 @@
+
+
+
+
+.ApplicantsContainer > div+div {
+    margin: 12px 0;
+}
+
+.ApplicantsPage {
+
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 96px;
+}
+
+.ApplicantsPage > * {
+    width: 40%;
+}
+
+.titleLarge {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.mb16 {
+    margin-bottom: 16px;
+}
+
+.mb32 {
+    margin-bottom: 32px;
+}
+
+.btnNoOutline {
+    border:none !important;
+    font-weight: bold;
+}
+
