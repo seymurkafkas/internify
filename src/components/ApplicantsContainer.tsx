@@ -38,7 +38,7 @@ export default function ApplicantsContainer() {
   return (
     <div>
       <h2 className={[styles.titleLarge, styles.mb16].join(" ")}>Applicants</h2>
-      <div className={styles.ApplicantsContainer}>
+      <div className={styles.ListContainer}>
         <AplicantList items={items} />
       </div>
     </div>
