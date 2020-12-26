@@ -1,7 +1,22 @@
 import React from "react";
-import { Button, Card, Elevation } from "@blueprintjs/core";
+import {
+  //Button,
+  Card,
+  Elevation,
+} from "@blueprintjs/core";
 
-export default function ApplicantItem(props) {
+interface Props {
+  url: string;
+  title: string;
+  date: string;
+  company: string;
+  location: string;
+  description: string;
+  applicants: string;
+  compensation: string;
+}
+
+export default function ApplicantItem(props: Props) {
   return (
     <Card className="listing_item" interactive={true} elevation={Elevation.TWO}>
       <a href={props.url}>

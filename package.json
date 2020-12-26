@@ -6,9 +6,9 @@
     "build": "next build",
     "compile": "tsc -b",
     "dev": "next dev",
-    "lint": "echo skipping linting",
+    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx",
     "format": "npx prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "format-check": "echo skipping format-check",
+    "format-check": "npx prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
     "start": "next start"
   },
   "dependencies": {

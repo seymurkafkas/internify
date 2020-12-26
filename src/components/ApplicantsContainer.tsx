@@ -2,11 +2,11 @@ import React from "react";
 import ApplicantItem from "./ApplicantItem";
 import styles from "./styles.module.css";
 
-function AplicantList(props) {
-  const listings = props.items.map((item) => {
-    return <ApplicantItem {...item} />;
+function AplicantList(props: any) {
+  const listings = props.items.map((item, index) => {
+    return <ApplicantItem key={index} {...item} />;
   });
-  return( <>{listings}</>);
+  return <>{listings}</>;
 }
 
 export default function ApplicantsContainer() {
@@ -20,7 +20,7 @@ export default function ApplicantsContainer() {
       description:
         "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
       compensation: "2000TL",
-      url: "withid2"
+      url: "withid2",
     },
     {
       title: "Data Manager",
@@ -31,8 +31,7 @@ export default function ApplicantsContainer() {
       description:
         "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
       compensation: "1600TL",
-            url: "withid4"
-
+      url: "withid4",
     },
   ];
 

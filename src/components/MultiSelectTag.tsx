@@ -1,7 +1,16 @@
 import * as React from "react";
 
-import { Button, H5, Intent, ITagProps, MenuItem, Switch } from "@blueprintjs/core";
-import { Example, IExampleProps } from "@blueprintjs/docs-theme";
+import {
+  Button, //H5,
+  Intent,
+  ITagProps,
+  MenuItem,
+  // Switch,
+} from "@blueprintjs/core";
+import {
+  Example,
+  //IExampleProps
+} from "@blueprintjs/docs-theme";
 import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 
 import {
@@ -65,6 +74,7 @@ class MultiSelectTag extends React.Component {
   private handleInitialContentChange = this.handleSwitchChange("hasInitialContent");
 
   public render() {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { allowCreate, elems, hasInitialContent, tagMinimal, popoverMinimal, ...flags } = this.state;
     const getTagProps = (_value: React.ReactNode, index: number): ITagProps => ({
       intent: this.state.intent ? INTENTS[index % INTENTS.length] : Intent.NONE,
