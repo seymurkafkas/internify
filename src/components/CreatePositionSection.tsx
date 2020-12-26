@@ -1,6 +1,11 @@
 import React from "react";
-import { Button, Card, Elevation, EditableText } from "@blueprintjs/core";
-import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
+import {
+  Button,
+  //Card,
+  //Elevation,
+  EditableText,
+} from "@blueprintjs/core";
+// import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import MultiSelectTag from "./MultiSelectTag";
 import styles from "./styles.module.css";
 
@@ -8,7 +13,7 @@ class CreatePositionSection extends React.Component {
   public state = {
     title: "Title goes here",
     description: "Description goes here",
-    requirements: []
+    requirements: [],
   };
   public render() {
     return (
@@ -23,7 +28,7 @@ class CreatePositionSection extends React.Component {
           <br />
           <h4 className="bp3-heading">Requirements</h4>
           <p>{this.state.requirements}</p>
-          <MultiSelectTag/>
+          <MultiSelectTag />
         </div>
         <div className="flex justify-between">
           <Button className={["bp3-outlined", "bp3-fill", styles.btnNoOutline].join()}>Update</Button>
@@ -33,6 +38,5 @@ class CreatePositionSection extends React.Component {
     );
   }
 }
-
 
 export default CreatePositionSection;

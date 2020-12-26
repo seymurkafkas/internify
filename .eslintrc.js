@@ -28,6 +28,7 @@ module.exports = {
     "@typescript-eslint/explicit-module-boundary-types": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": 0,
     "@typescript-eslint/no-unused-vars": 2,
     "no-empty-pattern": 0,

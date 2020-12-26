@@ -53,7 +53,7 @@ function highlightText(text: string, query: string) {
   }
   const regexp = new RegExp(words.join("|"), "gi");
   const tokens: React.ReactNode[] = [];
-  while (true) {
+  for (;;) {
     const match = regexp.exec(text);
     if (!match) {
       break;
@@ -74,7 +74,7 @@ function highlightText(text: string, query: string) {
 }
 
 function escapeRegExpChars(text: string) {
-  return text.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
+  return text.replace(/([.*+?^=!:${}()|[\]/\\])/g, "\\$1");
 }
 
 export const elemSelectProps = {
