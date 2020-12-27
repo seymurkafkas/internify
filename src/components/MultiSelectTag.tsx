@@ -42,36 +42,23 @@ export interface IMultiSelectExampleState {
   tagMinimal: boolean;
 }
 
-class MultiSelectTag extends React.Component {
-  public state = {
-    allowCreate: true,
-    createdItems: [],
-    fill: true,
-    elems: [],
-    hasInitialContent: false,
-    intent: false,
-    items: elemSelectProps.items,
-    openOnKeyDown: false,
-    popoverMinimal: true,
-    resetOnSelect: true,
-    tagMinimal: true,
-  };
-
-  private handleAllowCreateChange = this.handleSwitchChange("allowCreate");
-
-  private handleKeyDownChange = this.handleSwitchChange("openOnKeyDown");
-
-  private handleResetChange = this.handleSwitchChange("resetOnSelect");
-
-  private handlePopoverMinimalChange = this.handleSwitchChange("popoverMinimal");
-
-  private handleTagMinimalChange = this.handleSwitchChange("tagMinimal");
-
-  private handleFillChange = this.handleSwitchChange("fill");
-
-  private handleIntentChange = this.handleSwitchChange("intent");
-
-  private handleInitialContentChange = this.handleSwitchChange("hasInitialContent");
+class MultiSelectTag extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      allowCreate: true,
+      createdItems: [],
+      fill: true,
+      elems: [],
+      hasInitialContent: false,
+      intent: false,
+      items: elemSelectProps.items,
+      openOnKeyDown: false,
+      popoverMinimal: true,
+      resetOnSelect: true,
+      tagMinimal: true,
+    };
+  }
 
   public render() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -144,6 +131,7 @@ class MultiSelectTag extends React.Component {
   };
 
   private getSelectedElemIndex(elem: string) {
+    console.log("selecting: ", elem);
     return this.state.elems.indexOf(elem);
   }
 
@@ -177,12 +165,15 @@ class MultiSelectTag extends React.Component {
       elems: nextElems,
       items: nextItems,
     });
+
+    this.props.onReqUpdate(nextElems);
   }
 
   private deselectElem(index: number) {
     const { elems } = this.state;
 
     const elem = elems[index];
+
     const { createdItems: nextCreatedItems, items: nextItems } = maybeDeleteCreatedElemFromArrays(
       this.state.items,
       this.state.createdItems,
@@ -190,11 +181,13 @@ class MultiSelectTag extends React.Component {
     );
 
     // Delete the item if the user manually created it.
+    const nextElems = elems.filter((_elem, i) => i !== index);
     this.setState({
       createdItems: nextCreatedItems,
-      elems: elems.filter((_elem, i) => i !== index),
+      elems: nextElems,
       items: nextItems,
     });
+    this.props.onReqUpdate(nextElems);
   }
 
   private handleElemSelect = (elem: string) => {
@@ -210,13 +203,6 @@ class MultiSelectTag extends React.Component {
     // add the new ones.
     this.selectElems(elems);
   };
-
-  private handleSwitchChange(prop: keyof IMultiSelectExampleState) {
-    return (event: React.FormEvent<HTMLInputElement>) => {
-      const checked = event.currentTarget.checked;
-      this.setState((state) => ({ ...state, [prop]: checked }));
-    };
-  }
 
   private handleClear = () => this.setState({ elems: [] });
 }

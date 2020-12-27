@@ -7,38 +7,31 @@ import {
 
 interface Props {
   url: string;
-  title: string;
-  date: string;
-  company: string;
+  name: string;
+  education: string;
+  position: string;
+  dateApplied: string;
   location: string;
-  description: string;
-  applicants: string;
-  compensation: string;
 }
 
 export default function ApplicantItem(props: Props) {
   return (
     <Card className="listing_item" interactive={true} elevation={Elevation.TWO}>
-      <a href={props.url}>
-        <div>
-          <div className="flex justify-between">
-            <p>{props.title}</p>
-            <p>{props.date}</p>
-          </div>
-          <p>{props.company}</p>
-          <p>
-            in <b>{props.location}</b>
-          </p>
-          <br />
-          <p>{props.description}</p>
-          <div className="flex justify-between">
-            <p>
-              <b>Applicants: {props.applicants}</b>
-            </p>
-            <p>{props.compensation}</p>
-          </div>
+      <div>
+        <p>{props.name}</p>
+        <p>
+          for <b>{props.position}</b>
+        </p>
+        <p>{props.location}</p>
+        <br />
+        <p>Education: {props.education}</p>
+        <div className="flex justify-between">
+          <p>Date applied: {props.dateApplied}</p>
+          <a href={props.url}>
+            <b>View</b>
+          </a>
         </div>
-      </a>
+      </div>
     </Card>
   );
 }
