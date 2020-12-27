@@ -1,3 +1,5 @@
+
+
 .ListContainer > div + div {
   margin: 12px 0;
 }
@@ -26,20 +28,61 @@
   margin-bottom: 32px;
 }
 
+.mb64 {
+  margin-bottom: 64px;
+}
+
 .mr32 {
     margin-right: 32px;
 }
 
-.btnNoOutline {
+.btnNoOutline,
+.btnNoOutline input{
   border: none !important;
-  font-weight: bold;
+  box-shadow: none;
 }
+
+
+.inputUnderline input, 
+textarea.inputUnderline ,
+.inputUnderline div{
+    box-shadow: none !important;
+    outline: none;
+    padding: 0;
+    /* border-style: inset; */
+    /* border-bottom: 1px solid #aaa; */
+    -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
 
 .JobListingContainer {
   max-width: 600px;
+}
+.CompanyDetailContainer {
+  max-width: 960px;
+}
+
+.CompanyDetailPage {
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 120px;
+}
+
+.CompanyDetailContainer .label {
+    min-width: 240px;
+}
+
+.CompanyDetailContainer > div {
+    margin-bottom: 32px;
 }
 
 
 .searchBar {
   max-width: 600px;
+}
+
+.fullTextArea {
+    width: 100%;
 }

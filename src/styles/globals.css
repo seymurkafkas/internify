@@ -5,12 +5,22 @@
 @import "~@blueprintjs/datetime/lib/css/blueprint-datetime.css";
 /* Write your own custom base styles here */
 
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 body {
   height: 100%;
+  font-family: 'Roboto';
+}
+
+p {
+    font-size: 1em;
 }
 
 html {
   height: 100%;
+}
+
+html *:focus {
+    outline: none;
 }
 /* h1 {
 }
