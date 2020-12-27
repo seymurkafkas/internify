@@ -12,26 +12,36 @@ function AplicantList(props: any) {
 export default function ApplicantsContainer() {
   const items = [
     {
-      title: "Data Engineer",
-      date: "12/13/2020",
-      company: "SomeSoft Tech",
+      name: "John Doe",
+      dateApplied: "12/13/2020",
+      position: "Data Engineer",
       location: "İstanbul, Turkey",
-      applicants: 3,
-      description:
-        "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-      compensation: "2000TL",
+      education: "Istanbul Technical University",
       url: "withid2",
     },
     {
-      title: "Data Manager",
-      date: "12/23/2020",
-      company: "SomeSoft Tech",
+      name: "Mary Jane",
+      dateApplied: "3/45/2020",
+      position: "Data Manager",
       location: "İstanbul, Turkey",
-      applicants: 8,
-      description:
-        "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-      compensation: "1600TL",
+      education: "Istanbul Technical University",
+      url: "withid1",
+    },
+    {
+      name: "Tom Holland",
+      dateApplied: "3/2/2020",
+      position: "Software Engineer",
+      location: "İstanbul, Turkey",
+      education: "Koc University",
       url: "withid4",
+    },
+    {
+      name: "Rick Sanchez",
+      dateApplied: "3/9/2020",
+      position: "Embedded System Engineer",
+      location: "İstanbul, Turkey",
+      education: "Sabanci University",
+      url: "withid5",
     },
   ];
 

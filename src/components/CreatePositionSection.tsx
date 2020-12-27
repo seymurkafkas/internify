@@ -9,30 +9,62 @@ import {
 import MultiSelectTag from "./MultiSelectTag";
 import styles from "./styles.module.css";
 
-class CreatePositionSection extends React.Component {
-  public state = {
-    title: "Title goes here",
-    description: "Description goes here",
-    requirements: [],
-  };
+class CreatePositionSection extends React.Component<any, any> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      title: "",
+      description: "",
+      requirements: [],
+    };
+    this.handleReqUpdate = this.handleReqUpdate.bind(this);
+    this.handleInputUpdate = this.handleInputUpdate.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleReqUpdate(reqs) {
+    this.setState({ requirements: reqs });
+  }
+
+  handleInputUpdate(type, val) {
+    const nextState = {};
+    nextState[type] = val;
+    this.setState(nextState);
+  }
+
+  handleSubmit() {
+    console.log(this.state);
+    alert("submitted");
+  }
+
   public render() {
     return (
-      <div className="flex justify-between flex-col">
-        <div className="flex justify-between flex-col">
+      <div className="flex justify-start flex-col">
+        <div className="flex justify-between flex-col mb-16">
           <div className={[styles.mb32, "flex", "justify-between"].join(" ")}>
-            <EditableText className={styles.titleLarge} defaultValue={this.state.title} />
+            <EditableText
+              onChange={this.handleInputUpdate.bind(this, "title")}
+              className={styles.titleLarge}
+              value={this.state.title}
+              placeholder="Title goes here"
+            />
             <Button className={["bp3-outlined"].join()}>Close Position</Button>
           </div>
           <h4 className="bp3-heading">Description</h4>
-          <EditableText multiline={true} defaultValue={this.state.description} />
+          <EditableText
+            onChange={this.handleInputUpdate.bind(this, "description")}
+            multiline={true}
+            placeholder="Description goes here"
+            value={this.state.description}
+          />
           <br />
           <h4 className="bp3-heading">Requirements</h4>
-          <p>{this.state.requirements}</p>
-          <MultiSelectTag />
+          <MultiSelectTag onReqUpdate={this.handleReqUpdate} />
         </div>
-        <div className="flex justify-between">
-          <Button className={["bp3-outlined", "bp3-fill", styles.btnNoOutline].join()}>Update</Button>
-          <Button className={["bp3-outlined", "bp3-fill", styles.btnNoOutline].join()}>Cancel</Button>
+        <div className="flex justify-end">
+          <Button onClick={this.handleSubmit} className={["bp3-outlined"].join(" ")}>
+            Update
+          </Button>
         </div>
       </div>
     );
