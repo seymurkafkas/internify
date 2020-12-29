@@ -13,7 +13,9 @@ import {
   NavbarGroup,
   NavbarHeading,
 } from "@blueprintjs/core";
+import { useRouter } from "next/router";
 import { signOut } from "../services/auth/index";
+import * as Navigation from "../services/navigation";
 
 interface Props {}
 
@@ -21,6 +23,7 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
   function handleSignOut() {
     signOut();
   }
+  const router = useRouter();
   const settings = (
     <Menu>
       <MenuItem icon="settings" text="Settings" />
@@ -31,9 +34,21 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
 
   const applicationContent = (
     <Menu>
-      <MenuItem icon="search" onClick={() => {}} text="Search" />
+      <MenuItem
+        icon="search"
+        onClick={() => {
+          Navigation.goToSearchPage(router);
+        }}
+        text="Search"
+      />
       <MenuDivider />
-      <MenuItem icon="applications" onClick={() => {}} text="My Applications" />
+      <MenuItem
+        icon="applications"
+        onClick={() => {
+          Navigation.goToMyApplicationsPage(router);
+        }}
+        text="My Applications"
+      />
     </Menu>
   );
   return (
@@ -45,9 +60,23 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
           <Popover content={applicationContent} minimal position={Position.TOP}>
             <Button className={Classes.MINIMAL} icon="application" text="Apply" />
           </Popover>
-          <Button className={Classes.MINIMAL} icon="mugshot" text="Profile" />
+          <Button
+            className={Classes.MINIMAL}
+            onClick={() => {
+              Navigation.goToProfilePage(router);
+            }}
+            icon="mugshot"
+            text="Profile"
+          />
           <NavbarDivider />
-          <Button className={Classes.MINIMAL} icon="eye-open" text="Explore" />
+          <Button
+            className={Classes.MINIMAL}
+            onClick={() => {
+              Navigation.goToExplorePage(router);
+            }}
+            icon="eye-open"
+            text="Explore"
+          />
           <NavbarDivider />
           <Popover content={settings} minimal position={Position.TOP}>
             <Button icon="cog" text="" minimal />
