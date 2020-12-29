@@ -1,11 +1,10 @@
-
-
 .ListContainer > div + div {
   margin: 12px 0;
 }
 
 .ApplicantsPage,
-.SearchPage {
+.SearchPage,
+.JobListingDetailPage {
   max-width: 1200px;
   margin: auto;
   margin-top: 96px;
@@ -17,6 +16,11 @@
 
 .titleLarge {
   font-size: 2em;
+  font-weight: bold;
+}
+
+.titleMed {
+  font-size: 1.4em;
   font-weight: bold;
 }
 
@@ -33,56 +37,61 @@
 }
 
 .mr32 {
-    margin-right: 32px;
+  margin-right: 32px;
 }
 
 .btnNoOutline,
-.btnNoOutline input{
+.btnNoOutline input {
   border: none !important;
   box-shadow: none;
 }
 
-
-.inputUnderline input, 
-textarea.inputUnderline ,
-.inputUnderline div{
-    box-shadow: none !important;
-    outline: none;
-    padding: 0;
-    /* border-style: inset; */
-    /* border-bottom: 1px solid #aaa; */
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
+.inputUnderline input,
+textarea.inputUnderline,
+.inputUnderline div {
+  box-shadow: none !important;
+  outline: none;
+  padding: 0;
+  /* border-style: inset; */
+  /* border-bottom: 1px solid #aaa; */
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
-
-.JobListingContainer {
+.JobListingContainer,
+.JobsListingDetailContainer {
   max-width: 600px;
+  width: 100%;
 }
 .CompanyDetailContainer {
+  width: 100%;
   max-width: 960px;
 }
 
 .CompanyDetailPage {
-    max-width: 1200px;
-    margin: auto;
-    margin-top: 120px;
+  max-width: 1200px;
+  margin: auto;
+  margin-top: 120px;
 }
 
 .CompanyDetailContainer .label {
-    min-width: 240px;
+  min-width: 240px;
 }
 
 .CompanyDetailContainer > div {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
-
 
 .searchBar {
   max-width: 600px;
 }
 
 .fullTextArea {
-    width: 100%;
+  width: 100%;
+}
+
+.btnPill {
+  border-radius: 16px;
+  padding: 2px 32px;
 }
