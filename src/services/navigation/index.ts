@@ -20,6 +20,18 @@ export function goToProfilePage(router: NextRouter) {
   router.push("/Profile");
 }
 
+export function goToProfilePageEmployer(router: NextRouter) {
+  router.push("/CompanyDetail");
+}
+
 export function goToExplorePage(router: NextRouter) {
+  router.push("/");
+}
+
+export function goToPostAListingPage(router: NextRouter) {
+  router.push("/");
+}
+
+export function goToMyListingsPage(router: NextRouter) {
   router.push("/");
 }
