@@ -6,9 +6,9 @@
     "build": "next build",
     "compile": "tsc -b",
     "dev": "next dev",
-    "lint": "npx eslint src --ext .js,.jsx,.ts,.tsx",
-    "format": "npx prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
-    "format-check": "npx prettier --check \"src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "npx eslint src functions --ext .js,.jsx,.ts,.tsx",
+    "format": "npx prettier --write \"{src,functions}/**/*.{js,jsx,ts,tsx}\"",
+    "format-check": "npx prettier --check \"{src,functions}/**/*.{js,jsx,ts,tsx}\"",
     "start": "next start"
   },
   "dependencies": {
