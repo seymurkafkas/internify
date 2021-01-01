@@ -13,17 +13,17 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true); // Helpful, to update the UI accordingly.
   const router = useRouter();
-
   useEffect(() => {
     // Listen authenticated user
     const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
       try {
         if (user) {
           // User is signed in.
-          const { uid, displayName, email, photoURL } = user;
+          const userInfo = await user.getIdTokenResult();
+          const { user_id, displayName, email, photoURL, userType } = userInfo.claims;
           // You could also look for the user doc in your Firestore (if you have one):
           // const userDoc = await firebase.firestore().doc(`users/${uid}`).get()
-          setUser({ uid, displayName, email, photoURL });
+          setUser({ uid: user_id, displayName, email, photoURL, userType });
         } else {
           setUser(null);
           setLoadingUser(false);

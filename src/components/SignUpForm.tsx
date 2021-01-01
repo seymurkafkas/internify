@@ -3,6 +3,7 @@ import classnames from "classnames";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
 import { useRouter } from "next/router";
+import { setUserRole } from "../services/functions/setUserRole";
 import {
   Button,
   Callout,
@@ -17,6 +18,7 @@ import {
   Intent,
 } from "@blueprintjs/core";
 import styles from "./SignUpForm.module.css";
+import * as Navigation from "../services/navigation";
 
 export default function SignUpForm() {
   const [email, setEmail] = React.useState("");
@@ -44,8 +46,10 @@ export default function SignUpForm() {
     (async () => {
       try {
         await Auth.createUser(email, password);
-        alert("Success");
-        router.push("/Home");
+        await setUserRole(userType);
+        await Auth.signOut();
+        //TEMPORARY HACK. FIX ME! OnAuthStateChanged does not get triggered unless I log out and log back in.
+        Navigation.goToIndex(router);
       } catch (err) {
         console.log("Unknown Error");
       }
