@@ -5,6 +5,8 @@
   "scripts": {
     "build": "next build",
     "compile": "tsc -b",
+    "compile:functions": "cd functions && npm run build",
+    "deploy": "firebase deploy --only functions",
     "dev": "next dev",
     "lint": "npx eslint src functions --ext .js,.jsx,.ts,.tsx",
     "format": "npx prettier --write \"{src,functions}/**/*.{js,jsx,ts,tsx}\"",
