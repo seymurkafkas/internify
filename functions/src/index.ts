@@ -1,6 +1,13 @@
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
 
-export const helloWorld = functions.https.onRequest((request, response) => {
-  functions.logger.info("Hello logs!", { structuredData: true });
-  response.send("Hello from Firebase!");
+admin.initializeApp();
+
+export const setUserType = functions.https.onCall(async (data, context) => {
+  try {
+    await admin.auth().setCustomUserClaims(context.auth.uid, { userType: data });
+    return true;
+  } catch (err) {
+    console.log(err);
+  }
 });
