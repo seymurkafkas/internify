@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DateRangeInput } from "@blueprintjs/datetime";
+import { DateRange, DateRangeInput } from "@blueprintjs/datetime";
 
 const monthNames = [
   "January",
@@ -16,14 +16,36 @@ const monthNames = [
   "November",
   "December",
 ];
+interface Props {
+  institutionName: string;
+  positionName: string;
+  range: DateRange;
+  educationChangeHandler: any;
+  key: number;
+}
 
-export default function EnrolledItem() {
+export default function EnrolledItem(props: Props) {
   return (
     <>
-      <div>School</div>
+      <input
+        className="bp3-input .modifier"
+        value={props.institutionName}
+        type="text"
+        placeholder="Institution"
+        onChange={props.educationChangeHandler("institutionName")}
+        dir="auto"
+      />
+      <input
+        className="bp3-input .modifier"
+        value={props.positionName}
+        type="text"
+        onChange={props.educationChangeHandler("positionName")}
+        placeholder="Position"
+        dir="auto"
+      />
       <DateRangeInput
         formatDate={(date) => monthNames[date.getMonth()] + " " + date.getFullYear()}
-        onChange={() => {}}
+        onChange={props.educationChangeHandler("range")}
         parseDate={(str) => new Date(str)}
       />
     </>
