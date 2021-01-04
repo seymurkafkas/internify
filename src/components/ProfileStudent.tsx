@@ -39,6 +39,16 @@ export default function ProfileStudent() {
     });
   }
 
+  function removeInterestItem(index: number) {
+    return () => {
+      setInterests((prevInterests) => {
+        const newInterests = [...prevInterests];
+        newInterests.splice(index, 1);
+        return newInterests;
+      });
+    };
+  }
+
   function handleInterestsChange(index: number) {
     return function (event: React.ChangeEvent<HTMLInputElement>) {
       setInterests((prevInterests) => {
@@ -54,10 +64,30 @@ export default function ProfileStudent() {
     });
   }
 
+  function removeSkillItem(index: number) {
+    return () => {
+      setSkills((prevSkills) => {
+        const newSkills = [...prevSkills];
+        newSkills.splice(index, 1);
+        return newSkills;
+      });
+    };
+  }
+
   function addLanguageItem() {
     setLanguages((prevLanguages) => {
       return [...prevLanguages, { language: "", level: "Beginner" }];
     });
+  }
+
+  function removeLanguageItem(index: number) {
+    return () => {
+      setLanguages((prevLanguages) => {
+        const newLanguages = [...prevLanguages];
+        newLanguages.splice(index, 1);
+        return newLanguages;
+      });
+    };
   }
 
   function handleSkillsChange(index: number) {
@@ -95,10 +125,30 @@ export default function ProfileStudent() {
     });
   }
 
+  function removeEducationItem(index: number) {
+    return () => {
+      setEducation((prevEducation) => {
+        const newEducation = [...prevEducation];
+        newEducation.splice(index, 1);
+        return newEducation;
+      });
+    };
+  }
+
   function addExperienceItem() {
     setExperience((prevExperience) => {
       return [...prevExperience, { institutionName: "", positionName: "", range: [null, null] }];
     });
+  }
+
+  function removeExperienceItem(index: number) {
+    return () => {
+      setExperience((prevExperience) => {
+        const newExperience = [...prevExperience];
+        newExperience.splice(index, 1);
+        return newExperience;
+      });
+    };
   }
 
   function handleEducationItemChange(index: number) {
@@ -196,13 +246,15 @@ export default function ProfileStudent() {
           <div className="flex flex-col items-start">
             <Button icon="add" onClick={addEducationItem} disabled={education.length === constants.maxEducationCount} />
             {education.map((educationItem: EducationItem, index: number) => (
-              <EnrolledItem
-                experience={false}
-                key={index}
-                institutionName={educationItem.institutionName}
-                positionName={educationItem.degreeName}
-                range={educationItem.range}
-                educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
+              <div key={index}>
+                <EnrolledItem
+                  experience={false}
+                  institutionName={educationItem.institutionName}
+                  positionName={educationItem.degreeName}
+                  range={educationItem.range}
+                  educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
+                <Button icon="cross" onClick={removeEducationItem(index)}></Button>
+              </div>
             ))}
           </div>
         </div>
@@ -215,13 +267,15 @@ export default function ProfileStudent() {
               disabled={experience.length === constants.maxExperienceCount}
             />
             {experience.map((experienceItem: ExperienceItem, index: number) => (
-              <EnrolledItem
-                experience
-                key={index}
-                companyName={experienceItem.companyName}
-                positionName={experienceItem.positionName}
-                range={experienceItem.range}
-                experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
+              <div key={index}>
+                <EnrolledItem
+                  experience
+                  companyName={experienceItem.companyName}
+                  positionName={experienceItem.positionName}
+                  range={experienceItem.range}
+                  experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
+                <Button icon="cross" onClick={removeExperienceItem(index)}></Button>
+              </div>
             ))}
           </div>
         </div>
@@ -231,7 +285,7 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addSkillItem} disabled={skills.length === constants.maxSkillsCount} />
           {skills.map((skillElement, index) => {
             return (
-              <>
+              <div key={index}>
                 <input
                   className="bp3-input .modifier"
                   type="text"
@@ -247,7 +301,8 @@ export default function ProfileStudent() {
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-              </>
+                <Button icon="cross" onClick={removeSkillItem(index)}></Button>
+              </div>
             );
           })}
         </div>
@@ -256,7 +311,7 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addLanguageItem} disabled={languages.length === constants.maxLanguagesCount} />
           {languages.map((languageElement, index) => {
             return (
-              <>
+              <div key={index}>
                 <input
                   className="bp3-input .modifier"
                   type="text"
@@ -274,7 +329,8 @@ export default function ProfileStudent() {
                     <option value="3">Native</option>
                   </select>
                 </div>
-              </>
+                <Button icon="cross" onClick={removeLanguageItem(index)}></Button>
+              </div>
             );
           })}
         </div>
@@ -283,15 +339,17 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addInterestItem} disabled={interests.length === constants.maxInterestsCount} />
           {interests.map((interestItem, index) => {
             return (
-              <input
-                key={index}
-                className="bp3-input .modifier"
-                type="text"
-                dir="auto"
-                onChange={handleInterestsChange(index)}
-                value={interestItem}
-                placeholder="Interest"
-              />
+              <div key={index}>
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleInterestsChange(index)}
+                  value={interestItem}
+                  placeholder="Interest"
+                />
+                <Button icon="cross" onClick={removeInterestItem(index)}></Button>
+              </div>
             );
           })}
         </div>
