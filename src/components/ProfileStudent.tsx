@@ -160,7 +160,7 @@ export default function ProfileStudent() {
       <img
         className=" rounded-full absolute h-36 w-36 mt-20 ml-24"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col  justify-between absolute w-3/6 h-4/6 ml-96 mt-20">
+      <div className="flex flex-col items-start justify-between absolute w-3/6 h-4/6 ml-96 mt-20">
         <div>
           <div>Name</div>
           <input
@@ -305,6 +305,7 @@ export default function ProfileStudent() {
           value={description}
           selectAllOnFocus={true}
         />
+        <Button icon="floppy-disk"></Button>
       </div>
     </>
   );
