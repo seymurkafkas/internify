@@ -16,12 +16,17 @@ const monthNames = [
   "November",
   "December",
 ];
+
 interface Props {
-  institutionName: string;
-  positionName: string;
+  companyName?: string;
+  positionName?: string;
   range: DateRange;
-  educationChangeHandler: any;
+  experienceChangeHandler?: any;
+  institutionName?: string;
+  degreeName?: string;
+  educationChangeHandler?: any;
   key: number;
+  experience: boolean;
 }
 
 export default function EnrolledItem(props: Props) {
@@ -29,23 +34,29 @@ export default function EnrolledItem(props: Props) {
     <>
       <input
         className="bp3-input .modifier"
-        value={props.institutionName}
+        value={props.experience ? props.companyName : props.institutionName}
         type="text"
-        placeholder="Institution"
-        onChange={props.educationChangeHandler("institutionName")}
+        placeholder={props.experience ? "Company" : "Institution"}
+        onChange={
+          props.experience
+            ? props.experienceChangeHandler("companyName")
+            : props.educationChangeHandler("institutionName")
+        }
         dir="auto"
       />
       <input
         className="bp3-input .modifier"
-        value={props.positionName}
+        value={props.experience ? props.positionName : props.degreeName}
         type="text"
-        onChange={props.educationChangeHandler("positionName")}
-        placeholder="Position"
+        onChange={
+          props.experience ? props.experienceChangeHandler("positionName") : props.educationChangeHandler("degreeName")
+        }
+        placeholder={props.experience ? "Position" : "Degree"}
         dir="auto"
       />
       <DateRangeInput
         formatDate={(date) => monthNames[date.getMonth()] + " " + date.getFullYear()}
-        onChange={props.educationChangeHandler("range")}
+        onChange={props.experience ? props.experienceChangeHandler("range") : props.educationChangeHandler("range")}
         parseDate={(str) => new Date(str)}
       />
     </>
