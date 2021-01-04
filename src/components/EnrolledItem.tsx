@@ -25,7 +25,6 @@ interface Props {
   institutionName?: string;
   degreeName?: string;
   educationChangeHandler?: any;
-  key: number;
   experience: boolean;
 }
 
