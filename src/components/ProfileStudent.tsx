@@ -208,9 +208,9 @@ export default function ProfileStudent() {
   return (
     <>
       <img
-        className=" rounded-full absolute h-36 w-36 mt-20 ml-24"
+        className=" rounded-full absolute h-36 w-36 mt-12 ml-12"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col items-start justify-between absolute w-3/6 h-4/6 ml-96 mt-20">
+      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-60 mt-14">
         <div>
           <div>Name</div>
           <input
@@ -224,38 +224,42 @@ export default function ProfileStudent() {
         </div>
         <div>
           <div>Location</div>
-          <input
-            className="bp3-input .modifier"
-            type="text"
-            dir="auto"
-            onChange={handleLocationChange("city")}
-            value={location.city}
-            placeholder="Istanbul"
-          />
-          <input
-            className="bp3-input .modifier"
-            type="text"
-            dir="auto"
-            onChange={handleLocationChange("country")}
-            value={location.country}
-            placeholder="Turkey"
-          />
+          <div className="space-x-4">
+            <input
+              className="bp3-input .modifier"
+              type="text"
+              dir="auto"
+              onChange={handleLocationChange("city")}
+              value={location.city}
+              placeholder="Istanbul"
+            />
+            <input
+              className="bp3-input .modifier"
+              type="text"
+              dir="auto"
+              onChange={handleLocationChange("country")}
+              value={location.country}
+              placeholder="Turkey"
+            />
+          </div>
         </div>
         <div>
           <div>Education</div>
-          <div className="flex flex-col items-start">
+          <div>
             <Button icon="add" onClick={addEducationItem} disabled={education.length === constants.maxEducationCount} />
-            {education.map((educationItem: EducationItem, index: number) => (
-              <div key={index}>
-                <EnrolledItem
-                  experience={false}
-                  institutionName={educationItem.institutionName}
-                  positionName={educationItem.degreeName}
-                  range={educationItem.range}
-                  educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
-                <Button icon="cross" onClick={removeEducationItem(index)}></Button>
-              </div>
-            ))}
+            <div>
+              {education.map((educationItem: EducationItem, index: number) => (
+                <div key={index} className="box-border rounded-lg border-gray-300 flex border-4 p-4 mt-2">
+                  <EnrolledItem
+                    experience={false}
+                    institutionName={educationItem.institutionName}
+                    positionName={educationItem.degreeName}
+                    range={educationItem.range}
+                    educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
+                  <Button className="ml-8 place-self-center" icon="cross" onClick={removeEducationItem(index)}></Button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
         <div>
