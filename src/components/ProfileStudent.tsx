@@ -36,7 +36,6 @@ export default function ProfileStudent() {
   const [languages, setLanguages] = React.useState([]);
   const [interests, setInterests] = React.useState([]);
   const [experience, setExperience] = React.useState([]);
-
   const { user, loadingUser } = useUser();
   const uid = user?.uid ?? null;
 
@@ -250,10 +249,10 @@ export default function ProfileStudent() {
     };
   }
 
-  if (loadingUser) {
+  if (loadingUser || !user) {
     return null;
-  } else if (loadingData) {
-    return <div>Loading Mong</div>;
+  } else if (loadingData && user) {
+    return <div>Loading ...</div>;
   }
   return (
     <>
