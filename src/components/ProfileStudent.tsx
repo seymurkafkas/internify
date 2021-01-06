@@ -2,6 +2,9 @@ import React from "react";
 import { EditableText, Button } from "@blueprintjs/core";
 import EnrolledItem from "./EnrolledItem";
 import { DateRange } from "@blueprintjs/datetime";
+import * as databaseService from "../services/firestore";
+import { useUser } from "../services/auth/userContext";
+import { enrolledItemTransformDate } from "../util/date";
 
 interface EducationItem {
   institutionName: string;
@@ -24,6 +27,7 @@ const constants = {
 };
 
 export default function ProfileStudent() {
+  const [loadingData, setLoadingData] = React.useState(true);
   const [name, setName] = React.useState("");
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [education, setEducation] = React.useState([]);
@@ -32,6 +36,45 @@ export default function ProfileStudent() {
   const [languages, setLanguages] = React.useState([]);
   const [interests, setInterests] = React.useState([]);
   const [experience, setExperience] = React.useState([]);
+
+  const { user, loadingUser } = useUser();
+  const uid = user?.uid ?? null;
+
+  React.useEffect(() => {
+    (async () => {
+      if (user) {
+        try {
+          const studentProfileResponse = await databaseService.getStudentProfile(uid);
+          if (studentProfileResponse.exists) {
+            const StudentProfileData = studentProfileResponse.data();
+            const {
+              name: newName,
+              location: newLocation,
+              education: newEducation,
+              description: newDescription,
+              skills: newSkills,
+              languages: newLanguages,
+              interests: newInterests,
+              experience: newExperience,
+            } = StudentProfileData;
+            enrolledItemTransformDate(newEducation);
+            enrolledItemTransformDate(newExperience);
+            setName(newName);
+            setLocation(newLocation);
+            setEducation(newEducation);
+            setDescription(newDescription);
+            setSkills(newSkills);
+            setLanguages(newLanguages);
+            setInterests(newInterests);
+            setExperience(newExperience);
+          }
+          setLoadingData(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [user, uid]);
 
   function addInterestItem() {
     setInterests((prevInterests) => {
@@ -92,10 +135,11 @@ export default function ProfileStudent() {
 
   function handleSkillsChange(index: number) {
     return function (changedItem: string) {
-      const subFunction = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const subFunction = (event: any) => {
+        const newValue = changedItem === "level" ? event.target.value : event.currentTarget.value;
         setSkills((prevSkills) => {
           const newSkills = [...prevSkills];
-          newSkills[index] = { ...newSkills[index], [changedItem]: event.currentTarget.value };
+          newSkills[index] = { ...newSkills[index], [changedItem]: newValue };
           return newSkills;
         });
       };
@@ -105,10 +149,11 @@ export default function ProfileStudent() {
 
   function handleLanguagesChange(index: number) {
     return function (changedItem: string) {
-      const subFunction = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const subFunction = (event: any) => {
+        const newValue = changedItem === "level" ? event.target.value : event.currentTarget.value;
         setLanguages((prevLanguages) => {
           const newLanguages = [...prevLanguages];
-          newLanguages[index] = { ...newLanguages[index], [changedItem]: event.currentTarget.value };
+          newLanguages[index] = { ...newLanguages[index], [changedItem]: newValue };
           return newLanguages;
         });
       };
@@ -121,7 +166,7 @@ export default function ProfileStudent() {
   }
   function addEducationItem() {
     setEducation((prevEducation) => {
-      return [...prevEducation, { institutionName: "", positionName: "", range: [null, null] }];
+      return [...prevEducation, { institutionName: "", degreeName: "", range: [null, null] }];
     });
   }
 
@@ -137,7 +182,7 @@ export default function ProfileStudent() {
 
   function addExperienceItem() {
     setExperience((prevExperience) => {
-      return [...prevExperience, { institutionName: "", positionName: "", range: [null, null] }];
+      return [...prevExperience, { companyName: "", positionName: "", range: [null, null] }];
     });
   }
 
@@ -205,6 +250,11 @@ export default function ProfileStudent() {
     };
   }
 
+  if (loadingUser) {
+    return null;
+  } else if (loadingData) {
+    return <div>Loading Mong</div>;
+  }
   return (
     <>
       <img
@@ -253,7 +303,7 @@ export default function ProfileStudent() {
                   <EnrolledItem
                     experience={false}
                     institutionName={educationItem.institutionName}
-                    positionName={educationItem.degreeName}
+                    degreeName={educationItem.degreeName}
                     range={educationItem.range}
                     educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
                   <Button className="ml-8 place-self-center" icon="cross" onClick={removeEducationItem(index)}></Button>
@@ -298,8 +348,8 @@ export default function ProfileStudent() {
                   value={skillElement.skill}
                   placeholder="Skill"
                 />
-                <div className="bp3-select .modifier" onChange={handleSkillsChange(index)("level")}>
-                  <select value={skillElement.level}>
+                <div className="bp3-select .modifier">
+                  <select value={skillElement.level} onChange={handleSkillsChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Intermediate</option>
                     <option value="3">Advanced</option>
@@ -324,13 +374,13 @@ export default function ProfileStudent() {
                   value={languageElement.language}
                   placeholder="Language"
                 />
-                <div className="bp3-select .modifier" onChange={handleLanguagesChange(index)("level")}>
-                  <select value={languageElement.level}>
+                <div className="bp3-select .modifier">
+                  <select value={languageElement.level} onChange={handleLanguagesChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Elementary </option>
                     <option value="3">Intermediate</option>
-                    <option value="2">Proficient</option>
-                    <option value="3">Native</option>
+                    <option value="4">Proficient</option>
+                    <option value="5">Native</option>
                   </select>
                 </div>
                 <Button icon="cross" onClick={removeLanguageItem(index)}></Button>
@@ -367,7 +417,12 @@ export default function ProfileStudent() {
           value={description}
           selectAllOnFocus={true}
         />
-        <Button icon="floppy-disk"></Button>
+        <Button
+          icon="floppy-disk"
+          onClick={databaseService.saveStudentProfile(
+            { name, location, education, description, skills, languages, interests, experience },
+            uid
+          )}></Button>
       </div>
     </>
   );
