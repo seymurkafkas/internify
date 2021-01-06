@@ -63,6 +63,7 @@ export default function EnrolledItem(props: Props) {
             formatDate={(date) => monthNames[date.getMonth()] + " " + date.getFullYear()}
             onChange={props.experience ? props.experienceChangeHandler("range") : props.educationChangeHandler("range")}
             parseDate={(str) => new Date(str)}
+            value={props.range}
           />
         </div>
       </div>
