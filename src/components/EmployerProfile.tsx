@@ -7,7 +7,7 @@ import {
 } from "@blueprintjs/core";
 import styles from "../components/styles.module.css";
 
-class CompanyDetailContainer extends React.Component<any, any> {
+class EmployerProfile extends React.Component<any, any> {
   constructor(props) {
     super(props);
     this.handleClick = this.handleClick.bind(this);
@@ -104,4 +104,4 @@ class CompanyDetailContainer extends React.Component<any, any> {
   }
 }
 
-export default CompanyDetailContainer;
+export default EmployerProfile;

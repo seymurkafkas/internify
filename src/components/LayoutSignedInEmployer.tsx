@@ -64,7 +64,7 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
           <Button
             className={Classes.MINIMAL}
             onClick={() => {
-              Navigation.goToProfilePageEmployer(router);
+              Navigation.goToProfilePage(router);
             }}
             icon="mugshot"
             text="Profile"

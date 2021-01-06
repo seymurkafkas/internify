@@ -20,10 +20,6 @@ export async function goToProfilePage(router: NextRouter) {
   await router.push("/Profile");
 }
 
-export async function goToProfilePageEmployer(router: NextRouter) {
-  await router.push("/CompanyDetail");
-}
-
 export async function goToExplorePage(router: NextRouter) {
   await router.push("/");
 }
