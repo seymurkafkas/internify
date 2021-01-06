@@ -210,11 +210,11 @@ export default function ProfileStudent() {
       <img
         className=" rounded-full absolute h-36 w-36 mt-12 ml-12"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-60 mt-14">
+      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-60 mt-12">
         <div>
           <div>Name</div>
           <input
-            className="bp3-input .modifier"
+            className="bp3-input .modifier mt-2"
             type="text"
             dir="auto"
             onChange={handleNameChange}
@@ -224,7 +224,7 @@ export default function ProfileStudent() {
         </div>
         <div>
           <div>Location</div>
-          <div className="space-x-4">
+          <div className="space-x-4 mt-2">
             <input
               className="bp3-input .modifier"
               type="text"
@@ -244,9 +244,14 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div>Education</div>
+          <div className="mt-4">Education</div>
           <div>
-            <Button icon="add" onClick={addEducationItem} disabled={education.length === constants.maxEducationCount} />
+            <Button
+              icon="add"
+              className="mt-4"
+              onClick={addEducationItem}
+              disabled={education.length === constants.maxEducationCount}
+            />
             <div>
               {education.map((educationItem: EducationItem, index: number) => (
                 <div key={index} className="box-border rounded-lg border-gray-300 flex border-4 p-4 mt-2">
@@ -266,19 +271,20 @@ export default function ProfileStudent() {
           <div>Experience</div>
           <div className="flex flex-col items-start">
             <Button
+              className="mt-4"
               icon="add"
               onClick={addExperienceItem}
               disabled={experience.length === constants.maxExperienceCount}
             />
             {experience.map((experienceItem: ExperienceItem, index: number) => (
-              <div key={index}>
+              <div key={index} className="box-border rounded-lg border-gray-300 flex border-4 p-4 mt-2">
                 <EnrolledItem
                   experience
                   companyName={experienceItem.companyName}
                   positionName={experienceItem.positionName}
                   range={experienceItem.range}
                   experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
-                <Button icon="cross" onClick={removeExperienceItem(index)}></Button>
+                <Button className="ml-8 place-self-center" icon="cross" onClick={removeExperienceItem(index)}></Button>
               </div>
             ))}
           </div>
@@ -289,7 +295,7 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addSkillItem} disabled={skills.length === constants.maxSkillsCount} />
           {skills.map((skillElement, index) => {
             return (
-              <div key={index}>
+              <div key={index} className="flex mt-2 space-x-2">
                 <input
                   className="bp3-input .modifier"
                   type="text"
@@ -315,7 +321,7 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addLanguageItem} disabled={languages.length === constants.maxLanguagesCount} />
           {languages.map((languageElement, index) => {
             return (
-              <div key={index}>
+              <div key={index} className="flex mt-2 space-x-2">
                 <input
                   className="bp3-input .modifier"
                   type="text"
@@ -343,7 +349,7 @@ export default function ProfileStudent() {
           <Button icon="add" onClick={addInterestItem} disabled={interests.length === constants.maxInterestsCount} />
           {interests.map((interestItem, index) => {
             return (
-              <div key={index}>
+              <div key={index} className="flex mt-2 space-x-2">
                 <input
                   className="bp3-input .modifier"
                   type="text"
@@ -357,13 +363,15 @@ export default function ProfileStudent() {
             );
           })}
         </div>
+        <div>Description</div>
         <EditableText
+          className="ml-1 w-128 h-32"
           alwaysRenderInput={true}
           onChange={(newDescription: string) => {
             setDescription(newDescription);
           }}
           maxLength={300}
-          placeholder="Description"
+          placeholder="Tell us about yourself"
           value={description}
           selectAllOnFocus={true}
         />
