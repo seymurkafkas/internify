@@ -15,7 +15,7 @@ class CompanyDetailContainer extends React.Component<any, any> {
     this.state = {
       title: "",
       sector: "",
-      numOfEmployees: 12,
+      numOfEmployees: 0,
       description: "",
       address: "",
     };
@@ -67,7 +67,7 @@ class CompanyDetailContainer extends React.Component<any, any> {
           </p>
           <InputGroup
             placeholder={"Type to edit"}
-            onChange={this.inputChange.bind(this, "numOfEmpolyees")}
+            onChange={this.inputChange.bind(this, "numOfEmployees")}
             defaultValue={this.state.numOfEmployees}
             className={["bp3-fill", styles.inputUnderline].join(" ")}
           />
