@@ -1,5 +1,4 @@
 import "../firebase/init";
-
 import firebase from "firebase";
 import "firebase/auth";
 
