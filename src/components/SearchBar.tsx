@@ -1,6 +1,5 @@
 import React from "react";
 import { InputGroup, Button } from "@blueprintjs/core";
-import styles from "./styles.module.css";
 
 class SearchBar extends React.Component<any, any> {
   constructor(props: any) {
@@ -22,13 +21,14 @@ class SearchBar extends React.Component<any, any> {
 
   render() {
     return (
-      <div className={[styles.searchBar, "mb32"].join(" ")}>
-        <h2 className={[styles.titleLarge, styles.mb16].join(" ")}>Search</h2>
-        <div className={["flex"].join(" ")}>
+      <div className="flex flex-col space-y-2 mb-8">
+        <h2 className="text-3xl font-bold">Search</h2>
+        <div className="flex space-x-4">
           <InputGroup
             onChange={this.handleChange}
-            className={["mr32", "bp3-large", "bp3-round"].join(" ")}
+            className="rounded-lg w-96"
             defaultValue={this.state.searchText}
+            placeholder="Search for a term"
           />
           <Button onClick={this.handleClick}>Find a job</Button>
         </div>
