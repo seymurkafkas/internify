@@ -2,7 +2,6 @@ import React from "react";
 import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import JobListingContainer from "../components/JobListingContainer";
 import SearchBar from "../components/SearchBar";
-import styles from "../components/styles.module.css";
 const items1 = [
   {
     title: "Data Engineer",
@@ -71,7 +70,7 @@ class Search extends React.Component<any, any> {
   render() {
     return (
       <LayoutSignedInStudent>
-        <div className={[styles.SearchPage].join(" ")}>
+        <div className="ml-96 mt-24">
           <SearchBar onSearchClick={this.handleSearchClick} />
           <JobListingContainer items={this.state.listingItems} />
         </div>

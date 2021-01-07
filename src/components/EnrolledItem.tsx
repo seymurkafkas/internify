@@ -34,7 +34,7 @@ export default function EnrolledItem(props: Props) {
       <div className="flex flex-row items-center">
         <div className="flex flex-col pr-8">
           <input
-            className="bp3-input .modifier w-48 mb-4"
+            className="bp3-input .modifier w-64 mb-4"
             value={props.experience ? props.companyName : props.institutionName}
             type="text"
             placeholder={props.experience ? "Company" : "Institution"}
@@ -46,7 +46,7 @@ export default function EnrolledItem(props: Props) {
             dir="auto"
           />
           <input
-            className="bp3-input .modifier w-48"
+            className="bp3-input .modifier w-64"
             value={props.experience ? props.positionName : props.degreeName}
             type="text"
             onChange={

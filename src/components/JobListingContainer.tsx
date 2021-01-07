@@ -13,8 +13,8 @@ function JobList(props: any) {
 export default function JobListingContainer(props: any) {
   const items = props.items;
   return (
-    <div className={styles.JobListingContainer}>
-      <p className={[styles.mb16].join(" ")}>Results</p>
+    <div className="w-160">
+      <p className="text-xl mb-4">Results:</p>
       <div className={[styles.ListContainer].join(" ")}>
         <JobList items={items} />
       </div>
