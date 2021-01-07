@@ -256,11 +256,12 @@ export default function ProfileStudent() {
   }
   return (
     <>
+      <p className="text-5xl font-light mt-8 ml-48">Student Profile</p>
       <img
-        className=" rounded-full absolute h-36 w-36 mt-12 ml-12"
+        className=" rounded-full absolute h-36 w-36 mt-8 ml-48"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-60 mt-12">
-        <div>
+      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-48 mt-8">
+        <div className="ml-44">
           <div>Name</div>
           <input
             className="bp3-input .modifier mt-2"
@@ -271,7 +272,7 @@ export default function ProfileStudent() {
             placeholder="John Smith"
           />
         </div>
-        <div>
+        <div className="ml-44">
           <div>Location</div>
           <div className="space-x-4 mt-2">
             <input
@@ -293,7 +294,7 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div className="mt-4">Education</div>
+          <div className="mt-8">Education</div>
           <div>
             <Button
               icon="add"
@@ -425,11 +426,12 @@ export default function ProfileStudent() {
           selectAllOnFocus={true}
         />
         <Button
-          icon="floppy-disk"
           onClick={databaseService.saveStudentProfile(
             { name, location, education, description, skills, languages, interests, experience },
             uid
-          )}></Button>
+          )}>
+          Update
+        </Button>
       </div>
     </>
   );
