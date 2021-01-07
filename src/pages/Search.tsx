@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import JobListingContainer from "../components/JobListingContainer";
 import SearchBar from "../components/SearchBar";
@@ -51,33 +51,24 @@ const items2 = [
     url: "withid4",
   },
 ];
-class Search extends React.Component<any, any> {
-  constructor(props) {
-    super(props);
-    this.handleSearchClick = this.handleSearchClick.bind(this);
-    this.state = {
-      searchText: "",
-      listingItems: items1,
-    };
-  }
+const Search = () => {
+  const [listingItems, setListingItems] = useState([]);
 
-  handleSearchClick(text) {
-    if (text === "software") {
-      this.setState({ listingItems: items2, searchText: text });
+  function handleSearchClick(text) {
+    if (text === "s") {
+      setListingItems(items2);
     } else {
-      this.setState({ listingItems: items1, searchText: text });
+      setListingItems(items1);
     }
   }
-  render() {
-    return (
-      <LayoutSignedInStudent>
-        <div className={[styles.SearchPage].join(" ")}>
-          <SearchBar onSearchClick={this.handleSearchClick} />
-          <JobListingContainer items={this.state.listingItems} />
-        </div>
-      </LayoutSignedInStudent>
-    );
-  }
-}
+  return (
+    <LayoutSignedInStudent>
+      <div className={[styles.SearchPage].join(" ")}>
+        <SearchBar onSearchClick={(txt) => handleSearchClick(txt)} />
+        <JobListingContainer items={listingItems} />
+      </div>
+    </LayoutSignedInStudent>
+  );
+};
 
 export default Search;
