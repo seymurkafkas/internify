@@ -64,7 +64,7 @@ const Search = () => {
   return (
     <LayoutSignedInStudent>
       <div className={[styles.SearchPage].join(" ")}>
-        <SearchBar onSearchClick={(txt) => handleSearchClick(txt)} />
+        <SearchBar onSearchClick={handleSearchClick} />
         <JobListingContainer items={listingItems} />
       </div>
     </LayoutSignedInStudent>
