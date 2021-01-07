@@ -9,7 +9,7 @@ import {
 import MultiSelectTag from "./MultiSelectTag";
 import styles from "./styles.module.css";
 
-function CreatePositionSection() {
+function UpdatePositionSection() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
@@ -29,6 +29,7 @@ function CreatePositionSection() {
             value={title}
             placeholder="Title goes here"
           />
+          <Button className={["bp3-outlined"].join()}>Close Position</Button>
         </div>
         <h4 className="bp3-heading">Description</h4>
         <EditableText
@@ -43,11 +44,11 @@ function CreatePositionSection() {
       </div>
       <div className="flex justify-end">
         <Button onClick={() => submit()} className={["bp3-outlined"].join(" ")}>
-          Create
+          Update
         </Button>
       </div>
     </div>
   );
 }
 
-export default CreatePositionSection;
+export default UpdatePositionSection;
