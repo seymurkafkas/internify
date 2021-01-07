@@ -19,7 +19,7 @@ export default function Profile() {
   } else if (user?.userType === "Employer") {
     return (
       <LayoutSignedInEmployer>
-        <div className={styles.EmployerProfileWrapper}>
+        <div>
           <EmployerProfile />
         </div>
       </LayoutSignedInEmployer>
