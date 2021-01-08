@@ -31,3 +31,20 @@ export async function getStudentProfile(userId: string) {
   const userData = await db.collection("Students").doc(userId).get();
   return userData;
 }
+
+interface EmployerProfileData {}
+export function saveEmployerProfile(profileData: EmployerProfileData, userId: string) {
+  return async function () {
+    try {
+      await db.collection("Employers").doc(userId).set(profileData);
+    } catch (err) {
+      console.log(err);
+    }
+    return;
+  };
+}
+
+export async function getEmployerProfile(userId: string) {
+  const userData = await db.collection("Employers").doc(userId).get();
+  return userData;
+}

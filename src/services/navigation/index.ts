@@ -25,9 +25,9 @@ export async function goToExplorePage(router: NextRouter) {
 }
 
 export async function goToPostAListingPage(router: NextRouter) {
-  await router.push("/");
+  await router.push("/PostAListing");
 }
 
 export async function goToMyListingsPage(router: NextRouter) {
-  await router.push("/");
+  await router.push("/MyListings");
 }
