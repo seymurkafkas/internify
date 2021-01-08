@@ -1,5 +1,5 @@
 import React from "react";
-import * as Navigation from "../services/navigation";
+import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
 import { Button, Card, Elevation } from "@blueprintjs/core";
 

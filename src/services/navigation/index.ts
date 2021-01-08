@@ -39,3 +39,7 @@ export async function goToCustomPage(router: NextRouter, customUrl: string) {
 export async function goToViewApplicantPage(router: NextRouter, uid: string) {
   await router.push("/applicant/" + uid);
 }
+
+export async function goToMyPostedListingsPage(router: NextRouter, listingID: string) {
+  await router.push("/mylistings/" + listingID);
+}
