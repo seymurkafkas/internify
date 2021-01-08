@@ -1,12 +1,11 @@
 import React from "react";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import JobsListingDetailContainer from "../components/JobsListingDetailContainer";
-import styles from "../components/styles.module.css";
 
 export default function JobsListingDetail() {
   return (
     <LayoutSignedInEmployer>
-      <div className={[styles.JobListingDetailPage, "flex", "flex-row", "justify-between"].join(" ")}>
+      <div className="flex flex-row justify-between mt-16 ml-64">
         <JobsListingDetailContainer />
       </div>
     </LayoutSignedInEmployer>

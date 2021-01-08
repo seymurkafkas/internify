@@ -298,7 +298,7 @@ export default function ProfileStudent() {
           <div>
             <Button
               icon="add"
-              className="mt-4"
+              className="mt-4 bp3-outlined"
               onClick={addEducationItem}
               disabled={education.length === constants.maxEducationCount}
             />
@@ -311,7 +311,10 @@ export default function ProfileStudent() {
                     degreeName={educationItem.degreeName}
                     range={educationItem.range}
                     educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
-                  <Button className="ml-8 place-self-center" icon="cross" onClick={removeEducationItem(index)}></Button>
+                  <Button
+                    className="ml-8 place-self-center bp3-outlined"
+                    icon="cross"
+                    onClick={removeEducationItem(index)}></Button>
                 </div>
               ))}
             </div>
@@ -321,7 +324,7 @@ export default function ProfileStudent() {
           <div>Experience</div>
           <div className="flex flex-col items-start">
             <Button
-              className="mt-4"
+              className="mt-4 bp3-outlined"
               icon="add"
               onClick={addExperienceItem}
               disabled={experience.length === constants.maxExperienceCount}
@@ -334,7 +337,10 @@ export default function ProfileStudent() {
                   positionName={experienceItem.positionName}
                   range={experienceItem.range}
                   experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
-                <Button className="ml-8 place-self-center" icon="cross" onClick={removeExperienceItem(index)}></Button>
+                <Button
+                  className="ml-8 place-self-center bp3-outlined"
+                  icon="cross"
+                  onClick={removeExperienceItem(index)}></Button>
               </div>
             ))}
           </div>
@@ -342,7 +348,12 @@ export default function ProfileStudent() {
 
         <div>Skills</div>
         <div className="flex flex-col items-start">
-          <Button icon="add" onClick={addSkillItem} disabled={skills.length === constants.maxSkillsCount} />
+          <Button
+            icon="add"
+            className="bp3-outlined"
+            onClick={addSkillItem}
+            disabled={skills.length === constants.maxSkillsCount}
+          />
           {skills.map((skillElement, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
@@ -361,14 +372,19 @@ export default function ProfileStudent() {
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-                <Button icon="cross" onClick={removeSkillItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeSkillItem(index)}></Button>
               </div>
             );
           })}
         </div>
         <div>Languages</div>
         <div className="flex flex-col items-start">
-          <Button icon="add" onClick={addLanguageItem} disabled={languages.length === constants.maxLanguagesCount} />
+          <Button
+            icon="add"
+            className="bp3-outlined"
+            onClick={addLanguageItem}
+            disabled={languages.length === constants.maxLanguagesCount}
+          />
           {languages.map((languageElement, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
@@ -389,14 +405,19 @@ export default function ProfileStudent() {
                     <option value="5">Native</option>
                   </select>
                 </div>
-                <Button icon="cross" onClick={removeLanguageItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeLanguageItem(index)}></Button>
               </div>
             );
           })}
         </div>
         <div>Interests</div>
         <div className="flex flex-col items-start">
-          <Button icon="add" onClick={addInterestItem} disabled={interests.length === constants.maxInterestsCount} />
+          <Button
+            icon="add"
+            className="bp3-outlined"
+            onClick={addInterestItem}
+            disabled={interests.length === constants.maxInterestsCount}
+          />
           {interests.map((interestItem, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
@@ -408,7 +429,7 @@ export default function ProfileStudent() {
                   value={interestItem}
                   placeholder="Interest"
                 />
-                <Button icon="cross" onClick={removeInterestItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeInterestItem(index)}></Button>
               </div>
             );
           })}
@@ -426,6 +447,7 @@ export default function ProfileStudent() {
           selectAllOnFocus={true}
         />
         <Button
+          className="bp3-outlined"
           onClick={databaseService.saveStudentProfile(
             { name, location, education, description, skills, languages, interests, experience },
             uid

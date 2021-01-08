@@ -1,12 +1,11 @@
 import React from "react";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import CreatePositionSection from "../components/CreatePositionSection";
-import styles from "../components/styles.module.css";
 
 export default function PostAListing() {
   return (
     <LayoutSignedInEmployer>
-      <div className={[styles.ApplicantsPage, "flex", "flex-row", "justify-between"].join(" ")}>
+      <div className="ml-64 mt-16 flex flex-row justify-between">
         <CreatePositionSection />
       </div>
     </LayoutSignedInEmployer>

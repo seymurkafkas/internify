@@ -79,7 +79,7 @@ function EmployerProfile() {
           />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleClick} className="">
+          <Button onClick={handleClick} className="bp3-outlined">
             Update
           </Button>
         </div>
