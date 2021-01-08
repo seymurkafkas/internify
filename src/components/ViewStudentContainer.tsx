@@ -167,7 +167,7 @@ export default function ViewStudentContainer() {
           </div>
         </div>
         <div className="flex flex-row">
-          <div>Experiences</div>
+          <div>Education</div>
           <div>
             <EducationList education={item.education} />
           </div>

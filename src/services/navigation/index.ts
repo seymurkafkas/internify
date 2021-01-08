@@ -31,3 +31,11 @@ export async function goToPostAListingPage(router: NextRouter) {
 export async function goToMyListingsPage(router: NextRouter) {
   await router.push("/MyListings");
 }
+
+export async function goToCustomPage(router: NextRouter, customUrl: string) {
+  await router.push("/" + customUrl);
+}
+
+export async function goToViewApplicantPage(router: NextRouter, uid: string) {
+  await router.push("/applicant/" + uid);
+}
