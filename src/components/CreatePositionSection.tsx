@@ -9,7 +9,7 @@ import {
 import MultiSelectTag from "./MultiSelectTag";
 import styles from "./styles.module.css";
 
-function CreatePositionSection() {
+export default function CreatePositionSection() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
@@ -49,5 +49,3 @@ function CreatePositionSection() {
     </div>
   );
 }
-
-export default CreatePositionSection;

@@ -1,24 +1,56 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Button, //H5,
   InputGroup,
   TextArea,
   // Switch,
 } from "@blueprintjs/core";
+import * as databaseService from "../services/firestore";
+import { useUser } from "../services/auth/userContext";
 
-function EmployerProfile() {
-  const [state, setState] = useState({
+export default function EmployerProfile() {
+  const [profileDataState, setProfileDataState] = React.useState({
     title: "",
     address: "",
     numOfEmployees: "",
     description: "",
     sector: "",
   });
+  const [loadingData, setLoadingData] = React.useState(true);
+  const { user, loadingUser } = useUser();
+  const uid = user?.uid ?? null;
 
-  console.log(state);
+  React.useEffect(() => {
+    (async () => {
+      if (user) {
+        try {
+          const employerProfileResponse = await databaseService.getEmployerProfile(uid);
+          if (employerProfileResponse.exists) {
+            const { title, address, numOfEmployees, description, sector } = employerProfileResponse.data();
+            setProfileDataState({ title, address, numOfEmployees, description, sector });
+          }
+          setLoadingData(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [user, uid]);
 
-  function handleClick() {
-    alert("updated" + JSON.stringify(state));
+  const handleProfileUpdate = () => {
+    (async () => {
+      try {
+        console.log(profileDataState, uid);
+        await databaseService.saveEmployerProfile(profileDataState, uid)();
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  };
+  if (loadingUser || !user) {
+    return null;
+  } else if (loadingData && user) {
+    return <div>Loading ...</div>;
   }
 
   return (
@@ -32,14 +64,14 @@ function EmployerProfile() {
           <div>Title</div>
           <InputGroup
             onChange={(event) => {
-              setState((prevState) => {
+              setProfileDataState((prevState) => {
                 return {
                   ...prevState,
                   title: event.target.value,
                 };
               });
             }}
-            defaultValue={state.title}
+            defaultValue={profileDataState.title}
             placeholder="Title"
             className="w-64"
           />
@@ -49,14 +81,14 @@ function EmployerProfile() {
           <InputGroup
             placeholder={"Type to edit"}
             onChange={(event) => {
-              setState((prevState) => {
+              setProfileDataState((prevState) => {
                 return {
                   ...prevState,
                   sector: event.target.value,
                 };
               });
             }}
-            defaultValue={state.sector}
+            defaultValue={profileDataState.sector}
             className="w-64"
           />
         </div>
@@ -65,14 +97,14 @@ function EmployerProfile() {
           <InputGroup
             placeholder={"Type to edit"}
             onChange={(event) => {
-              setState((prevState) => {
+              setProfileDataState((prevState) => {
                 return {
                   ...prevState,
                   numOfEmployees: event.target.value,
                 };
               });
             }}
-            defaultValue={state.numOfEmployees}
+            defaultValue={profileDataState.numOfEmployees}
             className="w-12 mt-6 h-4"
           />
         </div>
@@ -81,14 +113,14 @@ function EmployerProfile() {
           <TextArea
             placeholder={"Type to edit"}
             onChange={(event) => {
-              setState((prevState) => {
+              setProfileDataState((prevState) => {
                 return {
                   ...prevState,
                   address: event.target.value,
                 };
               });
             }}
-            defaultValue={state.address}
+            defaultValue={profileDataState.address}
             className="w-128 max-h-32"
           />
         </div>
@@ -97,19 +129,19 @@ function EmployerProfile() {
           <TextArea
             placeholder={"Type to edit"}
             onChange={(event) => {
-              setState((prevState) => {
+              setProfileDataState((prevState) => {
                 return {
                   ...prevState,
                   description: event.target.value,
                 };
               });
             }}
-            defaultValue={state.description}
+            defaultValue={profileDataState.description}
             className="w-128 max-h-32"
           />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleClick} className="">
+          <Button onClick={handleProfileUpdate} className="">
             Update
           </Button>
         </div>
@@ -117,5 +149,3 @@ function EmployerProfile() {
     </>
   );
 }
-
-export default EmployerProfile;
