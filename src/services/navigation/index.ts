@@ -32,6 +32,10 @@ export async function goToMyListingsPage(router: NextRouter) {
   await router.push("/MyListings");
 }
 
+export async function goToViewListingPage(router: NextRouter, listingID: string) {
+  await router.push("/listing/" + listingID);
+}
+
 export async function goToCustomPage(router: NextRouter, customUrl: string) {
   await router.push("/" + customUrl);
 }
