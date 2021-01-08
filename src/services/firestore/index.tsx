@@ -89,3 +89,15 @@ export async function getApplicantsForListing(userId: string, listingId: string)
     console.log(err);
   }
 }
+
+export async function getListingData(userId: string, listingId: string) {
+  try {
+    const dataResponse = await db.collection("Employers").doc(userId).collection("Listings").doc(listingId).get();
+    if (!dataResponse.exists) {
+      throw "Listing doesn't exist";
+    }
+    return dataResponse.data();
+  } catch (err) {
+    console.log(err);
+  }
+}

@@ -2,16 +2,19 @@ import { useRouter } from "next/router";
 import React from "react";
 import JobsListingDetailContainer from "../../components/JobsListingDetailContainer";
 import LayoutSignedInStudent from "../../components/LayoutSignedInStudent";
-export default function Post() {
+export default function Listing() {
   const router = useRouter();
-  const { listingID } = router.query; //Use this to fetch data
-  if (!listingID) {
+  const { listingID, employerID } = router.query; //Use this to fetch data
+  if (!listingID || !employerID) {
     return null;
   }
+
   return (
     <LayoutSignedInStudent>
-      <p>Listing: {listingID}</p>
-      <JobsListingDetailContainer></JobsListingDetailContainer>
+      <div className="mt-20 ml-44">
+        <p>ListingID: {listingID}</p>
+        <JobsListingDetailContainer listingId={listingID} employerId={employerID}></JobsListingDetailContainer>
+      </div>
     </LayoutSignedInStudent>
   );
 }

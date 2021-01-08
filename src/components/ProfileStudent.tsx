@@ -99,7 +99,7 @@ export default function ProfileStudent() {
   }
   function addSkillItem() {
     setSkills((prevSkills) => {
-      return [...prevSkills, { skill: "", level: "Beginner" }];
+      return [...prevSkills, { skill: "", level: "1" }];
     });
   }
 
@@ -115,7 +115,7 @@ export default function ProfileStudent() {
 
   function addLanguageItem() {
     setLanguages((prevLanguages) => {
-      return [...prevLanguages, { language: "", level: "Beginner" }];
+      return [...prevLanguages, { language: "", level: "1" }];
     });
   }
 
