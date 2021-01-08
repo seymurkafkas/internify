@@ -4,9 +4,11 @@ import {
   Card,
   Elevation,
 } from "@blueprintjs/core";
+import * as Navigation from "../services/navigation";
+import { useRouter } from "next/router";
 
 interface Props {
-  url: string;
+  listingId: string;
   title: string;
   date: string;
   company: string;
@@ -17,28 +19,33 @@ interface Props {
 }
 
 export default function JobListingItem(props: Props) {
+  const router = useRouter();
   return (
-    <Card className="listing_item" interactive={true} elevation={Elevation.TWO}>
-      <a href={props.url}>
-        <div>
-          <div className="flex justify-between">
-            <p>{props.title}</p>
-            <p>{props.date}</p>
-          </div>
-          <p>{props.company}</p>
-          <p>
-            in <b>{props.location}</b>
-          </p>
-          <br />
-          <p>{props.description}</p>
-          <div className="flex justify-between">
-            <p>
-              <b>Applicants: {props.applicants}</b>
-            </p>
-            <p>{props.compensation}</p>
-          </div>
+    <Card
+      onClick={() => {
+        Navigation.goToViewListingPage(router, props.listingId);
+      }}
+      className="listing_item"
+      interactive={true}
+      elevation={Elevation.TWO}>
+      <div>
+        <div className="flex justify-between">
+          <p>{props.title}</p>
+          <p>{props.date}</p>
         </div>
-      </a>
+        <p>{props.company}</p>
+        <p>
+          in <b>{props.location}</b>
+        </p>
+        <br />
+        <p>{props.description}</p>
+        <div className="flex justify-between">
+          <p>
+            <b>Applicants: {props.applicants}</b>
+          </p>
+          <p>{props.compensation}</p>
+        </div>
+      </div>
     </Card>
   );
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import ApplicantItem from "./ApplicantItem";
+// import * as DatabaseService from "../services/firestore";
 
-function AplicantList(props: any) {
+function ApplicantList(props: any) {
   const listings = props.items.map((item, index) => {
     return <ApplicantItem key={index} {...item} />;
   });
@@ -9,6 +10,10 @@ function AplicantList(props: any) {
 }
 
 export default function ApplicantsContainer() {
+  //const applicantUIDs = ["123123", "512312"];
+
+  // const result = applicantIDs.reduce((currentApplicantList, currentUID) => {}, {});
+
   const items = [
     {
       name: "John Doe",
@@ -48,7 +53,7 @@ export default function ApplicantsContainer() {
     <div>
       <h2 className="text-3xl font-bold mb-8">Applicants</h2>
       <div className="w-128 space-y-4">
-        <AplicantList items={items} />
+        <ApplicantList items={items} />
       </div>
     </div>
   );

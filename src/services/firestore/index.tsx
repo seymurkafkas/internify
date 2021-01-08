@@ -1,15 +1,15 @@
 import "../firebase/init";
 import firebase from "firebase";
 import "firebase/firestore";
-import { DateRange } from "@blueprintjs/datetime";
+// import { DateRange } from "@blueprintjs/datetime";
 
 const db = firebase.firestore();
 
 interface StudentProfileData {
   name: string;
   location: { city: string; country: string };
-  education: DateRange[];
-  experience: DateRange[];
+  education: any;
+  experience: any;
   description: string;
   skills: { skill: string; level: string }[];
   languages: { language: string; level: string }[];
@@ -19,7 +19,7 @@ interface StudentProfileData {
 export function saveStudentProfile(profileData: StudentProfileData, userId: string) {
   return async function () {
     try {
-      await db.collection("Students").doc(userId).set(profileData);
+      await db.collection("Students").doc(userId).set(profileData, { merge: true });
     } catch (err) {
       console.log(err);
     }
