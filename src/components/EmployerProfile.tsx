@@ -141,7 +141,7 @@ export default function EmployerProfile() {
           />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleProfileUpdate} className="">
+          <Button onClick={handleProfileUpdate} className="bp3-outlined">
             Update
           </Button>
         </div>

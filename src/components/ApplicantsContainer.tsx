@@ -1,6 +1,5 @@
 import React from "react";
 import ApplicantItem from "./ApplicantItem";
-import styles from "./styles.module.css";
 
 function AplicantList(props: any) {
   const listings = props.items.map((item, index) => {
@@ -17,7 +16,7 @@ export default function ApplicantsContainer() {
       position: "Data Engineer",
       location: "İstanbul, Turkey",
       education: "Istanbul Technical University",
-      url: "withid2",
+      uid: "withid2",
     },
     {
       name: "Mary Jane",
@@ -25,7 +24,7 @@ export default function ApplicantsContainer() {
       position: "Data Manager",
       location: "İstanbul, Turkey",
       education: "Istanbul Technical University",
-      url: "withid1",
+      uid: "withid1",
     },
     {
       name: "Tom Holland",
@@ -33,7 +32,7 @@ export default function ApplicantsContainer() {
       position: "Software Engineer",
       location: "İstanbul, Turkey",
       education: "Koc University",
-      url: "withid4",
+      uid: "withid4",
     },
     {
       name: "Rick Sanchez",
@@ -41,14 +40,14 @@ export default function ApplicantsContainer() {
       position: "Embedded System Engineer",
       location: "İstanbul, Turkey",
       education: "Sabanci University",
-      url: "withid5",
+      uid: "withid5",
     },
   ];
 
   return (
     <div>
-      <h2 className={[styles.titleLarge, styles.mb16].join(" ")}>Applicants</h2>
-      <div className={styles.ListContainer}>
+      <h2 className="text-3xl font-bold mb-8">Applicants</h2>
+      <div className="w-128 space-y-4">
         <AplicantList items={items} />
       </div>
     </div>

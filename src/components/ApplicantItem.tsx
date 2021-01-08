@@ -1,12 +1,10 @@
 import React from "react";
-import {
-  //Button,
-  Card,
-  Elevation,
-} from "@blueprintjs/core";
+import * as Navigation from "../services/navigation";
+import { useRouter } from "next/router";
+import { Button, Card, Elevation } from "@blueprintjs/core";
 
 interface Props {
-  url: string;
+  uid: string;
   name: string;
   education: string;
   position: string;
@@ -15,6 +13,10 @@ interface Props {
 }
 
 export default function ApplicantItem(props: Props) {
+  const router = useRouter();
+  function handleClick() {
+    Navigation.goToViewApplicantPage(router, props.uid);
+  }
   return (
     <Card className="listing_item" interactive={true} elevation={Elevation.TWO}>
       <div>
@@ -27,9 +29,9 @@ export default function ApplicantItem(props: Props) {
         <p>Education: {props.education}</p>
         <div className="flex justify-between">
           <p>Date applied: {props.dateApplied}</p>
-          <a href={props.url}>
-            <b>View</b>
-          </a>
+          <Button onClick={handleClick} className="w-16 bp3-outlined">
+            View
+          </Button>
         </div>
       </div>
     </Card>
