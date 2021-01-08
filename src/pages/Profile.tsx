@@ -4,7 +4,6 @@ import ProfileStudent from "../components/ProfileStudent";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import EmployerProfile from "../components/EmployerProfile";
 import { useUser } from "../services/auth/userContext";
-import styles from "../components/styles.module.css";
 
 export default function Profile() {
   const { user, loadingUser } = useUser();
@@ -19,7 +18,7 @@ export default function Profile() {
   } else if (user?.userType === "Employer") {
     return (
       <LayoutSignedInEmployer>
-        <div className={styles.EmployerProfileWrapper}>
+        <div>
           <EmployerProfile />
         </div>
       </LayoutSignedInEmployer>
