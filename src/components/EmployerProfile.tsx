@@ -15,12 +15,7 @@ function EmployerProfile() {
     sector: "",
   });
 
-  function inputChange(name, val) {
-    setState({
-      ...state,
-      [name]: val,
-    });
-  }
+  console.log(state);
 
   function handleClick() {
     alert("updated" + JSON.stringify(state));
@@ -36,7 +31,14 @@ function EmployerProfile() {
         <div className="flex flex-col space-y-2 ml-44">
           <div>Title</div>
           <InputGroup
-            onChange={(text) => inputChange("title", text)}
+            onChange={(event) => {
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  title: event.target.value,
+                };
+              });
+            }}
             defaultValue={state.title}
             placeholder="Title"
             className="w-64"
@@ -46,7 +48,14 @@ function EmployerProfile() {
           <div>Sector</div>
           <InputGroup
             placeholder={"Type to edit"}
-            onChange={(text) => inputChange("sector", text)}
+            onChange={(event) => {
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  sector: event.target.value,
+                };
+              });
+            }}
             defaultValue={state.sector}
             className="w-64"
           />
@@ -55,7 +64,14 @@ function EmployerProfile() {
           <div className="mt-8">Number of employees</div>
           <InputGroup
             placeholder={"Type to edit"}
-            onChange={(text) => inputChange("numOfEmployees", text)}
+            onChange={(event) => {
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  numOfEmployees: event.target.value,
+                };
+              });
+            }}
             defaultValue={state.numOfEmployees}
             className="w-12 mt-6 h-4"
           />
@@ -64,7 +80,14 @@ function EmployerProfile() {
           <div>Address</div>
           <TextArea
             placeholder={"Type to edit"}
-            onChange={(text) => inputChange("address", text)}
+            onChange={(event) => {
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  address: event.target.value,
+                };
+              });
+            }}
             defaultValue={state.address}
             className="w-128 max-h-32"
           />
@@ -73,7 +96,14 @@ function EmployerProfile() {
           <div>Description</div>
           <TextArea
             placeholder={"Type to edit"}
-            onChange={(text) => inputChange("description", text)}
+            onChange={(event) => {
+              setState((prevState) => {
+                return {
+                  ...prevState,
+                  description: event.target.value,
+                };
+              });
+            }}
             defaultValue={state.description}
             className="w-128 max-h-32"
           />
