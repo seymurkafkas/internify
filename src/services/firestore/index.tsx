@@ -43,7 +43,7 @@ interface EmployerProfileData {}
 export function saveEmployerProfile(profileData: EmployerProfileData, userId: string) {
   return async function () {
     try {
-      await db.collection("Employers").doc(userId).set(profileData);
+      await db.collection("Employers").doc(userId).set(profileData, { merge: true });
     } catch (err) {
       console.log(err);
     }
@@ -58,6 +58,33 @@ export async function getEmployerProfile(userId: string) {
       throw "Employer Data doesnt exist";
     }
     return userDataResponse.data();
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMyListings(userId: string) {
+  try {
+    const userDataResponse = await db.collection("Employers").doc(userId).collection("Listings").get();
+    userDataResponse.forEach((doc) => {
+      return {
+        ...doc.data(),
+        listingid: doc.id,
+      };
+    });
+    return userDataResponse;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getApplicantsForListing(userId: string, listingId: string) {
+  try {
+    const dataResponse = await db.collection("Employers").doc(userId).collection("Listings").doc(listingId).get();
+    if (!dataResponse.exists) {
+      throw "Listing doesn't exist";
+    }
+    return dataResponse.data().applicants;
   } catch (err) {
     console.log(err);
   }
