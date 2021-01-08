@@ -28,8 +28,15 @@ export function saveStudentProfile(profileData: StudentProfileData, userId: stri
 }
 
 export async function getStudentProfile(userId: string) {
-  const userData = await db.collection("Students").doc(userId).get();
-  return userData;
+  try {
+    const userDataResponse = await db.collection("Students").doc(userId).get();
+    if (!userDataResponse.exists) {
+      throw "Student Data doesnt exist";
+    }
+    return userDataResponse.data();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
 interface EmployerProfileData {}
@@ -45,6 +52,13 @@ export function saveEmployerProfile(profileData: EmployerProfileData, userId: st
 }
 
 export async function getEmployerProfile(userId: string) {
-  const userData = await db.collection("Employers").doc(userId).get();
-  return userData;
+  try {
+    const userDataResponse = await db.collection("Employers").doc(userId).get();
+    if (!userDataResponse.exists) {
+      throw "Employer Data doesnt exist";
+    }
+    return userDataResponse.data();
+  } catch (err) {
+    console.log(err);
+  }
 }
