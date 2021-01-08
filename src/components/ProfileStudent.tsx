@@ -43,30 +43,27 @@ export default function ProfileStudent() {
     (async () => {
       if (user) {
         try {
-          const studentProfileResponse = await databaseService.getStudentProfile(uid);
-          if (studentProfileResponse.exists) {
-            const StudentProfileData = studentProfileResponse.data();
-            const {
-              name: newName,
-              location: newLocation,
-              education: newEducation,
-              description: newDescription,
-              skills: newSkills,
-              languages: newLanguages,
-              interests: newInterests,
-              experience: newExperience,
-            } = StudentProfileData;
-            enrolledItemTransformDate(newEducation);
-            enrolledItemTransformDate(newExperience);
-            setName(newName);
-            setLocation(newLocation);
-            setEducation(newEducation);
-            setDescription(newDescription);
-            setSkills(newSkills);
-            setLanguages(newLanguages);
-            setInterests(newInterests);
-            setExperience(newExperience);
-          }
+          const studentProfileData = await databaseService.getStudentProfile(uid);
+          const {
+            name: newName,
+            location: newLocation,
+            education: newEducation,
+            description: newDescription,
+            skills: newSkills,
+            languages: newLanguages,
+            interests: newInterests,
+            experience: newExperience,
+          } = studentProfileData;
+          enrolledItemTransformDate(newEducation);
+          enrolledItemTransformDate(newExperience);
+          setName(newName);
+          setLocation(newLocation);
+          setEducation(newEducation);
+          setDescription(newDescription);
+          setSkills(newSkills);
+          setLanguages(newLanguages);
+          setInterests(newInterests);
+          setExperience(newExperience);
           setLoadingData(false);
         } catch (err) {
           console.log(err);

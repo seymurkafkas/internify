@@ -8,7 +8,6 @@ interface Props {
   name: string;
   education: string;
   position: string;
-  dateApplied: string;
   location: string;
 }
 
@@ -28,7 +27,7 @@ export default function ApplicantItem(props: Props) {
         <br />
         <p>Education: {props.education}</p>
         <div className="flex justify-between">
-          <p>Date applied: {props.dateApplied}</p>
+          <p>Date applied</p>
           <Button onClick={handleClick} className="w-16 bp3-outlined">
             View
           </Button>

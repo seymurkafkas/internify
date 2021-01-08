@@ -24,11 +24,9 @@ export default function EmployerProfile() {
     (async () => {
       if (user) {
         try {
-          const employerProfileResponse = await databaseService.getEmployerProfile(uid);
-          if (employerProfileResponse.exists) {
-            const { title, address, numOfEmployees, description, sector } = employerProfileResponse.data();
-            setProfileDataState({ title, address, numOfEmployees, description, sector });
-          }
+          const employerProfileData = await databaseService.getEmployerProfile(uid);
+          const { title, address, numOfEmployees, description, sector } = employerProfileData;
+          setProfileDataState({ title, address, numOfEmployees, description, sector });
           setLoadingData(false);
         } catch (err) {
           console.log(err);
