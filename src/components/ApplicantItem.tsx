@@ -21,7 +21,7 @@ export default function ApplicantItem(props: Props) {
       <div>
         <p>{props.name}</p>
         <p>
-          for <b>{props.position}</b>
+          Previous Work: <b>{props.position}</b>
         </p>
         <p>{props.location}</p>
         <br />
