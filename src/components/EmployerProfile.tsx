@@ -27,10 +27,10 @@ export default function EmployerProfile() {
           const employerProfileData = await databaseService.getEmployerProfile(uid);
           const { title, address, numOfEmployees, description, sector } = employerProfileData;
           setProfileDataState({ title, address, numOfEmployees, description, sector });
-          setLoadingData(false);
         } catch (err) {
           console.log(err);
         }
+        setLoadingData(false);
       }
     })();
   }, [user, uid]);

@@ -77,7 +77,7 @@ export default function CreatePositionSection() {
             onChange={(text) => setTitle(text)}
             className="w-96 text-4xl font-bold"
             value={title}
-            placeholder="Edit Title"
+            placeholder="Title of the Listing"
           />
         </div>
         <div className="text-xl font-bold mb-4">Description</div>
@@ -88,6 +88,7 @@ export default function CreatePositionSection() {
           placeholder="Description"
           value={description}
         />
+        <div className="text-xl font-bold mb-2 mt-4">Location</div>
         <div className="space-x-4 mt-2">
           <input
             className="bp3-input .modifier"
@@ -95,7 +96,7 @@ export default function CreatePositionSection() {
             dir="auto"
             onChange={handleLocationChange("city")}
             value={location.city}
-            placeholder="Istanbul"
+            placeholder="City"
           />
           <input
             className="bp3-input .modifier"
@@ -103,11 +104,12 @@ export default function CreatePositionSection() {
             dir="auto"
             onChange={handleLocationChange("country")}
             value={location.country}
-            placeholder="Turkey"
+            placeholder="Country"
           />
         </div>
-        <div className="text-xl font-bold mb-4">Requirements</div>
+        <div className="text-xl font-bold mb-4 mt-8">Requirements</div>
         <MultiSelectTag onReqUpdate={(req) => setRequirements(req)} />
+        <div className="text-xl font-bold mt-8">Compensation</div>
       </div>
       <NumericInput
         allowNumericCharactersOnly={true}
@@ -116,7 +118,10 @@ export default function CreatePositionSection() {
         onValueChange={(number) => {
           setCompensation(number);
         }}></NumericInput>
+      <div className="text-xl font-bold mb-4 mt-8">Deadline</div>
+
       <DateInput
+        className="w-32"
         formatDate={(date) => date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear()}
         onChange={(date) => {
           setDeadline(date);
