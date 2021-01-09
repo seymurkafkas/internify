@@ -203,3 +203,11 @@ export async function isStudentAnApplicant(listingId: string, employerUid: strin
     console.log(err);
   }
 }
+
+export async function deleteListing(listingId: string, employerUid: string) {
+  try {
+    await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).delete();
+  } catch (err) {
+    console.log(err);
+  }
+}

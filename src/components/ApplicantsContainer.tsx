@@ -29,60 +29,61 @@ export default function ApplicantsContainer(props: any) {
   }, [listingId, userId, loadingUser]);
 
   React.useEffect(() => {
-    (async function fetchApplicantData() {
-      const result = await applicantUIDs.reduce(async function (currentApplicantList, currentUID: string) {
-        try {
-          const applicantData = await DatabaseService.getStudentProfile(currentUID);
+    applicantUIDs &&
+      (async function fetchApplicantData() {
+        const result = await applicantUIDs.reduce(async function (currentApplicantList, currentUID: string) {
+          try {
+            const applicantData = await DatabaseService.getStudentProfile(currentUID);
 
-          let positionString = "Undeclared";
-          let locationString = "Undeclared";
-          let educationString = "Undeclared";
-          if (applicantData.experience.length !== 0) {
-            if (applicantData.experience[0].positionName) {
-              if (applicantData.experience[0].companyName) {
-                positionString = `${applicantData?.experience[0]?.positionName} at ${applicantData.experience[0].companyName}`;
-              } else {
-                positionString = applicantData.experience[0].positionName;
+            let positionString = "Undeclared";
+            let locationString = "Undeclared";
+            let educationString = "Undeclared";
+            if (applicantData.experience.length !== 0) {
+              if (applicantData.experience[0].positionName) {
+                if (applicantData.experience[0].companyName) {
+                  positionString = `${applicantData?.experience[0]?.positionName} at ${applicantData.experience[0].companyName}`;
+                } else {
+                  positionString = applicantData.experience[0].positionName;
+                }
+              } else if (applicantData.experience[0].companyName) {
+                positionString = `$Works at ${applicantData.experience[0].companyName}`;
               }
-            } else if (applicantData.experience[0].companyName) {
-              positionString = `$Works at ${applicantData.experience[0].companyName}`;
             }
-          }
 
-          if (applicantData.education.length !== 0) {
-            if (applicantData.education[0].degreeName) {
-              if (applicantData.education[0].institutionName) {
-                educationString = `${applicantData?.education[0]?.degreeName} at ${applicantData.education[0].institutionName}`;
-              } else {
-                educationString = applicantData.education[0].institutionName;
+            if (applicantData.education.length !== 0) {
+              if (applicantData.education[0].degreeName) {
+                if (applicantData.education[0].institutionName) {
+                  educationString = `${applicantData?.education[0]?.degreeName} at ${applicantData.education[0].institutionName}`;
+                } else {
+                  educationString = applicantData.education[0].institutionName;
+                }
+              } else if (applicantData.education[0].companyName) {
+                educationString = `$Graduated from ${applicantData.education[0].institutionName}`;
               }
-            } else if (applicantData.education[0].companyName) {
-              educationString = `$Graduated from ${applicantData.education[0].institutionName}`;
             }
-          }
 
-          if (applicantData.location.city && applicantData.location.country) {
-            locationString = `${applicantData.location.city}, ${applicantData.location.country}`;
-          } else {
-            locationString = `${applicantData.location?.city ?? ""}${applicantData.location?.country ?? ""}`;
-          }
+            if (applicantData.location.city && applicantData.location.country) {
+              locationString = `${applicantData.location.city}, ${applicantData.location.country}`;
+            } else {
+              locationString = `${applicantData.location?.city ?? ""}${applicantData.location?.country ?? ""}`;
+            }
 
-          const applicantShrinkedData = {
-            name: applicantData?.name ?? " Undeclared",
-            position: positionString,
-            location: locationString,
-            education: educationString,
-            uid: currentUID,
-          };
-          const currentList = await currentApplicantList;
-          currentList.push(applicantShrinkedData);
-          return currentList;
-        } catch (err) {
-          console.log(err);
-        }
-      }, Promise.resolve([]));
-      setApplicantSmallData(result);
-    })();
+            const applicantShrinkedData = {
+              name: applicantData?.name ?? " Undeclared",
+              position: positionString,
+              location: locationString,
+              education: educationString,
+              uid: currentUID,
+            };
+            const currentList = await currentApplicantList;
+            currentList.push(applicantShrinkedData);
+            return currentList;
+          } catch (err) {
+            console.log(err);
+          }
+        }, Promise.resolve([]));
+        setApplicantSmallData(result);
+      })();
   }, [applicantUIDs]);
 
   /*   const items = [
