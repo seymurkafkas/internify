@@ -161,6 +161,30 @@ export async function applyForListing(listingId: string, employerUid: string, st
   }
 }
 
+export async function withdrawApplication(listingId: string, employerUid: string, studentUid: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
+        applicantCount: firebase.firestore.FieldValue.increment(-1),
+      });
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        myApplications: firebase.firestore.FieldValue.arrayRemove({ employerUid, listingId }),
+      });
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function isStudentAnApplicant(listingId: string, employerUid: string, studentUid: string) {
   try {
     const response = await db.collection("Students").doc(studentUid).get();
