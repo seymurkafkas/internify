@@ -34,7 +34,11 @@ export default function MyListingsPage() {
   }
 
   if (loadingData) {
-    return <div>loading</div>;
+    return (
+      <LayoutSignedInEmployer>
+        <div>loading</div>;
+      </LayoutSignedInEmployer>
+    );
   }
 
   function listingClickHandler(listingID: string) {
