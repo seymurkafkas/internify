@@ -12,8 +12,8 @@ const items1 = [
     description:
       "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
     compensation: "2000TL",
-    listingId: "withid2",
-    employerId: "someid",
+    listingId: "TestListing",
+    employerId: "MRxSgzTSdZT2SgPOD56Kbp14VgL2",
   },
   {
     title: "Data Manager",

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
+import { stringifyDate } from "../util/date";
 
 interface listingData {
   title: string;
@@ -9,8 +10,8 @@ interface listingData {
   applicationCount: string;
   description: string;
   requirements: string;
-  deadline: string;
-  compensation: string;
+  deadline: firebase.default.firestore.Timestamp;
+  compensation: number;
 }
 
 export default function JobsListingDetailContainer(props: any) {
@@ -26,13 +27,17 @@ export default function JobsListingDetailContainer(props: any) {
     description: "",
     requirements: "",
     deadline: "",
-    compensation: "",
+    compensation: 0,
   });
+
   React.useEffect(() => {
     (async function () {
       try {
         const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as listingData;
-        setListingDetail(fetchedListingData);
+        console.log(fetchedListingData);
+        const deadlineString = stringifyDate(fetchedListingData.deadline.toDate());
+        setListingDetail({ ...fetchedListingData, deadline: deadlineString });
+        setNoDataAvailable(false);
       } catch (err) {
         console.log(err);
         setNoDataAvailable(true);

@@ -24,5 +24,9 @@ export function enrolledItemTransformDate(enrolledItemContainer) {
 }
 
 export function stringifyDate(date: Date) {
+  if (!date) {
+    return "Undeclared";
+  }
+
   return date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear();
 }
