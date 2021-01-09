@@ -5,7 +5,7 @@ import SearchBar from "../components/SearchBar";
 const items1 = [
   {
     title: "Data Engineer",
-    date: "12/13/2020",
+    deadline: "12/13/2020",
     company: "SomeSoft Tech",
     location: "İstanbul, Turkey",
     applicants: 3,
@@ -17,7 +17,7 @@ const items1 = [
   },
   {
     title: "Data Manager",
-    date: "12/5/2020",
+    deadline: "12/5/2020",
     company: "SomeSoft Tech",
     location: "İstanbul, Turkey",
     applicants: 8,
@@ -31,7 +31,7 @@ const items1 = [
 const items2 = [
   {
     title: "Frontend Engineer",
-    date: "14/13/2020",
+    deadline: "14/13/2020",
     company: "Another Tech",
     location: "İstanbul, Turkey",
     applicants: 12,
@@ -43,7 +43,7 @@ const items2 = [
   },
   {
     title: "Software Manager",
-    date: "12/13/2020",
+    deadline: "12/13/2020",
     company: "Random Tech",
     location: "İstanbul, Turkey",
     applicants: 8,
