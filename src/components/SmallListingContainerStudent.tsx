@@ -15,7 +15,7 @@ interface Props {
   compensation: number;
 }
 
-export default function SmallListingContainer(props: Props) {
+export default function SmallListingContainerStudent(props: Props) {
   let locationString = "Undeclared";
 
   if (props.location.city && props.location.country) {
@@ -24,6 +24,10 @@ export default function SmallListingContainer(props: Props) {
     locationString = `${props.location?.city ?? ""}${props.location?.country ?? ""}`;
   }
 
+  // ******************************************************
+  // TODO: posted by yazan <p>'de locationString yerine company name dönmeli
+  // ******************************************************
+
   return (
     <Card onClick={props.navigateToLink} className="w-96 mb-8" interactive={true} elevation={Elevation.TWO}>
       <div>
@@ -31,6 +35,9 @@ export default function SmallListingContainer(props: Props) {
           <p className="font-bold text-xl mb-2">{props.title}</p>
           <p>{stringifyDate(props.deadline?.toDate() ?? null)}</p>
         </div>
+        <p>
+          posted by <b>company</b>
+        </p>
         <p>
           in <b>{locationString}</b>
         </p>
