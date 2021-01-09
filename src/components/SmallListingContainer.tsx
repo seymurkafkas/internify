@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  //Button,
+  Card,
+  Elevation,
+} from "@blueprintjs/core";
 import { stringifyDate } from "../util/date";
 
 interface Props {
@@ -19,11 +24,21 @@ export default function SmallListingContainer(props: Props) {
   }
 
   return (
-    <div onClick={props.navigateToLink} className="flex flex-row justify-start max-w-7xl">
-      <div className="bg-red-100 max-w-sm w-72">{props.title}</div>
-      <div className="bg-red-100 max-w-sm w-72">{locationString}</div>
-      <div className="bg-red-100 max-w-sm w-72">{stringifyDate(props.deadline.toDate())}</div>
-      <div className="bg-red-100 max-w-sm w-72">{props.applicationCount}</div>
-    </div>
+    <Card onClick={props.navigateToLink} className="w-96 mb-8" interactive={true} elevation={Elevation.TWO}>
+      <div>
+        <div className="flex justify-between">
+          <p className="font-bold text-xl mb-2">{props.title}</p>
+          <p>{stringifyDate(props.deadline.toDate())}</p>
+        </div>
+        <p>
+          in <b>{locationString}</b>
+        </p>
+        <div className="flex justify-between">
+          <p>
+            <b>Applicants: {props.applicationCount}</b>
+          </p>
+        </div>
+      </div>
+    </Card>
   );
 }
