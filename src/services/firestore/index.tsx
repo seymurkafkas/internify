@@ -1,15 +1,26 @@
 import "../firebase/init";
 import firebase from "firebase";
 import "firebase/firestore";
-// import { DateRange } from "@blueprintjs/datetime";
+import { DateRange } from "@blueprintjs/datetime";
 
 const db = firebase.firestore();
 
+interface EducationItem {
+  institutionName: string;
+  degreeName: string;
+  range: DateRange;
+}
+
+interface ExperienceItem {
+  companyName: string;
+  positionName: string;
+  range: DateRange;
+}
 interface StudentProfileData {
   name: string;
   location: { city: string; country: string };
-  education: any;
-  experience: any;
+  education: EducationItem[];
+  experience: ExperienceItem[];
   description: string;
   skills: { skill: string; level: string }[];
   languages: { language: string; level: string }[];
