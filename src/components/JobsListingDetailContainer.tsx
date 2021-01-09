@@ -9,7 +9,7 @@ interface listingData {
   applicationCount: string;
   description: string;
   requirements: string;
-  dateEnd: string;
+  deadline: string;
   compensation: string;
 }
 
@@ -25,7 +25,7 @@ export default function JobsListingDetailContainer(props: any) {
     applicationCount: "0",
     description: "",
     requirements: "",
-    dateEnd: "",
+    deadline: "",
     compensation: "",
   });
   React.useEffect(() => {
@@ -82,7 +82,7 @@ export default function JobsListingDetailContainer(props: any) {
           <p>{listingDetail.requirements}</p>
           <br />
           <p className="ml-128">
-            Apply before <b className="ml-3">{listingDetail.dateEnd}</b>
+            Apply before <b className="ml-3">{listingDetail.deadline}</b>
           </p>
         </div>
         <div></div>

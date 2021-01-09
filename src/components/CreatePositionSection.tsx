@@ -3,19 +3,56 @@ import {
   Button,
   //Card,
   //Elevation,
+  NumericInput,
   EditableText,
 } from "@blueprintjs/core";
+import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import MultiSelectTag from "./MultiSelectTag";
+import * as DatabaseService from "../services/firestore";
+import { useUser } from "../services/auth/userContext";
+
+/* interface listingData {
+  title: string;
+  company: string;
+  location: string;
+  applicationCount: string;
+  description: string;
+  requirements: string;
+  deadline: string;
+  compensation: string;
+} */
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 export default function CreatePositionSection() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
-
-  function submit() {
-    console.log(requirements);
-    alert("submitted");
+  const [compensation, setCompensation] = useState(0);
+  const [deadline, setDeadline] = useState(null);
+  const { user } = useUser();
+  const userId = user?.uid;
+  function createAListing() {
+    (async function () {
+      try {
+        await DatabaseService.createAListing({ title, description, requirements, compensation, deadline }, userId);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }
 
   return (
@@ -40,9 +77,25 @@ export default function CreatePositionSection() {
         <div className="text-xl font-bold mb-4">Requirements</div>
         <MultiSelectTag onReqUpdate={(req) => setRequirements(req)} />
       </div>
+      <NumericInput
+        allowNumericCharactersOnly={true}
+        min={0}
+        value={compensation}
+        onValueChange={(number) => {
+          setCompensation(number);
+        }}></NumericInput>
+      <DateInput
+        formatDate={(date) => date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear()}
+        onChange={(date) => {
+          setDeadline(date);
+        }}
+        parseDate={(str) => new Date(str)}
+        placeholder={"Set a deadline"}
+        value={deadline}
+      />
       <div className="flex justify-end">
-        <Button onClick={() => submit()} className="bp3-outlined">
-          Update
+        <Button onClick={createAListing} className="bp3-outlined">
+          Create
         </Button>
       </div>
     </div>

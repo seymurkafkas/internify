@@ -101,3 +101,21 @@ export async function getListingData(userId: string, listingId: string) {
     console.log(err);
   }
 }
+
+export async function createAListing(listingData: any, userId: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(userId)
+      .collection("Listings")
+      .doc()
+      .set({
+        ...listingData,
+        applicationCount: 0,
+        applicants: [],
+      });
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
