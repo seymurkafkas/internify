@@ -17,7 +17,7 @@ export default function JobsListingDetailContainer(props: any) {
   const listingId = props.listingId;
   const employerId = props.employerId;
   const [loadingData, setLoadingData] = React.useState(true);
-  const [noDataAvailable, setNoDataAvailable] = React.useState(false);
+  const [noDataAvailable, setNoDataAvailable] = React.useState(true);
   const [listingDetail, setListingDetail] = React.useState({
     title: "",
     company: "",
@@ -28,7 +28,6 @@ export default function JobsListingDetailContainer(props: any) {
     dateEnd: "",
     compensation: "",
   });
-
   React.useEffect(() => {
     (async function () {
       try {
