@@ -11,7 +11,7 @@ const items1 = [
     applicants: 3,
     description:
       "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-    compensation: "2000TL",
+    compensation: "$2000",
     listingId: "TestListing",
     employerId: "MRxSgzTSdZT2SgPOD56Kbp14VgL2",
   },
@@ -23,7 +23,7 @@ const items1 = [
     applicants: 8,
     description:
       "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-    compensation: "1600TL",
+    compensation: "$1600",
     listingId: "withid4",
     employerId: "someid12",
   },
@@ -37,7 +37,7 @@ const items2 = [
     applicants: 12,
     description:
       "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-    compensation: "4000TL",
+    compensation: "$4000",
     listingId: "withid2",
     employerId: "someid2",
   },
@@ -49,7 +49,7 @@ const items2 = [
     applicants: 8,
     description:
       "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
-    compensation: "5600TL",
+    compensation: "$5600",
     listingId: "withid4",
     employerId: "someid4",
   },

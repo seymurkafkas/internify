@@ -30,8 +30,8 @@ export default function JobListingItem(props: Props) {
       interactive={true}
       elevation={Elevation.TWO}>
       <div>
-        <div className="flex justify-between">
-          <p>{props.title}</p>
+        <div className="flex justify-between mb-2">
+          <p className="text-3xl font-bold">{props.title}</p>
           <p>{props.date}</p>
         </div>
         <p>{props.company}</p>
@@ -40,11 +40,11 @@ export default function JobListingItem(props: Props) {
         </p>
         <br />
         <p>{props.description}</p>
-        <div className="flex justify-between">
+        <div className="flex justify-between mt-4">
           <p>
             <b>Applicants: {props.applicants}</b>
           </p>
-          <p>{props.compensation}</p>
+          <p className="font-bold">{props.compensation}</p>
         </div>
       </div>
     </Card>
