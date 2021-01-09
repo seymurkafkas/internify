@@ -36,7 +36,7 @@ export default function SmallListingContainerStudent(props: Props) {
           <p>{stringifyDate(props.deadline?.toDate() ?? null)}</p>
         </div>
         <p>
-          posted by <b>{locationString}</b>
+          posted by <b>company</b>
         </p>
         <p>
           in <b>{locationString}</b>
@@ -45,7 +45,7 @@ export default function SmallListingContainerStudent(props: Props) {
           <p>
             <b>Applicants: {props.applicationCount}</b>
           </p>
-          <div>{props.compensation}</div>
+          <div className="font-bold">${props.compensation}</div>
         </div>
       </div>
     </Card>

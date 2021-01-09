@@ -38,7 +38,7 @@ export default function SmallListingContainer(props: Props) {
           <p>
             <b>Applicants: {props.applicationCount}</b>
           </p>
-          <div>{props.compensation}</div>
+          <div className="font-bold">${props.compensation}</div>
         </div>
       </div>
     </Card>

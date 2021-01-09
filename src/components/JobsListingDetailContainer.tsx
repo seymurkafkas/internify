@@ -109,21 +109,21 @@ export default function JobsListingDetailContainer(props: any) {
     <div className="w-160">
       <div>
         <div className="flex flex-row justify-between">
-          <p className="text-3xl font-bold">{listingDetail?.title}</p>
+          <p className="text-4xl font-bold">{listingDetail?.title}</p>
           <div className="flex flex-row items-center">
-            <p className="mr-4">{listingDetail?.compensation}</p>
+            <p className="mr-4 text-lg">${listingDetail?.compensation}</p>
             {!isAnApplicant ? (
               <Button className="w-16 bp3-outlined" onClick={handleApplyButtonClick}>
                 <b>Apply</b>
               </Button>
             ) : (
-              <Button className="w-16 bp3-outlined" onClick={handleWithdrawButtonClick}>
+              <Button className="w-24 bp3-outlined" onClick={handleWithdrawButtonClick}>
                 <b>Withdraw</b>
               </Button>
             )}
           </div>
         </div>
-        <div>
+        <div className="mt-4">
           <p>{listingDetail.company}</p>
           <p>
             in <b>{locationString}</b>
@@ -135,20 +135,16 @@ export default function JobsListingDetailContainer(props: any) {
           </p>
         </div>
         <div>
-          <br />
-          <br />
-          <br />
-          <p className="text-xl font-bold mb-2">Description</p>
+          <p className="text-xl font-bold mb-2 mt-8">Description</p>
           <p>{listingDetail.description}</p>
-          <br />
-          <p className="text-xl font-bold mb-2 mt-2">Requirements</p>
+          <p className="text-xl font-bold mb-2 mt-8">Requirements</p>
           <p>{listingDetail.requirements}</p>
-          <br />
-          <p className="ml-128">
-            Apply before <b className="ml-3">{deadlineString}</b>
-          </p>
         </div>
-        <div></div>
+
+        <div className="flex flex-col items-center ml-128 mt-8">
+          <div>Apply before</div>
+          <b>{deadlineString}</b>
+        </div>
       </div>
     </div>
   );
