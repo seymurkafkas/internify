@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 
 interface Props {
   listingId: string;
+  employerId: string;
   title: string;
   date: string;
   company: string;
@@ -23,7 +24,7 @@ export default function JobListingItem(props: Props) {
   return (
     <Card
       onClick={() => {
-        Navigation.goToViewListingPage(router, props.listingId);
+        Navigation.goToViewListingPage(router, props.employerId, props.listingId);
       }}
       className="listing_item"
       interactive={true}
