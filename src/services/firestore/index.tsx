@@ -121,6 +121,22 @@ export async function createAListing(listingData: any, userId: string) {
   }
 }
 
+export async function updateListing(listingData: any, userId: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(userId)
+      .collection("Listings")
+      .doc()
+      .update({
+        ...listingData,
+      });
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function applyForListing(listingId: string, employerUid: string, studentUid: string) {
   try {
     await db
