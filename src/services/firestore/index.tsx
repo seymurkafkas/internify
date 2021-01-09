@@ -120,3 +120,46 @@ export async function createAListing(listingData: any, userId: string) {
     console.log(err);
   }
 }
+
+export async function applyForListing(listingId: string, employerUid: string, studentUid: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        applicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
+        applicantCount: firebase.firestore.FieldValue.increment(1),
+      });
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        myApplications: firebase.firestore.FieldValue.arrayUnion({ employerUid, listingId }),
+      });
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function isStudentAnApplicant(listingId: string, employerUid: string, studentUid: string) {
+  try {
+    const response = await db.collection("Students").doc(studentUid).get();
+    if (response.exists) {
+      const data = response.data();
+      if (data?.myApplications ?? null) {
+        for (let i = 0; i < data.myApplications.length; i++) {
+          if (data.myApplications[i].listingId === listingId && data.myApplications[i].employerUid === employerUid) {
+            return true;
+          }
+        }
+      }
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
