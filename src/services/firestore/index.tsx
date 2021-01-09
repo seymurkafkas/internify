@@ -211,3 +211,26 @@ export async function deleteListing(listingId: string, employerUid: string) {
     console.log(err);
   }
 }
+
+export async function getMyApplications(studentUid: string) {
+  try {
+    const appliedListings = await (await db.collection("Students").doc(studentUid).get()).data().myApplications;
+    if (!appliedListings) {
+      return null;
+    }
+
+    const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
+      const listingData = (
+        await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get()
+      ).data();
+      const newListingData = { ...listingData, employerUid, listingId };
+      return newListingData;
+    });
+
+    const result = await Promise.all(appliedListingsData);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}

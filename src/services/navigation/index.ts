@@ -13,7 +13,7 @@ export async function goToSearchPage(router: NextRouter) {
 }
 
 export async function goToMyApplicationsPage(router: NextRouter) {
-  await router.push("/");
+  await router.push("/MyApplications");
 }
 
 export async function goToProfilePage(router: NextRouter) {
