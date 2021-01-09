@@ -9,6 +9,8 @@ import {
 import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import MultiSelectTag from "./MultiSelectTag";
+import * as DatabaseService from "../services/firestore";
+import { useUser } from "../services/auth/userContext";
 
 const monthNames = [
   "January",
@@ -24,19 +26,34 @@ const monthNames = [
   "November",
   "December",
 ];
-
-function UpdatePositionSection() {
+interface Props {
+  listingId: string;
+}
+function UpdatePositionSection(props: Props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [compensation, setCompensation] = useState(0);
   const [deadline, setDeadline] = useState(null);
-  console.log({ title, description, requirements, location, compensation, deadline });
+  const { user } = useUser();
+  const userId = user?.uid;
+  const listingId = props.listingId;
+  console.log(props);
 
-  function submit() {
-    console.log(requirements);
-    alert("submitted");
+  function updateListing() {
+    (async function () {
+      try {
+        console.log(userId, listingId);
+        await DatabaseService.updateListing(
+          { title, description, requirements, compensation, deadline, location },
+          userId,
+          listingId
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }
 
   function handleLocationChange(updatedPart: string) {
@@ -112,7 +129,7 @@ function UpdatePositionSection() {
         value={deadline}
       />
       <div className="flex justify-end">
-        <Button onClick={() => submit()} className="bp3-outlined">
+        <Button onClick={updateListing} className="bp3-outlined">
           Update
         </Button>
       </div>

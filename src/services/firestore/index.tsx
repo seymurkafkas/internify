@@ -121,13 +121,13 @@ export async function createAListing(listingData: any, userId: string) {
   }
 }
 
-export async function updateListing(listingData: any, userId: string) {
+export async function updateListing(listingData: any, userId: string, listingId: string) {
   try {
     await db
       .collection("Employers")
       .doc(userId)
       .collection("Listings")
-      .doc()
+      .doc(listingId)
       .update({
         ...listingData,
       });
