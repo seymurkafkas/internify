@@ -10,7 +10,7 @@ interface listingData {
   applicationCount: string;
   description: string;
   requirements: string;
-  deadline: firebase.default.firestore.Timestamp;
+  deadline: firebase.default.firestore.Timestamp | null;
   compensation: number;
 }
 
@@ -35,7 +35,7 @@ export default function JobsListingDetailContainer(props: any) {
       try {
         const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as listingData;
         console.log(fetchedListingData);
-        const deadlineString = stringifyDate(fetchedListingData.deadline.toDate());
+        const deadlineString = stringifyDate(fetchedListingData.deadline?.toDate() ?? null);
         setListingDetail({ ...fetchedListingData, deadline: deadlineString });
         setNoDataAvailable(false);
       } catch (err) {
