@@ -41,6 +41,7 @@ export default function CreatePositionSection() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
+  const [location, setLocation] = React.useState({ city: "", country: "" });
   const [compensation, setCompensation] = useState(0);
   const [deadline, setDeadline] = useState(null);
   const { user } = useUser();
@@ -48,11 +49,24 @@ export default function CreatePositionSection() {
   function createAListing() {
     (async function () {
       try {
-        await DatabaseService.createAListing({ title, description, requirements, compensation, deadline }, userId);
+        await DatabaseService.createAListing(
+          { title, description, requirements, compensation, deadline, location },
+          userId
+        );
       } catch (err) {
         console.log(err);
       }
     })();
+  }
+
+  function handleLocationChange(updatedPart: string) {
+    return function (event: React.ChangeEvent<HTMLInputElement>) {
+      const updatedSection = { [updatedPart]: event.target.value };
+
+      setLocation((prevLocation) => {
+        return { ...prevLocation, ...updatedSection };
+      });
+    };
   }
 
   return (
@@ -74,6 +88,24 @@ export default function CreatePositionSection() {
           placeholder="Description"
           value={description}
         />
+        <div className="space-x-4 mt-2">
+          <input
+            className="bp3-input .modifier"
+            type="text"
+            dir="auto"
+            onChange={handleLocationChange("city")}
+            value={location.city}
+            placeholder="Istanbul"
+          />
+          <input
+            className="bp3-input .modifier"
+            type="text"
+            dir="auto"
+            onChange={handleLocationChange("country")}
+            value={location.country}
+            placeholder="Turkey"
+          />
+        </div>
         <div className="text-xl font-bold mb-4">Requirements</div>
         <MultiSelectTag onReqUpdate={(req) => setRequirements(req)} />
       </div>
