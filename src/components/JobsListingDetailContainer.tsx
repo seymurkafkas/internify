@@ -34,12 +34,17 @@ export default function JobsListingDetailContainer(props: any) {
   const { user, loadingUser } = useUser();
 
   function handleApplyButtonClick() {
-    DatabaseService.applyForListing(listingId, employerId, user?.uid ?? null);
-    setIsAnApplicant(true);
+    (async () => {
+      await DatabaseService.applyForListing(listingId, employerId, user?.uid ?? null);
+      setIsAnApplicant(true);
+    })();
   }
 
   function handleWithdrawButtonClick() {
-    setIsAnApplicant(false);
+    (async () => {
+      await DatabaseService.withdrawApplication(listingId, employerId, user?.uid ?? null);
+      setIsAnApplicant(false);
+    })();
   }
 
   React.useEffect(() => {
