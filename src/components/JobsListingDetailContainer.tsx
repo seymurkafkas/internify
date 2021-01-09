@@ -4,10 +4,10 @@ import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
 import { useUser } from "../services/auth/userContext";
 
-interface listingData {
+interface ListingData {
   title: string;
   company: string;
-  location: string;
+  location: { city: string; country: string };
   applicationCount: string;
   description: string;
   requirements: string;
@@ -21,14 +21,17 @@ export default function JobsListingDetailContainer(props: any) {
   const [isAnApplicant, setIsAnApplicant] = React.useState(true);
   const [loadingData, setLoadingData] = React.useState(true);
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
-  const [listingDetail, setListingDetail] = React.useState({
+  const [listingDetail, setListingDetail] = React.useState<ListingData>({
     title: "",
     company: "",
-    location: "",
+    location: {
+      city: "",
+      country: "",
+    },
     applicationCount: "0",
     description: "",
     requirements: "",
-    deadline: "",
+    deadline: null,
     compensation: 0,
   });
   const { user, loadingUser } = useUser();
@@ -51,10 +54,9 @@ export default function JobsListingDetailContainer(props: any) {
     (async function () {
       if (user) {
         try {
-          const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as listingData;
+          const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as ListingData;
           console.log(fetchedListingData);
-          const deadlineString = stringifyDate(fetchedListingData.deadline?.toDate() ?? null);
-          setListingDetail({ ...fetchedListingData, deadline: deadlineString });
+          setListingDetail({ ...fetchedListingData });
           setNoDataAvailable(false);
         } catch (err) {
           console.log(err);
@@ -90,6 +92,16 @@ export default function JobsListingDetailContainer(props: any) {
   if (noDataAvailable) {
     return <div>Error!!!! NO DATA</div>;
   }
+
+  let locationString = "Undeclared";
+  const deadlineString = stringifyDate(listingDetail.deadline?.toDate() ?? null);
+
+  if (listingDetail.location.city && listingDetail.location.country) {
+    locationString = `${listingDetail.location.city}, ${listingDetail.location.country}`;
+  } else {
+    locationString = `${listingDetail.location?.city ?? ""}${listingDetail.location?.country ?? ""}`;
+  }
+
   return (
     <div className="w-160">
       <div>
@@ -111,7 +123,7 @@ export default function JobsListingDetailContainer(props: any) {
         <div>
           <p>{listingDetail.company}</p>
           <p>
-            in <b>{listingDetail.location}</b>
+            in <b>{locationString}</b>
           </p>
           <p>
             <span>
@@ -130,7 +142,7 @@ export default function JobsListingDetailContainer(props: any) {
           <p>{listingDetail.requirements}</p>
           <br />
           <p className="ml-128">
-            Apply before <b className="ml-3">{listingDetail.deadline}</b>
+            Apply before <b className="ml-3">{deadlineString}</b>
           </p>
         </div>
         <div></div>
