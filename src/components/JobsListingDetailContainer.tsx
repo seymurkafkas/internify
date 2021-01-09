@@ -56,8 +56,11 @@ export default function JobsListingDetailContainer(props: any) {
         try {
           const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as ListingData;
           console.log(fetchedListingData);
-          setListingDetail({ ...fetchedListingData });
-          setNoDataAvailable(false);
+
+          if (fetchedListingData) {
+            setListingDetail({ ...fetchedListingData });
+            setNoDataAvailable(false);
+          }
         } catch (err) {
           console.log(err);
           setNoDataAvailable(true);
@@ -92,7 +95,7 @@ export default function JobsListingDetailContainer(props: any) {
   if (noDataAvailable) {
     return <div>Error!!!! NO DATA</div>;
   }
-
+  console.log(noDataAvailable);
   let locationString = "Undeclared";
   const deadlineString = stringifyDate(listingDetail.deadline?.toDate() ?? null);
 
