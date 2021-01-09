@@ -31,15 +31,38 @@ interface Props {
 }
 function UpdatePositionSection(props: Props) {
   const [title, setTitle] = useState("");
+  const [noDataAvailable, setNoDataAvailable] = React.useState(true);
+  const [loadingData, setLoadingData] = React.useState(true);
   const [description, setDescription] = useState("");
   const [requirements, setRequirements] = useState([]);
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [compensation, setCompensation] = useState(0);
   const [deadline, setDeadline] = useState(null);
-  const { user } = useUser();
-  const userId = user?.uid;
+  const { user, loadingUser } = useUser();
+  const userId = user?.uid ?? null;
   const listingId = props.listingId;
-  console.log(props);
+  console.log(listingId, userId);
+  React.useEffect(() => {
+    (async function () {
+      if (user) {
+        try {
+          const res = await DatabaseService.getListingData(userId, listingId);
+          console.log(res);
+          setTitle(res.title);
+          setDescription(res.description);
+          setRequirements(res.requirements);
+          setLocation(res.location);
+          setCompensation(res.compensation);
+          setDeadline(res.deadline?.toDate() ?? null);
+          setNoDataAvailable(false);
+        } catch (err) {
+          console.log(err);
+          setNoDataAvailable(true);
+        }
+        setLoadingData(false);
+      }
+    })();
+  }, [user, listingId, userId]);
 
   function updateListing() {
     (async function () {
@@ -65,7 +88,17 @@ function UpdatePositionSection(props: Props) {
       });
     };
   }
+  if (!user || loadingUser) {
+    return null;
+  }
 
+  if (loadingData) {
+    return <div>Loading</div>;
+  }
+
+  if (noDataAvailable) {
+    return <div>Error!!!! NO DATA</div>;
+  }
   return (
     <div className="flex justify-start flex-col mr-96 w-128">
       <div className="flex justify-between flex-col mb-4">
