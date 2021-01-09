@@ -1,5 +1,6 @@
 import React from "react";
 import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
+import SmallListingContainerStudent from "../components/SmallListingContainerStudent";
 import { useUser } from "../services/auth/userContext";
 import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
@@ -49,9 +50,14 @@ export default function MyApplications() {
       <div className="flex flex-col justify-start mt-16 ml-96">
         {myApplications.map((applicationItem, index) => {
           return (
-            <div onClick={listingClickHandler(applicationItem.employerUid, applicationItem.listingId)} key={index}>
-              APPLICATION
-            </div>
+            <SmallListingContainerStudent
+              key={index}
+              navigateToLink={listingClickHandler(applicationItem.employerUid, applicationItem.listingId)}
+              applicationCount={applicationItem.applicationCount}
+              title={applicationItem.title}
+              location={applicationItem.location}
+              deadline={applicationItem.deadline}
+              compensation={applicationItem.compensation}></SmallListingContainerStudent>
           );
         })}
       </div>
