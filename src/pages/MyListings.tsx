@@ -1,41 +1,47 @@
 import React from "react";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import SmallListingContainer from "../components/SmallListingContainer";
-// import { useUser } from "../services/auth/userContext";
-// import * as db from "../services/firestore";
+import { useUser } from "../services/auth/userContext";
+import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 
 export default function MyListingsPage() {
-  //  const { user, loadingUser } = useUser();
-  const [myListings] = React.useState([
-    {
-      title: "Frontend developer",
-      location: "Istanbul, Turkey",
-      applicationCount: 32,
-      dateEnd: "3/7/2020",
-    },
-    {
-      title: "Backend Developer ",
-      location: "Istanbul, Turkey",
-      applicationCount: 32,
-      dateEnd: "3/7/2020",
-    },
-    {
-      title: "Perdeci",
-      location: "Istanbul, Turkey",
-      applicationCount: 32,
-      dateEnd: "3/7/2020",
-    },
-  ]);
+  const [loadingData, setLoadingData] = React.useState(true);
+  const [myListings, setMyListings] = React.useState([]);
   const router = useRouter();
+  const { user, loadingUser } = useUser();
+
+  const userId = user?.uid ?? null;
+
+  React.useEffect(() => {
+    (async () => {
+      if (userId) {
+        try {
+          const myListingsData = await DatabaseService.getMyListings(userId);
+          console.log(myListingsData);
+          setMyListings(myListingsData);
+        } catch (err) {
+          console.log(err);
+        }
+        setLoadingData(false);
+      }
+    })();
+  }, [userId]);
+
+  if (loadingUser) {
+    return null;
+  }
+
+  if (loadingData) {
+    return <div>loading</div>;
+  }
+
   function listingClickHandler(listingID: string) {
     return function () {
       Navigation.goToMyPostedListingsPage(router, listingID);
     };
   }
-  const myListingIDs = ["123", "2312", "413"];
-  React.useEffect(() => {});
 
   return (
     <LayoutSignedInEmployer>
@@ -44,11 +50,11 @@ export default function MyListingsPage() {
           return (
             <SmallListingContainer
               key={index}
-              navigateToLink={listingClickHandler(myListingIDs[index])}
+              navigateToLink={listingClickHandler(listingElement.listingId)}
               applicationCount={listingElement.applicationCount}
               title={listingElement.title}
               location={listingElement.location}
-              dateEnd={listingElement.dateEnd}></SmallListingContainer>
+              deadline={listingElement.deadline}></SmallListingContainer>
           );
         })}
       </div>

@@ -66,13 +66,14 @@ export async function getEmployerProfile(userId: string) {
 export async function getMyListings(userId: string) {
   try {
     const userDataResponse = await db.collection("Employers").doc(userId).collection("Listings").get();
+    const resultArr = [];
     userDataResponse.forEach((doc) => {
-      return {
+      resultArr.push({
         ...doc.data(),
-        listingid: doc.id,
-      };
+        listingId: doc.id,
+      });
     });
-    return userDataResponse;
+    return resultArr;
   } catch (err) {
     console.log(err);
   }
