@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
+import { useUser } from "../services/auth/userContext";
 
 interface listingData {
   title: string;
@@ -17,6 +18,7 @@ interface listingData {
 export default function JobsListingDetailContainer(props: any) {
   const listingId = props.listingId;
   const employerId = props.employerId;
+  const [isAnApplicant, setIsAnApplicant] = React.useState(true);
   const [loadingData, setLoadingData] = React.useState(true);
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
   const [listingDetail, setListingDetail] = React.useState({
@@ -29,22 +31,52 @@ export default function JobsListingDetailContainer(props: any) {
     deadline: "",
     compensation: 0,
   });
+  const { user, loadingUser } = useUser();
+
+  function handleApplyButtonClick() {
+    DatabaseService.applyForListing(listingId, employerId, user?.uid ?? null);
+    setIsAnApplicant(true);
+  }
+
+  function handleWithdrawButtonClick() {
+    setIsAnApplicant(false);
+  }
 
   React.useEffect(() => {
     (async function () {
-      try {
-        const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as listingData;
-        console.log(fetchedListingData);
-        const deadlineString = stringifyDate(fetchedListingData.deadline?.toDate() ?? null);
-        setListingDetail({ ...fetchedListingData, deadline: deadlineString });
-        setNoDataAvailable(false);
-      } catch (err) {
-        console.log(err);
-        setNoDataAvailable(true);
+      if (user) {
+        try {
+          const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as listingData;
+          console.log(fetchedListingData);
+          const deadlineString = stringifyDate(fetchedListingData.deadline?.toDate() ?? null);
+          setListingDetail({ ...fetchedListingData, deadline: deadlineString });
+          setNoDataAvailable(false);
+        } catch (err) {
+          console.log(err);
+          setNoDataAvailable(true);
+        }
+        setLoadingData(false);
       }
-      setLoadingData(false);
     })();
-  }, [employerId, listingId]);
+  }, [employerId, listingId, user]);
+
+  React.useEffect(() => {
+    (async function () {
+      if (user) {
+        try {
+          const fetchedIsAnApplicant = await DatabaseService.isStudentAnApplicant(listingId, employerId, user.uid);
+          console.log(fetchedIsAnApplicant);
+          setIsAnApplicant(fetchedIsAnApplicant);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [isAnApplicant, employerId, listingId, user]);
+
+  if (!user || loadingUser) {
+    return null;
+  }
 
   if (loadingData) {
     return <div>Loading</div>;
@@ -60,9 +92,15 @@ export default function JobsListingDetailContainer(props: any) {
           <p className="text-3xl font-bold">{listingDetail?.title}</p>
           <div className="flex flex-row items-center">
             <p className="mr-4">{listingDetail?.compensation}</p>
-            <Button className="w-16 bp3-outlined">
-              <b>Apply</b>
-            </Button>
+            {!isAnApplicant ? (
+              <Button className="w-16 bp3-outlined" onClick={handleApplyButtonClick}>
+                <b>Apply</b>
+              </Button>
+            ) : (
+              <Button className="w-16 bp3-outlined" onClick={handleWithdrawButtonClick}>
+                <b>Withdraw</b>
+              </Button>
+            )}
           </div>
         </div>
         <div>
