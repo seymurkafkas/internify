@@ -45,7 +45,7 @@ export default function MyListingsPage() {
 
   return (
     <LayoutSignedInEmployer>
-      <div className="flex flex-col justify-start">
+      <div className="flex flex-col justify-start mt-16 ml-96">
         {myListings.map((listingElement, index) => {
           return (
             <SmallListingContainer
