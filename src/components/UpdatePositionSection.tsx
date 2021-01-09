@@ -10,7 +10,9 @@ import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import MultiSelectTag from "./MultiSelectTag";
 import * as DatabaseService from "../services/firestore";
+import * as NavigationService from "../services/navigation";
 import { useUser } from "../services/auth/userContext";
+import { useRouter } from "next/router";
 
 const monthNames = [
   "January",
@@ -39,6 +41,7 @@ function UpdatePositionSection(props: Props) {
   const [compensation, setCompensation] = useState(0);
   const [deadline, setDeadline] = useState(null);
   const { user, loadingUser } = useUser();
+  const router = useRouter();
   const userId = user?.uid ?? null;
   const listingId = props.listingId;
   console.log(listingId, userId);
@@ -64,6 +67,16 @@ function UpdatePositionSection(props: Props) {
     })();
   }, [user, listingId, userId]);
 
+  function handleDeleteListing() {
+    (async function () {
+      try {
+        await DatabaseService.deleteListing(listingId, userId);
+        NavigationService.goToMyListingsPage(router);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }
   function updateListing() {
     (async function () {
       try {
@@ -109,7 +122,9 @@ function UpdatePositionSection(props: Props) {
             value={title}
             placeholder="Title of the Listing"
           />
-          <Button className="bp3-outlined w-32">Close Position</Button>
+          <Button className="bp3-outlined w-32" onClick={handleDeleteListing}>
+            Close Position
+          </Button>
         </div>
         <div className="text-xl font-bold mb-4">Description</div>
         <EditableText
