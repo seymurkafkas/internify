@@ -54,7 +54,8 @@ export default function MyListingsPage() {
               applicationCount={listingElement.applicationCount}
               title={listingElement.title}
               location={listingElement.location}
-              deadline={listingElement.deadline}></SmallListingContainer>
+              deadline={listingElement.deadline}
+              compensation={listingElement.compensation}></SmallListingContainer>
           );
         })}
       </div>

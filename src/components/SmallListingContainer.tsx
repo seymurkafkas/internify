@@ -12,6 +12,7 @@ interface Props {
   location: { city: string; country: string };
   deadline: firebase.default.firestore.Timestamp;
   applicationCount: number;
+  compensation: number;
 }
 
 export default function SmallListingContainer(props: Props) {
@@ -28,7 +29,7 @@ export default function SmallListingContainer(props: Props) {
       <div>
         <div className="flex justify-between">
           <p className="font-bold text-xl mb-2">{props.title}</p>
-          <p>{stringifyDate(props.deadline.toDate())}</p>
+          <p>{stringifyDate(props.deadline?.toDate() ?? null)}</p>
         </div>
         <p>
           in <b>{locationString}</b>
@@ -37,6 +38,7 @@ export default function SmallListingContainer(props: Props) {
           <p>
             <b>Applicants: {props.applicationCount}</b>
           </p>
+          <div>{props.compensation}</div>
         </div>
       </div>
     </Card>
