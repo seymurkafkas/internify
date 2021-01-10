@@ -10,7 +10,7 @@ const Search = () => {
       deadline: null,
       companyName: "SomeSoft Tech",
       location: { city: "Istanbul", country: "Turkey" },
-      applicantCount: 3,
+      applicationCount: 3,
       description:
         "3rd or 4th year student to handle our data ware house operations. Possible tools are Python, numpy, PyTorch etc. lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet ... ",
       compensation: 2000,

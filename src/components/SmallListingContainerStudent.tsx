@@ -13,6 +13,7 @@ interface Props {
   deadline: firebase.default.firestore.Timestamp;
   applicationCount: number;
   compensation: number;
+  companyName: string;
 }
 
 export default function SmallListingContainerStudent(props: Props) {
@@ -36,7 +37,7 @@ export default function SmallListingContainerStudent(props: Props) {
           <p>{stringifyDate(props.deadline?.toDate() ?? null)}</p>
         </div>
         <p>
-          posted by <b>company</b>
+          posted by <b>{props.companyName}</b>
         </p>
         <p>
           in <b>{locationString}</b>

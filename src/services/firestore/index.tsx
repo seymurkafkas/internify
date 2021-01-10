@@ -108,7 +108,11 @@ export async function getListingData(userId: string, listingId: string) {
     if (!dataResponse.exists) {
       throw "Listing doesn't exist";
     }
-    return dataResponse.data();
+    const employerDataResponse = await db.collection("Employers").doc(userId).get();
+
+    const result = { ...dataResponse.data(), companyName: employerDataResponse.data().companyName };
+    delete result["applicants"];
+    return result;
   } catch (err) {
     console.log(err);
   }
@@ -157,7 +161,7 @@ export async function applyForListing(listingId: string, employerUid: string, st
       .doc(listingId)
       .update({
         applicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
-        applicantCount: firebase.firestore.FieldValue.increment(1),
+        applicationCount: firebase.firestore.FieldValue.increment(1),
       });
 
     await db
@@ -181,7 +185,7 @@ export async function withdrawApplication(listingId: string, employerUid: string
       .doc(listingId)
       .update({
         applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
-        applicantCount: firebase.firestore.FieldValue.increment(-1),
+        applicationCount: firebase.firestore.FieldValue.increment(-1),
       });
 
     await db
