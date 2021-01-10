@@ -6,62 +6,43 @@ export default function ViewStudentContainer() {
   //   let item = props.item;
   const item = {
     name: "Mert Buran",
-    educationPrimary: "Istanbul Technical Universtiy",
-    appliedFor: "Software Engineering",
-    email: "mertburan@itu.edu.tr",
-    address: "Fulya, Ortaklar Cd. 1/C, 03400 Mecidiyeköy - Şişli/İstanbul",
-    experiences: [
+    description:
+      "Aenean sit amet nulla scelerisque, tempus lectus ut, congue augue. Morbi massa est, sagittis volutpat turpis eu, commodo interdum augue. Nullam eu",
+    location: {
+      country: "Turkey",
+      city: "Istanbul",
+    },
+    experience: [
       {
-        title: "Software Developer",
-        company: "SomeSoft Technologies",
-        startDate: "12/2003",
-        endDate: "06/2008",
-        description:
-          "Aenean sit amet nulla scelerisque, tempus lectus ut, congue augue. Morbi massa est, sagittis volutpat turpis eu, commodo interdum augue. Nullam eu",
-      },
-      {
-        title: "Data Developer",
-        company: "DataSoft Technologies",
-        startDate: "12/2009",
-        endDate: "06/20012",
-        description: "Congue augue. Morbi massa est, sagittis volutpat turpis eu, commodo interdum augue. Nullam eu",
+        positionName: "Software Developer",
+        companyName: "SomeSoft Technologies",
       },
     ],
-    age: 32,
     education: [
       {
-        name: "Istanbul Technical University",
-        level: "University",
+        institutionName: "Istanbul Technical University",
+        degreeName: "University",
         grade: "3.99",
-        startDate: "12/2009",
-        endDate: "06/20012",
-      },
-      {
-        name: "Kükürtlü İlköğretim Okulu",
-        level: "Primary School",
-        grade: "100.0",
-        startDate: "12/2009",
-        endDate: "06/20012",
       },
     ],
     interests: ["read", "write", "listen", "play"],
     skills: [
       {
-        name: "Python",
+        skill: "Python",
         level: "advanced",
       },
       {
-        name: "Go",
+        skill: "Go",
         level: "advanced",
       },
     ],
     languages: [
       {
-        name: "English",
+        language: "English",
         level: "advanced",
       },
       {
-        name: "Russian",
+        language: "Russian",
         level: "advanced",
       },
     ],
@@ -72,11 +53,13 @@ export default function ViewStudentContainer() {
       <div className={styles.experinceItem}>
         <p>
           <span>
-            <b>{props.title}</b>
+            <b>{props.positionName}</b>
           </span>
-          <span>{props.company}</span> <span>{props.startDate}</span> <span>{props.endDate}</span>
+          <span></span>
+          <span>{props.companyName}</span>
+          {/* <span>{props.startDate}</span> <span>{props.endDate}</span> */}
         </p>
-        <p>{props.description}</p>
+        {/* <p>{props.description}</p> */}
       </div>
     );
   }
@@ -92,8 +75,8 @@ export default function ViewStudentContainer() {
     return (
       <div className={styles.educationItem}>
         <p>
-          <span>{props.name}</span> <span>{props.level}</span> <span>{props.grade} </span>{" "}
-          <span>{props.startDate}</span> <span>{props.endDate}</span>
+          <span>{props.institutionName}</span> <span>{props.degreeName}</span>{" "}
+          {/* <span>{props.startDate}</span> <span>{props.endDate}</span> */}
         </p>
       </div>
     );
@@ -110,7 +93,7 @@ export default function ViewStudentContainer() {
     const list = props.skills.map((item, index) => {
       return (
         <div key={index}>
-          {item.name}: {item.level}
+          {item.skill}: {item.level}
         </div>
       );
     });
@@ -121,7 +104,7 @@ export default function ViewStudentContainer() {
     const list = props.languages.map((item, index) => {
       return (
         <div key={index}>
-          {item.name}: {item.level}
+          {item.language}: {item.level}
         </div>
       );
     });
@@ -133,10 +116,13 @@ export default function ViewStudentContainer() {
       <div className={[styles.ViewStudentContainer, "flex", "justify-between"].join(" ")}>
         <div className="left">
           <h3>{item.name}</h3>
-          <p>{item.educationPrimary}</p>
           <p>
-            for <b>{item.appliedFor}</b>
+            <span>at </span>
+            <b>
+              {item.location.city}, {item.location.country}
+            </b>
           </p>
+          <br />
         </div>
         <div className={["flex", "justify-between", "flex-col"].join(" ")}>
           <Button className={["bp3-outlined", styles.btnPill].join(" ")}>Approve</Button>
@@ -149,21 +135,13 @@ export default function ViewStudentContainer() {
 
       <div className={styles.informationTable}>
         <div className="flex flex-row">
-          <div>Age</div>
-          <div>{item.age}</div>
-        </div>
-        <div className="flex flex-row">
-          <div>Email</div>
-          <div>{item.email}</div>
-        </div>
-        <div className="flex flex-row">
-          <div>Address</div>
-          <div>{item.address}</div>
+          <div>Description</div>
+          <div>{item.description}</div>
         </div>
         <div className="flex flex-row">
           <div>Experiences</div>
           <div>
-            <ExperinceList exps={item.experiences} />
+            <ExperinceList exps={item.experience} />
           </div>
         </div>
         <div className="flex flex-row">
