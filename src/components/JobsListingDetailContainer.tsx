@@ -6,11 +6,11 @@ import { useUser } from "../services/auth/userContext";
 
 interface ListingData {
   title: string;
-  company: string;
+  companyName: string;
   location: { city: string; country: string };
-  applicationCount: string;
+  applicationCount: number;
   description: string;
-  requirements: string;
+  requirements: { skill: string; level: string }[];
   deadline: firebase.default.firestore.Timestamp | null;
   compensation: number;
 }
@@ -23,14 +23,14 @@ export default function JobsListingDetailContainer(props: any) {
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
   const [listingDetail, setListingDetail] = React.useState<ListingData>({
     title: "",
-    company: "",
+    companyName: "",
     location: {
       city: "",
       country: "",
     },
-    applicationCount: "0",
+    applicationCount: 0,
     description: "",
-    requirements: "",
+    requirements: [],
     deadline: null,
     compensation: 0,
   });
@@ -124,7 +124,7 @@ export default function JobsListingDetailContainer(props: any) {
           </div>
         </div>
         <div className="mt-4">
-          <p>{listingDetail.company}</p>
+          <p>{listingDetail.companyName}</p>
           <p>
             in <b>{locationString}</b>
           </p>
@@ -138,7 +138,18 @@ export default function JobsListingDetailContainer(props: any) {
           <p className="text-xl font-bold mb-2 mt-8">Description</p>
           <p>{listingDetail.description}</p>
           <p className="text-xl font-bold mb-2 mt-8">Requirements</p>
-          <p>{listingDetail.requirements}</p>
+
+          {listingDetail.requirements.map((requirement, index) => {
+            if (!requirement.skill && !requirement.level) {
+              return null;
+            }
+            return (
+              <div key={index}>
+                <div>{requirement.skill}</div>
+                <div>{["Beginner", "Intermediate", "Advanced"][Number(requirement.level) - 1]}</div>
+              </div>
+            );
+          })}
         </div>
 
         <div className="flex flex-col items-center ml-128 mt-8">
