@@ -252,19 +252,15 @@ export async function getMyApplications(studentUid: string) {
 
 export async function getEmployerListings(employerUid: string) {
   try {
-    const listings = await db.collection("Employers").doc(employerUid).collection("Listings").get();
-    if (!listings) {
-      return [];
-    }
-    const allListings = [];
-    listings.forEach((listingResponse) => {
-      const listingData = { ...listingResponse.data(), listingId: listingResponse.id };
-      delete listingData["applicants"];
-      allListings.push(listingData);
+    const { docs: listingDocs } = await db.collection("Employers").doc(employerUid).collection("Listings").get();
+    return listingDocs.map((doc) => {
+      /* eslint-disable-next-line */
+      const { applicants: _, ...rest } = doc.data();
+      return {
+        ...rest,
+        listingId: doc.id,
+      };
     });
-
-    console.log(allListings);
-    return allListings;
   } catch (err) {
     console.log(err);
   }
