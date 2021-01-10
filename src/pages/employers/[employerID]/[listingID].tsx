@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React from "react";
-import JobsListingDetailContainer from "../../components/JobsListingDetailContainer";
-import LayoutSignedInStudent from "../../components/LayoutSignedInStudent";
+import JobsListingDetailContainer from "../../../components/JobsListingDetailContainer";
+import LayoutSignedInStudent from "../../../components/LayoutSignedInStudent";
 export default function Listing() {
   const router = useRouter();
   const { listingID, employerID } = router.query; //Use this to fetch data
