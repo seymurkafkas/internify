@@ -1,0 +1,357 @@
+{
+   "students":[
+      {
+         "Name":"Muhammed Kozan",
+         "Age":"22",
+         "Email":"kozan16@itu.edu.tr",
+         "Address":"Sultan Selim mah. Sakarya sok. 60 Kağıthane/İstanbul",
+         "Experience":[
+            {
+               "Company name":"Migros",
+               "Position":"Intern",
+               "Start date":"07/2018",
+               "End date":"09/2018"
+            },
+            {
+               "Company name":"ITU BIDB",
+               "Position":"Asistant student",
+               "Start date":"02/2018",
+               "End date":"10/2019"
+            }
+         ],
+         "Education":[
+            {
+               "Name":"Sunguroğlu Fen Lisesi",
+               "Level":"Highschool",
+               "Grade":"97.75",
+               "Start date":"09/2012",
+               "End date":"06/2016"
+            },
+            {
+               "Name":"Istanbul Technical University",
+               "Level":"Bachelor",
+               "Grade":"3.13",
+               "Start date":"09/2016",
+               "End date":"-"
+            }
+         ],
+         "Interests":[
+            "Computer communication",
+            "Robotics",
+            "Artificial intelligence"
+         ],
+         "Skills":[
+            {
+               "Name":"Python",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"C++",
+               "Level":"Advanced"
+            }
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            }
+         ]
+      },
+	  {
+         "Name":"Habib Bartu Gökalp",
+         "Age":"22",
+         "Email":"gokalph16@itu.edu.tr",
+         "Address":"Hürriyet 219. 16. Akhisar/Manisa",
+         "Experience":[
+            {
+               "Company name":"Morhipo",
+               "Position":"Intern",
+               "Start date":"07/2019",
+               "End date":"09/2019"
+            },
+         ],
+         "Education":[
+            {
+               "Name":"Soma Fen Lisesi",
+               "Level":"Highschool",
+               "Grade":"93.75",
+               "Start date":"09/2012",
+               "End date":"06/2016"
+            },
+            {
+               "Name":"Istanbul Technical University",
+               "Level":"Bachelor",
+               "Grade":"3.01",
+               "Start date":"09/2016",
+               "End date":"-"
+            }
+         ],
+         "Interests":[
+            "Machine Learning",
+            "Artificial Intelligence",
+            "Learning From Data"
+         ],
+         "Skills":[
+            {
+               "Name":"Python",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"C++",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"C#",
+               "Level":"Intermediate"
+            }
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            }
+         ]
+      },
+      {
+         "Name":"Caner Avcı",
+         "Age":"23",
+         "Email":"avcim16@itu.edu.tr",
+         "Address":"Atatürk 210. 23. Keçiören/Ankara",
+         "Experience":[
+            {
+               "Company name":"THY",
+               "Position":"Intern",
+               "Start date":"07/2019",
+               "End date":"09/2019"
+            },
+         ],
+         "Education":[
+            {
+               "Name":"Ankara Fen Lisesi",
+               "Level":"Highschool",
+               "Grade":"87.5",
+               "Start date":"09/2012",
+               "End date":"06/2016"
+            },
+            {
+               "Name":"Istanbul Technical University",
+               "Level":"Bachelor",
+               "Grade":"3.11",
+               "Start date":"09/2016",
+               "End date":"-"
+            }
+         ],
+         "Interests":[
+            "Sattelites",
+            "Spacecraft construction",
+            "Sattelite communication"
+         ],
+         "Skills":[
+            {
+               "Name":"Python",
+               "Level":"Intermediate"
+            },
+            {
+               "Name":"Excel",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Matlab",
+               "Level":"Intermediate"
+            }
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            }
+         ]
+      },
+      {
+         "Name":"Ahmet Yemliha Öner",
+         "Age":"23",
+         "Email":"oner15@itu.edu.tr",
+         "Address":"Zafer 140. 12. Ferizli/Sakarya",
+         "Experience":[
+            {
+               "Company name":"Trendyol",
+               "Position":"Intern",
+               "Start date":"07/2019",
+               "End date":"09/2019"
+            },
+            {
+               "Company name":"Morhipo",
+               "Position":"Software Developer",
+               "Start date":"09/2019",
+               "End date":"12/2020"
+            },
+         ],
+         "Education":[
+            {
+               "Name":"Ferizli Fen Lisesi",
+               "Level":"Highschool",
+               "Grade":"91.0",
+               "Start date":"09/2011",
+               "End date":"06/2015"
+            },
+            {
+               "Name":"Istanbul Technical University",
+               "Level":"Bachelor",
+               "Grade":"2.86",
+               "Start date":"09/2015",
+               "End date":"06/2020"
+            }
+         ],
+         "Interests":[
+            "Machine learning",
+            "Data engineering",
+            "Backend development",
+         ],
+         "Skills":[
+            {
+               "Name":"Python",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"C#",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Excel",
+               "Level":"Intermediate"
+            }
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Spanish",
+               "Level":"Intermediate"
+            },
+            {
+               "Name":"German",
+               "Level":"Beginner"
+            }
+         ]
+      },
+      {
+         "Name":"Mine Gürer",
+         "Age":"22",
+         "Email":"gurer16@iu.edu.tr",
+         "Address":"Cumhuriyet 10. 65. Beylikdüzü/İstanbul",
+         "Experience":[
+         	{
+               "Company name":"Fizyoterapi Eğitim Araştırma Hastanesi",
+               "Position":"Intern",
+               "Start date":"07/2019",
+               "End date":"07/2020"
+            },
+         ],
+         "Education":[
+            {
+               "Name":"Manisa Anadolu Öğretmen Lisesi",
+               "Level":"Highschool",
+               "Grade":"87.5",
+               "Start date":"09/2012",
+               "End date":"06/2016"
+            },
+            {
+               "Name":"Istanbul University",
+               "Level":"Bachelor",
+               "Grade":"2.56",
+               "Start date":"09/2016",
+               "End date":"-"
+            }
+         ],
+         "Interests":[
+            "Physiotherapy",
+            "Pilates",
+            "Rehabilitation",
+         ],
+         "Skills":[
+            {
+               "Name":"Word",
+               "Level":"Intermediate"
+            },
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Beginner"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            }
+         ]
+      },
+      {
+         "Name":"Melikşah Hayırsever",
+         "Age":"23",
+         "Email":"hayırsever15@itu.edu.tr",
+         "Address":"Güneşli 47. 12. Bağcılar/İstanbul",
+         "Experience":[
+
+         ],
+         "Education":[
+            {
+               "Name":"Ataşehir Anadolu Lisesi",
+               "Level":"Highschool",
+               "Grade":"92.5",
+               "Start date":"09/2011",
+               "End date":"06/2015"
+            },
+            {
+               "Name":"Istanbul Technical University",
+               "Level":"Bachelor",
+               "Grade":"2.76",
+               "Start date":"09/2015",
+               "End date":"-"
+            }
+         ],
+         "Interests":[
+            "Machine learning",
+            "Data engineering",
+            "Backend development",
+         ],
+         "Skills":[
+            {
+               "Name":"Python",
+               "Level":"Intermediate"
+            },
+            {
+               "Name":"Excel",
+               "Level":"Beginner"
+            }
+         ],
+         "Languages":[
+            {
+               "Name":"English",
+               "Level":"Advanced"
+            },
+            {
+               "Name":"Turkish",
+               "Level":"Advanced"
+            }
+         ]
+      },
+   ]
+}
