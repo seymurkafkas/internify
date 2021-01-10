@@ -18,7 +18,9 @@ export default function MyApplications() {
       if (userId) {
         try {
           const myListingsData = await DatabaseService.getMyApplications(userId);
-          setMyApplications(myListingsData);
+          if (myListingsData) {
+            setMyApplications(myListingsData);
+          }
         } catch (err) {
           console.log(err);
         }
