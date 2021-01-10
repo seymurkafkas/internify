@@ -44,7 +44,9 @@ export async function getStudentProfile(userId: string) {
     if (!userDataResponse.exists) {
       throw "Student Data doesnt exist";
     }
-    return userDataResponse.data();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { myApplications, ...rest } = userDataResponse.data();
+    return rest as StudentProfileData;
   } catch (err) {
     console.log(err);
   }

@@ -11,7 +11,7 @@ export default function Post() {
   return (
     <LayoutSignedInEmployer>
       <div className="ml-96 mt-16 flex flex-row justify-between">
-        <ViewStudentContainer />
+        <ViewStudentContainer applicantUid={applicantID as string} />
       </div>
     </LayoutSignedInEmployer>
   );
