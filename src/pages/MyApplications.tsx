@@ -52,6 +52,7 @@ export default function MyApplications() {
           return (
             <SmallListingContainerStudent
               key={index}
+              companyName={applicationItem.companyName}
               navigateToLink={listingClickHandler(applicationItem.employerUid, applicationItem.listingId)}
               applicationCount={applicationItem.applicationCount}
               title={applicationItem.title}

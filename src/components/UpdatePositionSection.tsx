@@ -32,6 +32,17 @@ const constants = {
   maxRequirementsCount: 6,
 };
 
+interface ListingData {
+  title: string;
+  companyName: string;
+  location: { city: string; country: string };
+  applicationCount: number;
+  description: string;
+  requirements: { skill: string; level: string }[];
+  deadline: firebase.default.firestore.Timestamp | null;
+  compensation: number;
+}
+
 interface Props {
   listingId: string;
 }
@@ -53,7 +64,7 @@ function UpdatePositionSection(props: Props) {
     (async function () {
       if (user) {
         try {
-          const res = await DatabaseService.getListingData(userId, listingId);
+          const res = (await DatabaseService.getListingData(userId, listingId)) as ListingData;
           console.log(res);
           setTitle(res.title);
           setDescription(res.description);
