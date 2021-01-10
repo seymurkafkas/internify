@@ -10,7 +10,7 @@ import { useUser } from "../services/auth/userContext";
 
 export default function EmployerProfile() {
   const [profileDataState, setProfileDataState] = React.useState({
-    title: "",
+    companyName: "",
     address: "",
     numOfEmployees: "",
     description: "",
@@ -25,8 +25,8 @@ export default function EmployerProfile() {
       if (user) {
         try {
           const employerProfileData = await databaseService.getEmployerProfile(uid);
-          const { title, address, numOfEmployees, description, sector } = employerProfileData;
-          setProfileDataState({ title, address, numOfEmployees, description, sector });
+          const { companyName, address, numOfEmployees, description, sector } = employerProfileData;
+          setProfileDataState({ companyName, address, numOfEmployees, description, sector });
         } catch (err) {
           console.log(err);
         }
@@ -65,11 +65,11 @@ export default function EmployerProfile() {
               setProfileDataState((prevState) => {
                 return {
                   ...prevState,
-                  title: event.target.value,
+                  companyName: event.target.value,
                 };
               });
             }}
-            defaultValue={profileDataState.title}
+            defaultValue={profileDataState.companyName}
             placeholder="Title"
             className="w-64"
           />

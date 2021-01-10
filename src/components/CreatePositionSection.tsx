@@ -8,7 +8,6 @@ import {
 } from "@blueprintjs/core";
 import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
-import MultiSelectTag from "./MultiSelectTag";
 import * as DatabaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
 
@@ -36,6 +35,10 @@ const monthNames = [
   "November",
   "December",
 ];
+
+const constants = {
+  maxRequirementsCount: 6,
+};
 
 export default function CreatePositionSection() {
   const [title, setTitle] = useState("");
@@ -66,6 +69,36 @@ export default function CreatePositionSection() {
       setLocation((prevLocation) => {
         return { ...prevLocation, ...updatedSection };
       });
+    };
+  }
+
+  function addRequirementItem() {
+    setRequirements((prevRequirements) => {
+      return [...prevRequirements, { skill: "", level: "1" }];
+    });
+  }
+
+  function removeRequirementItem(index: number) {
+    return () => {
+      setRequirements((prevRequirements) => {
+        const newRequirements = [...prevRequirements];
+        newRequirements.splice(index, 1);
+        return newRequirements;
+      });
+    };
+  }
+
+  function handleRequirementsChange(index: number) {
+    return function (changedItem: string) {
+      const subFunction = (event: any) => {
+        const newValue = changedItem === "level" ? event.target.value : event.currentTarget.value;
+        setRequirements((prevRequirements) => {
+          const newRequirements = [...prevRequirements];
+          newRequirements[index] = { ...newRequirements[index], [changedItem]: newValue };
+          return newRequirements;
+        });
+      };
+      return subFunction;
     };
   }
 
@@ -108,7 +141,38 @@ export default function CreatePositionSection() {
           />
         </div>
         <div className="text-xl font-bold mb-4 mt-8">Requirements</div>
-        <MultiSelectTag onReqUpdate={(req) => setRequirements(req)} />
+
+        <div className="flex flex-col items-start">
+          <Button
+            icon="add"
+            className="bp3-outlined"
+            onClick={addRequirementItem}
+            disabled={requirements.length === constants.maxRequirementsCount}
+          />
+          {requirements.map((requirementElement, index) => {
+            return (
+              <div key={index} className="flex mt-2 space-x-2">
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleRequirementsChange(index)("skill")}
+                  value={requirementElement.skill}
+                  placeholder="Skill"
+                />
+                <div className="bp3-select .modifier">
+                  <select value={requirementElement.level} onChange={handleRequirementsChange(index)("level")}>
+                    <option value="1">Beginner</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Advanced</option>
+                  </select>
+                </div>
+                <Button icon="cross" className="bp3-outlined" onClick={removeRequirementItem(index)}></Button>
+              </div>
+            );
+          })}
+        </div>
+
         <div className="text-xl font-bold mt-8">Compensation</div>
       </div>
       <NumericInput
