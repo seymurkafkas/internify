@@ -76,19 +76,35 @@ export default function EmployerDataContainer(props: Props) {
   }
 
   return (
-    <div>
+    <div className="flex flex-row justify-between mr-128 mt-16 ml-64">
       <div>
-        <div>Company Name: {profileDataState.companyName}</div>
-        <div>Number of Employees {profileDataState.numOfEmployees}</div>
-        <div>Sector: {profileDataState.sector}</div>
-        <p>Description:{profileDataState.description}</p>
-        <p>Address:{profileDataState.address}</p>
+        <div className="flex content-center space-x-8">
+          <img
+            className="rounded-full h-36 w-36"
+            src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
+          <div className="flex flex-col mt-8">
+            <p className="text-xl">{profileDataState.sector} Sector of</p>
+            <p className="text-5xl font-bold">{profileDataState.companyName}</p>
+          </div>
+        </div>
+        <div className="flex flex-col mt-8 space-y-4 w-128">
+          <div className="font-bold text-lg">Number of Employees: {profileDataState.numOfEmployees}</div>
+          <div className="flex items-center text-lg space-x-2">
+            <div className="font-bold">Adress:</div>
+            <div>{profileDataState.address}</div>
+          </div>
+          <div>
+            <div className="font-bold text-lg">Description:</div>
+            <div>{profileDataState.description}</div>
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col justify-start mt-16 ml-96">
+      <div className="flex flex-col">
         {loadingListingData ? (
           <div>loading</div>
         ) : (
           <div>
+            <div className="text-3xl font-bold mt-8 mb-6">Posted Listings</div>
             {listings.map((applicationItem, index) => {
               return (
                 <SmallListingContainerStudent
