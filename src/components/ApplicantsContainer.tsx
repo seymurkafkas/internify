@@ -57,7 +57,7 @@ export default function ApplicantsContainer(props: any) {
                 } else {
                   educationString = applicantData.education[0].institutionName;
                 }
-              } else if (applicantData.education[0].companyName) {
+              } else if (applicantData.education[0].institutionName) {
                 educationString = `$Graduated from ${applicantData.education[0].institutionName}`;
               }
             }
