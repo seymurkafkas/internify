@@ -44,26 +44,28 @@ export default function ProfileStudent() {
       if (user) {
         try {
           const studentProfileData = await databaseService.getStudentProfile(uid);
-          const {
-            name: newName,
-            location: newLocation,
-            education: newEducation,
-            description: newDescription,
-            skills: newSkills,
-            languages: newLanguages,
-            interests: newInterests,
-            experience: newExperience,
-          } = studentProfileData;
-          enrolledItemTransformDate(newEducation);
-          enrolledItemTransformDate(newExperience);
-          setName(newName);
-          setLocation(newLocation);
-          setEducation(newEducation);
-          setDescription(newDescription);
-          setSkills(newSkills);
-          setLanguages(newLanguages);
-          setInterests(newInterests);
-          setExperience(newExperience);
+          if (studentProfileData) {
+            const {
+              name: newName,
+              location: newLocation,
+              education: newEducation,
+              description: newDescription,
+              skills: newSkills,
+              languages: newLanguages,
+              interests: newInterests,
+              experience: newExperience,
+            } = studentProfileData;
+            enrolledItemTransformDate(newEducation);
+            enrolledItemTransformDate(newExperience);
+            setName(newName);
+            setLocation(newLocation);
+            setEducation(newEducation);
+            setDescription(newDescription);
+            setSkills(newSkills);
+            setLanguages(newLanguages);
+            setInterests(newInterests);
+            setExperience(newExperience);
+          }
           setLoadingData(false);
         } catch (err) {
           console.log(err);

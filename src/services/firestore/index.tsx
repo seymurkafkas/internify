@@ -229,7 +229,7 @@ export async function deleteListing(listingId: string, employerUid: string) {
 
 export async function getMyApplications(studentUid: string) {
   try {
-    const appliedListings = await (await db.collection("Students").doc(studentUid).get()).data().myApplications;
+    const appliedListings = (await db.collection("Students").doc(studentUid).get())?.data()?.myApplications ?? null;
     if (!appliedListings) {
       return null;
     }
