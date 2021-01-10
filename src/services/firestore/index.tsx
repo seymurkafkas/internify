@@ -159,6 +159,15 @@ export async function updateListing(listingData: any, userId: string, listingId:
 export async function applyForListing(listingId: string, employerUid: string, studentUid: string) {
   try {
     await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        applicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
+      });
+
+    await db
       .collection("Students")
       .doc(studentUid)
       .update({
@@ -172,6 +181,15 @@ export async function applyForListing(listingId: string, employerUid: string, st
 
 export async function withdrawApplication(listingId: string, employerUid: string, studentUid: string) {
   try {
+    await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
+      });
+
     await db
       .collection("Students")
       .doc(studentUid)
