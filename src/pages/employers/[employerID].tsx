@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React from "react";
+import EmployerDataContainer from "../../components/EmployerDataContainer";
 import LayoutSignedInStudent from "../../components/LayoutSignedInStudent";
 export default function ViewEmployerPage() {
   const router = useRouter();
@@ -12,7 +13,7 @@ export default function ViewEmployerPage() {
 
   return (
     <LayoutSignedInStudent>
-      <div className="mt-16 ml-96">this is the employer View page</div>
+      <EmployerDataContainer employerUid={employerID as string} />
     </LayoutSignedInStudent>
   );
 }

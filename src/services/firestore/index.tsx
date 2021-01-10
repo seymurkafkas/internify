@@ -249,3 +249,23 @@ export async function getMyApplications(studentUid: string) {
     console.log(err);
   }
 }
+
+export async function getEmployerListings(employerUid: string) {
+  try {
+    const listings = await db.collection("Employers").doc(employerUid).collection("Listings").get();
+    if (!listings) {
+      return [];
+    }
+    const allListings = [];
+    listings.forEach((listingResponse) => {
+      const listingData = { ...listingResponse.data(), listingId: listingResponse.id };
+      delete listingData["applicants"];
+      allListings.push(listingData);
+    });
+
+    console.log(allListings);
+    return allListings;
+  } catch (err) {
+    console.log(err);
+  }
+}
