@@ -255,13 +255,15 @@ export default function ProfileStudent() {
   }
   return (
     <>
-      <p className="text-5xl font-light mt-8 ml-48">Student Profile</p>
+      <p className="text-5xl font-light mt-8 ml-48">My Profile</p>
       <img
         className=" rounded-full absolute h-36 w-36 mt-8 ml-48"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
       <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-48 mt-8">
         <div className="ml-44">
-          <div>Name</div>
+          <div>
+            <b>Name</b>
+          </div>
           <input
             className="bp3-input .modifier mt-2"
             type="text"
@@ -272,7 +274,9 @@ export default function ProfileStudent() {
           />
         </div>
         <div className="ml-44">
-          <div>Location</div>
+          <div>
+            <b>Location</b>
+          </div>
           <div className="space-x-4 mt-2">
             <input
               className="bp3-input .modifier"
@@ -293,7 +297,9 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div className="mt-8">Education</div>
+          <div className="mt-8">
+            <b>Education</b>
+          </div>
           <div>
             <Button
               icon="add"
@@ -320,7 +326,9 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div>Experience</div>
+          <div>
+            <b>Experience</b>
+          </div>
           <div className="flex flex-col items-start">
             <Button
               className="mt-4 bp3-outlined"
@@ -345,7 +353,9 @@ export default function ProfileStudent() {
           </div>
         </div>
 
-        <div>Skills</div>
+        <div>
+          <b>Skills</b>
+        </div>
         <div className="flex flex-col items-start">
           <Button
             icon="add"
@@ -376,7 +386,9 @@ export default function ProfileStudent() {
             );
           })}
         </div>
-        <div>Languages</div>
+        <div>
+          <b>Languages</b>
+        </div>
         <div className="flex flex-col items-start">
           <Button
             icon="add"
@@ -409,7 +421,9 @@ export default function ProfileStudent() {
             );
           })}
         </div>
-        <div>Interests</div>
+        <div>
+          <b>Interests</b>
+        </div>
         <div className="flex flex-col items-start">
           <Button
             icon="add"
@@ -433,7 +447,9 @@ export default function ProfileStudent() {
             );
           })}
         </div>
-        <div>Description</div>
+        <div>
+          <b>Description</b>
+        </div>
         <EditableText
           className="ml-1 w-128 h-32"
           alwaysRenderInput={true}
