@@ -3,7 +3,8 @@ import { Button } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
 import { useUser } from "../services/auth/userContext";
-
+import { useRouter } from "next/router";
+import * as Navigation from "../services/navigation";
 interface ListingData {
   title: string;
   companyName: string;
@@ -35,7 +36,7 @@ export default function JobsListingDetailContainer(props: any) {
     compensation: 0,
   });
   const { user, loadingUser } = useUser();
-
+  const router = useRouter();
   function handleApplyButtonClick() {
     (async () => {
       await DatabaseService.applyForListing(listingId, employerId, user?.uid ?? null);
@@ -48,6 +49,10 @@ export default function JobsListingDetailContainer(props: any) {
       await DatabaseService.withdrawApplication(listingId, employerId, user?.uid ?? null);
       setIsAnApplicant(false);
     })();
+  }
+
+  function handleClickOnCompany() {
+    Navigation.goToViewEmployerPage(router, employerId);
   }
 
   React.useEffect(() => {
@@ -124,7 +129,7 @@ export default function JobsListingDetailContainer(props: any) {
           </div>
         </div>
         <div className="mt-4">
-          <p>{listingDetail.companyName}</p>
+          <p onClick={handleClickOnCompany}>{listingDetail?.companyName ?? "Undeclared"}</p>
           <p>
             in <b>{locationString}</b>
           </p>
