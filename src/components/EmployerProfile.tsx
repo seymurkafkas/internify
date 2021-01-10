@@ -25,8 +25,11 @@ export default function EmployerProfile() {
       if (user) {
         try {
           const employerProfileData = await databaseService.getEmployerProfile(uid);
-          const { companyName, address, numOfEmployees, description, sector } = employerProfileData;
-          setProfileDataState({ companyName, address, numOfEmployees, description, sector });
+
+          if (employerProfileData) {
+            const { companyName, address, numOfEmployees, description, sector } = employerProfileData;
+            setProfileDataState({ companyName, address, numOfEmployees, description, sector });
+          }
         } catch (err) {
           console.log(err);
         }
