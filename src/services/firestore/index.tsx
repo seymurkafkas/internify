@@ -81,6 +81,7 @@ export async function getMyListings(userId: string) {
     userDataResponse.forEach((doc) => {
       resultArr.push({
         ...doc.data(),
+        applicationCount: doc.data().applicants.length,
         listingId: doc.id,
       });
     });
@@ -110,7 +111,11 @@ export async function getListingData(userId: string, listingId: string) {
     }
     const employerDataResponse = await db.collection("Employers").doc(userId).get();
 
-    const result = { ...dataResponse.data(), companyName: employerDataResponse.data().companyName };
+    const result = {
+      ...dataResponse.data(),
+      applicationCount: dataResponse.data().applicants.length,
+      companyName: employerDataResponse.data().companyName,
+    };
     delete result["applicants"];
     return result;
   } catch (err) {
@@ -127,7 +132,6 @@ export async function createAListing(listingData: any, userId: string) {
       .doc()
       .set({
         ...listingData,
-        applicationCount: 0,
         applicants: [],
       });
     return;
@@ -155,16 +159,6 @@ export async function updateListing(listingData: any, userId: string, listingId:
 export async function applyForListing(listingId: string, employerUid: string, studentUid: string) {
   try {
     await db
-      .collection("Employers")
-      .doc(employerUid)
-      .collection("Listings")
-      .doc(listingId)
-      .update({
-        applicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
-        applicationCount: firebase.firestore.FieldValue.increment(1),
-      });
-
-    await db
       .collection("Students")
       .doc(studentUid)
       .update({
@@ -178,16 +172,6 @@ export async function applyForListing(listingId: string, employerUid: string, st
 
 export async function withdrawApplication(listingId: string, employerUid: string, studentUid: string) {
   try {
-    await db
-      .collection("Employers")
-      .doc(employerUid)
-      .collection("Listings")
-      .doc(listingId)
-      .update({
-        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
-        applicationCount: firebase.firestore.FieldValue.increment(-1),
-      });
-
     await db
       .collection("Students")
       .doc(studentUid)
@@ -238,7 +222,14 @@ export async function getMyApplications(studentUid: string) {
       const listingData = (
         await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get()
       ).data();
-      const newListingData = { ...listingData, employerUid, listingId };
+
+      const { applicants, ...rest } = listingData;
+      const newListingData = {
+        ...rest,
+        applicationCount: applicants.length,
+        employerUid,
+        listingId,
+      };
       return newListingData;
     });
 
@@ -255,9 +246,10 @@ export async function getEmployerListings(employerUid: string) {
     const { docs: listingDocs } = await db.collection("Employers").doc(employerUid).collection("Listings").get();
     return listingDocs.map((doc) => {
       /* eslint-disable-next-line */
-      const { applicants: _, ...rest } = doc.data();
+      const { applicants, ...rest } = doc.data();
       return {
         ...rest,
+        applicationCount: applicants.length,
         listingId: doc.id,
       };
     });
