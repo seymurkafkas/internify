@@ -285,16 +285,20 @@ export async function getEmployerListings(employerUid: string) {
 export async function getAllListings() {
   try {
     const { docs: listingDocs } = await await db.collectionGroup("Listings").get();
-    return listingDocs.map((doc) => {
+    const ListingPromises = listingDocs.map(async (doc) => {
       /* eslint-disable-next-line */
       const { applicants, ...rest } = doc.data();
+      const companyNameQuery = await doc.ref.parent.parent.get();
+      const { companyName } = companyNameQuery.data();
       return {
         ...rest,
         applicationCount: applicants.length,
         listingId: doc.id,
         employerUid: doc.ref.parent.parent.id,
+        companyName,
       };
     });
+    return await Promise.all(ListingPromises);
   } catch (err) {
     console.log(err);
   }

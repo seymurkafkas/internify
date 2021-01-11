@@ -259,7 +259,7 @@ export default function ProfileStudent() {
       <img
         className=" rounded-full absolute h-36 w-36 mt-8 ml-48"
         src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col items-start justify-start absolute space-y-4 w-full ml-48 mt-8">
+      <div className="flex flex-col items-start justify-start absolute space-y-4 ml-48 mt-8">
         <div className="ml-44">
           <div>
             <b>Name</b>

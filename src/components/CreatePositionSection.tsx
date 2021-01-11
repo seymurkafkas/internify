@@ -11,16 +11,6 @@ import { DateInput } from "@blueprintjs/datetime";
 import * as DatabaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
 
-/* interface listingData {
-  title: string;
-  company: string;
-  location: string;
-  applicationCount: string;
-  description: string;
-  requirements: string;
-  deadline: string;
-  compensation: string;
-} */
 const monthNames = [
   "January",
   "February",
