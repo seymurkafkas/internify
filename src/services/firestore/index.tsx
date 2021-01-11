@@ -288,6 +288,7 @@ export async function getAllListings() {
         ...rest,
         applicationCount: applicants.length,
         listingId: doc.id,
+        employerUid: doc.ref.parent.parent.id,
       };
     });
   } catch (err) {
