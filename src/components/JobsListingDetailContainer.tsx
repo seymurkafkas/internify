@@ -18,7 +18,7 @@ interface ListingData {
 
 export default function JobsListingDetailContainer(props: any) {
   const listingId = props.listingId;
-  const employerId = props.employerId;
+  const employerUid = props.employerUid;
   const [isAnApplicant, setIsAnApplicant] = React.useState(true);
   const [loadingData, setLoadingData] = React.useState(true);
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
@@ -39,27 +39,27 @@ export default function JobsListingDetailContainer(props: any) {
   const router = useRouter();
   function handleApplyButtonClick() {
     (async () => {
-      await DatabaseService.applyForListing(listingId, employerId, user?.uid ?? null);
+      await DatabaseService.applyForListing(listingId, employerUid, user?.uid ?? null);
       setIsAnApplicant(true);
     })();
   }
 
   function handleWithdrawButtonClick() {
     (async () => {
-      await DatabaseService.withdrawApplication(listingId, employerId, user?.uid ?? null);
+      await DatabaseService.withdrawApplication(listingId, employerUid, user?.uid ?? null);
       setIsAnApplicant(false);
     })();
   }
 
   function handleClickOnCompany() {
-    Navigation.goToViewEmployerPage(router, employerId);
+    Navigation.goToViewEmployerPage(router, employerUid);
   }
 
   React.useEffect(() => {
     (async function () {
       if (user) {
         try {
-          const fetchedListingData = (await DatabaseService.getListingData(employerId, listingId)) as ListingData;
+          const fetchedListingData = (await DatabaseService.getListingData(employerUid, listingId)) as ListingData;
           console.log(fetchedListingData);
 
           if (fetchedListingData) {
@@ -73,13 +73,13 @@ export default function JobsListingDetailContainer(props: any) {
         setLoadingData(false);
       }
     })();
-  }, [employerId, listingId, user]);
+  }, [employerUid, listingId, user]);
 
   React.useEffect(() => {
     (async function () {
       if (user) {
         try {
-          const fetchedIsAnApplicant = await DatabaseService.isStudentAnApplicant(listingId, employerId, user.uid);
+          const fetchedIsAnApplicant = await DatabaseService.isStudentAnApplicant(listingId, employerUid, user.uid);
           console.log(fetchedIsAnApplicant);
           setIsAnApplicant(fetchedIsAnApplicant);
         } catch (err) {
@@ -87,7 +87,7 @@ export default function JobsListingDetailContainer(props: any) {
         }
       }
     })();
-  }, [isAnApplicant, employerId, listingId, user]);
+  }, [isAnApplicant, employerUid, listingId, user]);
 
   if (!user || loadingUser) {
     return null;

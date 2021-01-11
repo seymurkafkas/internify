@@ -41,9 +41,9 @@ export default function MyApplications() {
     );
   }
 
-  function listingClickHandler(employerUid, listingID: string) {
+  function listingClickHandler(employerUid, listingId: string) {
     return function () {
-      Navigation.goToViewListingPage(router, employerUid, listingID);
+      Navigation.goToViewListingPage(router, employerUid, listingId);
     };
   }
 

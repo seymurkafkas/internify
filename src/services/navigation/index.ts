@@ -32,12 +32,12 @@ export async function goToMyListingsPage(router: NextRouter) {
   await router.push("/MyListings");
 }
 
-export async function goToViewEmployerPage(router: NextRouter, employerId: string) {
-  await router.push("/employers/" + employerId);
+export async function goToViewEmployerPage(router: NextRouter, employerUid: string) {
+  await router.push("/employers/" + employerUid);
 }
 
-export async function goToViewListingPage(router: NextRouter, employerId: string, listingID: string) {
-  await router.push("/employers/" + employerId + "/" + listingID);
+export async function goToViewListingPage(router: NextRouter, employerUid: string, listingId: string) {
+  await router.push("/employers/" + employerUid + "/" + listingId);
 }
 
 export async function goToCustomPage(router: NextRouter, customUrl: string) {
@@ -48,6 +48,6 @@ export async function goToViewApplicantPage(router: NextRouter, uid: string) {
   await router.push("/applicant/" + uid);
 }
 
-export async function goToMyPostedListingsPage(router: NextRouter, listingID: string) {
-  await router.push("/mylistings/" + listingID);
+export async function goToMyPostedListingsPage(router: NextRouter, listingId: string) {
+  await router.push("/mylistings/" + listingId);
 }

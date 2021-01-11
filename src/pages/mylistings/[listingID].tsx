@@ -6,15 +6,15 @@ import UpdatePositionSection from "../../components/UpdatePositionSection";
 
 export default function Position() {
   const router = useRouter();
-  const { listingID } = router.query; //Use this to fetch data
-  if (!listingID) {
+  const { listingId } = router.query; //Use this to fetch data
+  if (!listingId) {
     return null;
   }
   return (
     <LayoutSignedInEmployer>
       <div className="ml-64 mt-16 flex flex-row justify-between">
-        <ApplicantsContainer listingId={listingID} />
-        <UpdatePositionSection listingId={listingID as string} />
+        <ApplicantsContainer listingId={listingId} />
+        <UpdatePositionSection listingId={listingId as string} />
       </div>
     </LayoutSignedInEmployer>
   );

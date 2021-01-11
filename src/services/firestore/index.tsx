@@ -244,11 +244,15 @@ export async function getMyApplications(studentUid: string) {
       ).data();
 
       const { applicants, ...rest } = listingData;
+
+      const queryResult = await db.collection("Employers").doc(employerUid).get();
+      const { companyName } = queryResult.data();
       const newListingData = {
         ...rest,
         applicationCount: applicants.length,
         employerUid,
         listingId,
+        companyName,
       };
       return newListingData;
     });
