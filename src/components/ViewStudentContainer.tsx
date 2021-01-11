@@ -181,10 +181,7 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
           </p>
           <br />
         </div>
-        <div className={["flex", "justify-between", "flex-col"].join(" ")}>
-          <Button className={["bp3-outlined", styles.btnPill].join(" ")}>Approve</Button>
-          <Button className={["bp3-outlined", styles.btnPill].join(" ")}>Reject</Button>
-        </div>
+        <div className={["flex", "justify-between", "flex-col"].join(" ")}></div>
       </div>
       <div className={styles.mt32}>
         <Button className={["bp3-outlined", styles.btnPill].join(" ")}>View CV</Button>

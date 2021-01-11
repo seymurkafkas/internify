@@ -2,6 +2,7 @@ import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
 import { Button, Card, Elevation } from "@blueprintjs/core";
+import styles from "./styles.module.css";
 
 interface Props {
   uid: string;
@@ -23,11 +24,13 @@ export default function ApplicantItem(props: Props) {
         <p>
           Previous Work: <b>{props.position}</b>
         </p>
+
         <p>{props.location}</p>
         <br />
         <p>Education: {props.education}</p>
         <div className="flex justify-between">
-          <p>Date applied</p>
+          <Button className={["bp3-outlined", styles.btnPill].join(" ")}>Approve</Button>
+          <Button className={["bp3-outlined", styles.btnPillReject].join(" ")}>Reject</Button>
           <Button onClick={handleClick} className="w-16 bp3-outlined">
             View
           </Button>
