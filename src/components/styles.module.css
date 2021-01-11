@@ -98,7 +98,15 @@ textarea.inputUnderline,
 }
 
 .btnPill {
-  background-color: #eee !important;
+  background-color: #ccffcc !important;
+  border: 1px solid #eee !important;
+  border-radius: 16px;
+  padding: 2px 32px;
+  box-shadow: none !important;
+}
+
+.btnPillReject {
+  background-color: #b3b3b3 !important;
   border: 1px solid #eee !important;
   border-radius: 16px;
   padding: 2px 32px;
