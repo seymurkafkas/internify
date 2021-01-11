@@ -4,15 +4,15 @@ import JobsListingDetailContainer from "../../../components/JobsListingDetailCon
 import LayoutSignedInStudent from "../../../components/LayoutSignedInStudent";
 export default function Listing() {
   const router = useRouter();
-  const { listingID, employerID } = router.query; //Use this to fetch data
-  if (!listingID || !employerID) {
+  const { listingId, employerUid } = router.query; //Use this to fetch data
+  if (!listingId || !employerUid) {
     return null;
   }
 
   return (
     <LayoutSignedInStudent>
       <div className="mt-16 ml-96">
-        <JobsListingDetailContainer listingId={listingID} employerId={employerID}></JobsListingDetailContainer>
+        <JobsListingDetailContainer listingId={listingId} employerUid={employerUid}></JobsListingDetailContainer>
       </div>
     </LayoutSignedInStudent>
   );

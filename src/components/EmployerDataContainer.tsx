@@ -22,14 +22,14 @@ export default function EmployerDataContainer(props: Props) {
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
   const [listings, setListings] = React.useState([]);
   const { user, loadingUser } = useUser();
-  const employerId = props.employerUid;
+  const employerUid = props.employerUid;
   const router = useRouter();
 
   React.useEffect(() => {
     (async () => {
-      if (user && employerId) {
+      if (user && employerUid) {
         try {
-          const employerProfileData = await databaseService.getEmployerProfile(employerId);
+          const employerProfileData = await databaseService.getEmployerProfile(employerUid);
 
           if (employerProfileData) {
             const { companyName, address, numOfEmployees, description, sector } = employerProfileData;
@@ -44,13 +44,13 @@ export default function EmployerDataContainer(props: Props) {
         setLoadingData(false);
       }
     })();
-  }, [user, employerId]);
+  }, [user, employerUid]);
 
   React.useEffect(() => {
     (async () => {
-      if (user && employerId && !noDataAvailable) {
+      if (user && employerUid && !noDataAvailable) {
         try {
-          const listingData = await databaseService.getEmployerListings(employerId);
+          const listingData = await databaseService.getEmployerListings(employerUid);
 
           setListings(listingData);
         } catch (err) {
@@ -59,7 +59,7 @@ export default function EmployerDataContainer(props: Props) {
         setLoadingListingData(false);
       }
     })();
-  }, [user, employerId, noDataAvailable]);
+  }, [user, employerUid, noDataAvailable]);
 
   function listingClickHandler(employerUid: string, listingId: string) {
     return function () {
@@ -110,7 +110,7 @@ export default function EmployerDataContainer(props: Props) {
                 <SmallListingContainerStudent
                   key={index}
                   companyName={profileDataState.companyName}
-                  navigateToLink={listingClickHandler(employerId, applicationItem.listingId)}
+                  navigateToLink={listingClickHandler(employerUid, applicationItem.listingId)}
                   applicationCount={applicationItem.applicationCount}
                   title={applicationItem.title}
                   location={applicationItem.location}

@@ -41,9 +41,9 @@ export default function MyListingsPage() {
     );
   }
 
-  function listingClickHandler(listingID: string) {
+  function listingClickHandler(listingId: string) {
     return function () {
-      Navigation.goToMyPostedListingsPage(router, listingID);
+      Navigation.goToMyPostedListingsPage(router, listingId);
     };
   }
 
