@@ -277,3 +277,20 @@ export async function getEmployerListings(employerUid: string) {
     console.log(err);
   }
 }
+
+export async function getAllListings() {
+  try {
+    const { docs: listingDocs } = await await db.collectionGroup("Listings").get();
+    return listingDocs.map((doc) => {
+      /* eslint-disable-next-line */
+      const { applicants, ...rest } = doc.data();
+      return {
+        ...rest,
+        applicationCount: applicants.length,
+        listingId: doc.id,
+      };
+    });
+  } catch (err) {
+    console.log(err);
+  }
+}
