@@ -10,7 +10,7 @@ import { stringifyDate } from "../util/date";
 
 interface Props {
   listingId: string;
-  employerId: string;
+  employerUid: string;
   title: string;
   deadline: firebase.default.firestore.Timestamp | null;
   companyName: string;
@@ -34,7 +34,7 @@ export default function JobListingItem(props: Props) {
   return (
     <Card
       onClick={() => {
-        Navigation.goToViewListingPage(router, props.employerId, props.listingId);
+        Navigation.goToViewListingPage(router, props.employerUid, props.listingId);
       }}
       className="listing_item"
       interactive={true}
