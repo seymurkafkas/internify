@@ -40,7 +40,7 @@ export default function ApplicantsContainer(props: any) {
           console.log(err);
         }
 
-        const result = await applicantUids.reduce(async function (currentApplicantList, currentUID, index) {
+        const result = await applicantUids.reduce(async function (currentApplicantList, currentUID) {
           try {
             const applicantData = await DatabaseService.getStudentProfile(currentUID);
             let positionString = "Undeclared";
@@ -98,7 +98,7 @@ export default function ApplicantsContainer(props: any) {
   return (
     <div>
       <h2 className="text-3xl font-bold mb-8">Applicants</h2>
-      <div className="w-128 space-y-4">
+      <div>
         {applicantSmallData.map((item, index) => {
           return (
             <ApplicantItem
