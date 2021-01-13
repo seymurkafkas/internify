@@ -317,7 +317,10 @@ export async function approveApplicant(employerUid: string, studentUid: string, 
       .collection("Students")
       .doc(studentUid)
       .update({
-        approvedApplications: firebase.firestore.FieldValue.arrayUnion({ employerUid, listingId: approvedListingId }),
+        approvedApplications: firebase.firestore.FieldValue.arrayUnion({
+          employerUid,
+          listingId: approvedListingId.id,
+        }),
       });
   } catch (err) {
     console.log(err);
@@ -333,12 +336,14 @@ export async function rejectApplicant(employerUid: string, studentUid: string, l
       .doc(listingId)
       .update({
         rejectedApplicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
+        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
       });
 
     await db
       .collection("Students")
       .doc(studentUid)
       .update({
+        myApplications: firebase.firestore.FieldValue.arrayRemove({ employerUid, listingId }),
         rejectedApplications: firebase.firestore.FieldValue.arrayUnion({ employerUid, listingId }),
       });
   } catch (err) {
