@@ -46,7 +46,7 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
   );
   return (
     <>
-      <Navbar className="h-16">
+      <Navbar className="bp3-dark">
         <NavbarGroup className="w-full h-full" align={Alignment.LEFT}>
           <NavbarHeading>INTERNIFY</NavbarHeading>
           <NavbarDivider />
