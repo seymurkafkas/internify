@@ -2,7 +2,6 @@ import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
 import { Button, Card, Elevation } from "@blueprintjs/core";
-import styles from "./styles.module.css";
 
 interface Props {
   studentUid: string;
@@ -23,28 +22,33 @@ export default function ApplicantItem(props: Props) {
   }
 
   return (
-    <Card className="listing_item" interactive={true} elevation={Elevation.TWO}>
-      <div>
-        <p>{props.name}</p>
-        <p>
-          Previous Work: <b>{props.position}</b>
-        </p>
+    <div className="flex flex-row items-center mt-11">
+      <img
+        className=" rounded-full h-28 w-28"
+        src="https://www.nicepng.com/png/detail/60-609253_smile-shapers-men-smile-smiling-man-conditioning-black.png"></img>
+      <Card className="w-96" interactive={true} elevation={Elevation.THREE}>
+        <div>
+          <p>
+            <b>{props.name}</b>
+          </p>
+          <p>
+            Previous Work: <b>{props.position}</b>
+          </p>
 
-        <p>{props.location}</p>
-        <br />
-        <p>Education: {props.education}</p>
-        <div className="flex justify-between">
-          <Button onClick={props.handleApprove} className={["bp3-outlined", styles.btnPill].join(" ")}>
-            Approve
-          </Button>
-          <Button onClick={props.handleReject} className={["bp3-outlined", styles.btnPillReject].join(" ")}>
-            Reject
-          </Button>
-          <Button onClick={handleClick} className="w-16 bp3-outlined">
-            View
-          </Button>
+          <p>
+            in <b>{props.location}</b>
+          </p>
+          <br />
+          <p>
+            Education: <b>{props.education}</b>
+          </p>
         </div>
+      </Card>
+      <div className="ml-4 flex flex-col justify-between ">
+        <Button onClick={props.handleApprove} className="mt-4 bp3-minimal" icon="endorsed"></Button>
+        <Button onClick={props.handleReject} className="mt-4 bp3-minimal" icon="delete"></Button>
+        <Button onClick={handleClick} className=" mt-6 bp3-minimal" icon="eye-open"></Button>
       </div>
-    </Card>
+    </div>
   );
 }
