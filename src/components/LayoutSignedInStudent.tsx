@@ -24,13 +24,6 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
     signOut();
   }
   const router = useRouter();
-  const settings = (
-    <Menu>
-      <MenuItem icon="settings" text="Settings" />
-      <MenuDivider />
-      <MenuItem icon="log-out" onClick={handleSignOut} text="Sign Out" />
-    </Menu>
-  );
 
   const applicationContent = (
     <Menu>
@@ -78,9 +71,7 @@ export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
             text="Explore"
           />
           <NavbarDivider />
-          <Popover content={settings} minimal position={Position.TOP}>
-            <Button icon="cog" text="" minimal />
-          </Popover>
+          <Button className={Classes.MINIMAL} icon="log-out" onClick={handleSignOut} text="Sign Out"></Button>
         </NavbarGroup>
       </Navbar>
       {props.children}
