@@ -111,12 +111,15 @@ export default function JobsListingDetailContainer(props: any) {
   }
 
   return (
-    <div className="w-160">
+    <div className="w-192">
       <div>
         <div className="flex flex-row justify-between">
           <p className="text-4xl font-bold">{listingDetail?.title}</p>
           <div className="flex flex-row items-center">
             <p className="mr-4 text-lg">${listingDetail?.compensation}</p>
+            <Button className="w-30 bp3-outlined mr-4" onClick={handleClickOnCompany}>
+              <b>View Company</b>
+            </Button>
             {!isAnApplicant ? (
               <Button className="w-16 bp3-outlined" onClick={handleApplyButtonClick}>
                 <b>Apply</b>
@@ -129,7 +132,7 @@ export default function JobsListingDetailContainer(props: any) {
           </div>
         </div>
         <div className="mt-4">
-          <p onClick={handleClickOnCompany}>{listingDetail?.companyName ?? "Undeclared"}</p>
+          <p>{listingDetail?.companyName ?? "Undeclared"}</p>
           <p>
             in <b>{locationString}</b>
           </p>
@@ -157,7 +160,7 @@ export default function JobsListingDetailContainer(props: any) {
           })}
         </div>
 
-        <div className="flex flex-col items-center ml-128 mt-8">
+        <div className="flex flex-col items-center ml-160 mt-8">
           <div>Apply before</div>
           <b>{deadlineString}</b>
         </div>
