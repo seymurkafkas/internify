@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Button,
   //Card,
-  //Elevation,
+  Intent,
   NumericInput,
   EditableText,
 } from "@blueprintjs/core";
@@ -10,6 +10,7 @@ import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import * as DatabaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
+import { AppToaster } from "./Toaster";
 
 const monthNames = [
   "January",
@@ -39,6 +40,23 @@ export default function CreatePositionSection() {
   const [deadline, setDeadline] = useState(null);
   const { user } = useUser();
   const userId = user?.uid;
+
+  const showSuccessMessage = () => {
+    AppToaster.show({
+      message: "Successfully created your listing.",
+      icon: "tick-circle",
+      intent: Intent.SUCCESS,
+    });
+  };
+
+  const showFailureMessage = () => {
+    AppToaster.show({
+      message: "Listing could not be created",
+      icon: "warning-sign",
+      intent: Intent.DANGER,
+    });
+  };
+
   function createAListing() {
     (async function () {
       try {
@@ -46,7 +64,15 @@ export default function CreatePositionSection() {
           { title, description, requirements, compensation, deadline, location },
           userId
         );
+        showSuccessMessage();
+        setTitle("");
+        setDescription("");
+        setRequirements([]);
+        setLocation({ city: "", country: "" });
+        setCompensation(0);
+        setDeadline(null);
       } catch (err) {
+        showFailureMessage();
         console.log(err);
       }
     })();
