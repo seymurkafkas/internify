@@ -27,15 +27,13 @@ interface StudentProfileData {
   interests: string[];
 }
 
-export function saveStudentProfile(profileData: StudentProfileData, userId: string) {
-  return async function () {
-    try {
-      await db.collection("Students").doc(userId).set(profileData, { merge: true });
-    } catch (err) {
-      console.log(err);
-    }
-    return;
-  };
+export async function saveStudentProfile(profileData: StudentProfileData, userId: string) {
+  try {
+    await db.collection("Students").doc(userId).set(profileData, { merge: true });
+  } catch (err) {
+    console.log(err);
+  }
+  return;
 }
 
 export async function getStudentProfile(userId: string) {
