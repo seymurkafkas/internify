@@ -47,7 +47,7 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
   );
   return (
     <>
-      <Navbar>
+      <Navbar className="bp3-dark">
         <NavbarGroup align={Alignment.LEFT}>
           <NavbarHeading>INTERNIFY</NavbarHeading>
           <NavbarDivider />
