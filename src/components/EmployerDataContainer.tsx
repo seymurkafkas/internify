@@ -90,7 +90,7 @@ export default function EmployerDataContainer(props: Props) {
         <div className="flex flex-col mt-8 space-y-4 w-128">
           <div className="font-bold text-lg">Number of Employees: {profileDataState.numOfEmployees}</div>
           <div className="flex items-center text-lg space-x-2">
-            <div className="font-bold">Adress:</div>
+            <div className="font-bold">Address:</div>
             <div>{profileDataState.address}</div>
           </div>
           <div>
