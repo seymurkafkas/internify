@@ -34,7 +34,6 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
           setUser({ uid: user_id, displayName, email, photoURL, userType });
         } else {
           setUser(null);
-          setLoadingUser(false);
         }
       } catch (error) {
         // Most probably a connection error. Handle appropriately.
