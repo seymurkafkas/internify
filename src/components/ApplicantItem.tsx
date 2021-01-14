@@ -2,6 +2,7 @@ import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
 import { Button, Card, Elevation, Position, Tooltip, Intent, Alert } from "@blueprintjs/core";
+import * as Storage from "../services/storage";
 
 interface Props {
   studentUid: string;
@@ -17,16 +18,22 @@ interface Props {
 export default function ApplicantItem(props: Props) {
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [profilePicUrl, setProfilePicUrl] = React.useState(Storage.standardPhoto);
   const [isApproveDialogOpen, setIsApproveDialogOpen] = React.useState(false);
   function handleClick() {
     Navigation.goToViewApplicantPage(router, props.studentUid);
   }
-
+  React.useEffect(() => {
+    (async () => {
+      const newProfilePic = await Storage.getProfilePictureUrl(props.studentUid);
+      if (newProfilePic) {
+        setProfilePicUrl(newProfilePic);
+      }
+    })();
+  });
   return (
     <div className="flex flex-row items-center mt-11">
-      <img
-        className=" rounded-full h-28 w-28"
-        src="https://www.nicepng.com/png/detail/60-609253_smile-shapers-men-smile-smiling-man-conditioning-black.png"></img>
+      <img className=" rounded-full h-28 w-28 mr-3" src={profilePicUrl}></img>
       <Card className="w-96" interactive={true} elevation={Elevation.THREE}>
         <div>
           <p>
