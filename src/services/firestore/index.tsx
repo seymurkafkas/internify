@@ -91,6 +91,23 @@ export async function getMyListings(userId: string) {
   }
 }
 
+export async function getMyConcludedListings(userId: string) {
+  try {
+    const userDataResponse = await db.collection("Employers").doc(userId).collection("ConcludedListings").get();
+    const resultArr = [];
+    userDataResponse.forEach((doc) => {
+      resultArr.push({
+        ...doc.data(),
+        applicationCount: doc.data().applicants.length,
+        listingId: doc.id,
+      });
+    });
+    return resultArr;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getApplicantsForListing(userId: string, listingId: string) {
   try {
     const dataResponse = await db.collection("Employers").doc(userId).collection("Listings").doc(listingId).get();
@@ -248,6 +265,78 @@ export async function getMyApplications(studentUid: string) {
       const newListingData = {
         ...rest,
         applicationCount: applicants.length,
+        employerUid,
+        listingId,
+        companyName,
+      };
+      return newListingData;
+    });
+
+    const result = await Promise.all(appliedListingsData);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMyApprovedApplications(studentUid: string) {
+  try {
+    const appliedListings =
+      (await db.collection("Students").doc(studentUid).get())?.data()?.approvedApplications ?? null;
+    if (!appliedListings) {
+      return null;
+    }
+
+    const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
+      const listingData = (
+        await db.collection("Employers").doc(employerUid).collection("ConcludedListings").doc(listingId).get()
+      ).data();
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { applicants, ...rest } = listingData;
+
+      const queryResult = await db.collection("Employers").doc(employerUid).get();
+      const { companyName } = queryResult.data(); //Also email here
+      const newListingData = {
+        ...rest,
+        //  applicationCount: applicants.length,
+        employerUid,
+        listingId,
+        companyName,
+      };
+      return newListingData;
+    });
+
+    const result = await Promise.all(appliedListingsData);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMyRejectedApplications(studentUid: string) {
+  try {
+    const appliedListings =
+      (await db.collection("Students").doc(studentUid).get())?.data()?.rejectedApplications ?? null;
+    if (!appliedListings) {
+      return null;
+    }
+
+    const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
+      const listingData = (
+        await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get()
+      ).data();
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { applicants, ...rest } = listingData;
+
+      const queryResult = await db.collection("Employers").doc(employerUid).get();
+      const { companyName } = queryResult.data(); //Also email here
+      const newListingData = {
+        ...rest,
+        //  applicationCount: applicants.length,
         employerUid,
         listingId,
         companyName,
