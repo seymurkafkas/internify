@@ -12,6 +12,10 @@ function userPictureReference(userId: string) {
 }
 
 export async function uploadProfilePicture(userId: string, blob: Blob) {
+  if (!blob) {
+    throw "empty";
+  }
+  console.log(blob);
   const metadata = {
     contentType: "image/jpeg",
   };
