@@ -4,7 +4,7 @@ import { InputGroup, Button } from "@blueprintjs/core";
 function SearchBar(props: any) {
   return (
     <div className="flex flex-col space-y-2 mb-8">
-      <h2 className="text-3xl font-bold">Search</h2>
+      <h2 className="text-3xl font-bold mb-9">Find Listings!</h2>
       <div className="flex space-x-4">
         <InputGroup
           onChange={props.onKeywordChange}
@@ -12,8 +12,8 @@ function SearchBar(props: any) {
           className="rounded-lg w-96"
           placeholder={"Enter a keyword"}
         />
-        <Button className="bp3-outlined" onClick={props.onSearchClick}>
-          Find a job
+        <Button icon="search" className="bp3-minimal" onClick={props.onSearchClick}>
+          Search
         </Button>
       </div>
     </div>
