@@ -47,7 +47,7 @@ export default function SignInForm() {
       try {
         const userResponse = await Auth.logIn(email, password);
         setUser(userResponse);
-        Navigation.goToHome(router);
+        await Navigation.goToHome(router);
       } catch (err) {
         handleIncorrectPassword();
       }
