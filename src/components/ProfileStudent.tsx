@@ -6,6 +6,7 @@ import * as databaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
 import { enrolledItemTransformDate } from "../util/date";
 import { AppToaster } from "../components/Toaster";
+import * as storage from "../services/storage";
 
 interface EducationItem {
   institutionName: string;
@@ -39,6 +40,8 @@ export default function ProfileStudent() {
     interests: [],
     experience: [],
   });
+
+  const [profilePicUrl, setProfilePicUrl] = React.useState(storage.standardPhoto);
   const { user, loadingUser } = useUser();
   const uid = user?.uid ?? null;
 
@@ -52,6 +55,8 @@ export default function ProfileStudent() {
             enrolledItemTransformDate(studentProfileData.experience);
             enrolledItemTransformDate(studentProfileData.education);
             setUserData(studentProfileData);
+            const newProfilePic = await storage.getProfilePictureUrl(uid);
+            setProfilePicUrl(newProfilePic);
           }
           setLoadingData(false);
         } catch (err) {
@@ -284,9 +289,7 @@ export default function ProfileStudent() {
   return (
     <>
       <p className="text-5xl font-light mt-8 ml-48">My Profile</p>
-      <img
-        className=" rounded-full absolute h-36 w-36 mt-8 ml-48"
-        src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
+      <img className=" rounded-full absolute h-36 w-36 mt-8 ml-48" src={profilePicUrl}></img>
       <div className="flex flex-col items-start justify-start absolute space-y-4 ml-48 mt-8">
         <div className="ml-44">
           <div>
