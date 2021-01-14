@@ -89,6 +89,26 @@ textarea.inputUnderline,
   margin-bottom: 32px;
 }
 
+.IndexButtons {
+  width: 8rem;
+  height: 3rem;
+  background-color: #f2f7ff;
+  -webkit-box-shadow: 0px 0px 77px 30px #d1dced;
+  -moz-box-shadow: 0px 0px 77px 30px#d1dced;
+  box-shadow: 0px 0px 77px 30px #d1dced;
+  border-radius: 11px;
+  -moz-border-radius: 11px;
+  -webkit-border-radius: 11px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  vertical-align: bottom;
+}
+.IndexButtons:hover {
+  background-color: #fafcff;
+}
+
 .searchBar {
   max-width: 600px;
 }

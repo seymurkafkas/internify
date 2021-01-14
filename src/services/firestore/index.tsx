@@ -301,3 +301,52 @@ export async function getAllListings() {
     console.log(err);
   }
 }
+
+export async function approveApplicant(employerUid: string, studentUid: string, listingId: string) {
+  try {
+    const dataResponse = await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get();
+    const approvedListingId = await db.collection("Employers").doc(employerUid).collection("ConcludedListings").doc();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { applicants, ...rest } = dataResponse.data();
+    approvedListingId.set({ ...rest, approvedApplicant: studentUid });
+
+    await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).delete();
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        approvedApplications: firebase.firestore.FieldValue.arrayUnion({
+          employerUid,
+          listingId: approvedListingId.id,
+        }),
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function rejectApplicant(employerUid: string, studentUid: string, listingId: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        rejectedApplicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
+        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
+      });
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        myApplications: firebase.firestore.FieldValue.arrayRemove({ employerUid, listingId }),
+        rejectedApplications: firebase.firestore.FieldValue.arrayUnion({ employerUid, listingId }),
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
