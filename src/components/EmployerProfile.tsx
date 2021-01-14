@@ -3,10 +3,11 @@ import {
   Button, //H5,
   InputGroup,
   TextArea,
-  // Switch,
+  Intent,
 } from "@blueprintjs/core";
 import * as databaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
+import { AppToaster } from "../components/Toaster";
 
 export default function EmployerProfile() {
   const [profileDataState, setProfileDataState] = React.useState({
@@ -19,6 +20,14 @@ export default function EmployerProfile() {
   const [loadingData, setLoadingData] = React.useState(true);
   const { user, loadingUser } = useUser();
   const uid = user?.uid ?? null;
+
+  const showUpdateToaster = () => {
+    AppToaster.show({
+      message: "Profile Saved.",
+      icon: "tick-circle",
+      intent: Intent.SUCCESS,
+    });
+  };
 
   React.useEffect(() => {
     (async () => {
@@ -43,6 +52,7 @@ export default function EmployerProfile() {
       try {
         console.log(profileDataState, uid);
         await databaseService.saveEmployerProfile(profileDataState, uid)();
+        showUpdateToaster();
       } catch (err) {
         console.log(err);
       }
@@ -142,7 +152,7 @@ export default function EmployerProfile() {
           />
         </div>
         <div className="flex justify-end">
-          <Button onClick={handleProfileUpdate} className="bp3-outlined">
+          <Button intent={Intent.PRIMARY} icon="saved" className="bp3-minimal" onClick={handleProfileUpdate}>
             Update
           </Button>
         </div>
