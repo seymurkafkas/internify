@@ -1,5 +1,5 @@
 import React from "react";
-import { EditableText, Button, Intent } from "@blueprintjs/core";
+import { EditableText, Button, Position, Tooltip, Intent } from "@blueprintjs/core";
 import EnrolledItem from "./EnrolledItem";
 import { DateRange } from "@blueprintjs/datetime";
 import * as databaseService from "../services/firestore";
@@ -43,6 +43,38 @@ export default function ProfileStudent() {
 
   const [profilePicUrl, setProfilePicUrl] = React.useState(storage.standardPhoto);
   const { user, loadingUser } = useUser();
+  const hiddenFileInput = React.useRef(null);
+
+  const handleUploadClick = () => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleUploadChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    if (fileUploaded) {
+      (async () => {
+        try {
+          await storage.uploadProfilePicture(uid, fileUploaded);
+          const newProfilePic = await storage.getProfilePictureUrl(uid);
+          setProfilePicUrl(newProfilePic);
+          showUploadSuccessMessage();
+        } catch (err) {
+          showUploadFailureMessage("Could not upload the photo! Try again later.");
+        }
+      })();
+    }
+  };
+
+  const handlePhotoDelete = () => {
+    (async () => {
+      try {
+        await storage.deleteProfilePicture(uid);
+        setProfilePicUrl(storage.standardPhoto);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  };
   const uid = user?.uid ?? null;
 
   React.useEffect(() => {
@@ -56,7 +88,9 @@ export default function ProfileStudent() {
             enrolledItemTransformDate(studentProfileData.education);
             setUserData(studentProfileData);
             const newProfilePic = await storage.getProfilePictureUrl(uid);
-            setProfilePicUrl(newProfilePic);
+            if (newProfilePic) {
+              setProfilePicUrl(newProfilePic);
+            }
           }
           setLoadingData(false);
         } catch (err) {
@@ -268,6 +302,20 @@ export default function ProfileStudent() {
     });
   };
 
+  const showUploadFailureMessage = (error: string) => {
+    AppToaster.show({
+      message: error,
+      intent: Intent.DANGER,
+    });
+  };
+
+  const showUploadSuccessMessage = () => {
+    AppToaster.show({
+      message: "Upload successful!",
+      intent: Intent.SUCCESS,
+    });
+  };
+
   function handleSaveProfile() {
     (async () => {
       try {
@@ -288,43 +336,59 @@ export default function ProfileStudent() {
   }
   return (
     <>
+      <input type="file" ref={hiddenFileInput} onChange={handleUploadChange} className="hidden" />
       <p className="text-5xl font-light mt-8 ml-48">My Profile</p>
-      <img className=" rounded-full absolute h-36 w-36 mt-8 ml-48" src={profilePicUrl}></img>
-      <div className="flex flex-col items-start justify-start absolute space-y-4 ml-48 mt-8">
-        <div className="ml-44">
-          <div>
-            <b>Name</b>
+
+      <div className="flex flex-col items-start justify-start space-y-4 ml-48 mt-8">
+        <div className="flex flex-row items-start justify-start">
+          <div className="ml-24 flex flex-col justify-start">
+            <div className="flex flex-row justify-evenly">
+              <Tooltip intent={Intent.NONE} content="Upload Photo" position={Position.TOP}>
+                <Button icon="camera" className="bp3-minimal" onClick={handleUploadClick}></Button>
+              </Tooltip>
+              <Tooltip intent={Intent.NONE} content="Delete Photo" position={Position.TOP}>
+                <Button icon="trash" className="bp3-minimal" onClick={handlePhotoDelete}></Button>
+              </Tooltip>
+            </div>
+            <img className=" rounded-full h-36 w-36 " src={profilePicUrl}></img>
           </div>
-          <input
-            className="bp3-input .modifier mt-2"
-            type="text"
-            dir="auto"
-            onChange={handleNameChange}
-            value={userData.name}
-            placeholder="John Smith"
-          />
-        </div>
-        <div className="ml-44">
           <div>
-            <b>Location</b>
-          </div>
-          <div className="space-x-4 mt-2">
-            <input
-              className="bp3-input .modifier"
-              type="text"
-              dir="auto"
-              onChange={handleLocationChange("city")}
-              value={userData.location.city}
-              placeholder="Istanbul"
-            />
-            <input
-              className="bp3-input .modifier"
-              type="text"
-              dir="auto"
-              onChange={handleLocationChange("country")}
-              value={userData.location.country}
-              placeholder="Turkey"
-            />
+            <div className="ml-20">
+              <div>
+                <b>Name</b>
+              </div>
+              <input
+                className="bp3-input .modifier mt-2"
+                type="text"
+                dir="auto"
+                onChange={handleNameChange}
+                value={userData.name}
+                placeholder="John Smith"
+              />
+            </div>
+            <div className="ml-20">
+              <div className="mt-6">
+                <b>Location</b>
+              </div>
+              <div className="space-x-4 mt-2">
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleLocationChange("city")}
+                  value={userData.location.city}
+                  placeholder="Istanbul"
+                />
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleLocationChange("country")}
+                  value={userData.location.country}
+                  placeholder="Turkey"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div>
