@@ -23,7 +23,9 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
   const router = useRouter();
 
   function handleSignOut() {
-    signOut();
+    (async () => {
+      await signOut();
+    })();
   }
 
   const applicationContent = (

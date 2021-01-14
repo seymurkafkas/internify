@@ -29,7 +29,9 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
           setLoadingUser(false);
           if (router.pathname !== "/Login" && router.pathname !== "/Register" && router.pathname !== "/") {
             //Only redirect if in another page than login or register or index
-            goToIndex(router);
+            (async () => {
+              await goToIndex(router);
+            })();
           }
         }
       } catch (error) {
