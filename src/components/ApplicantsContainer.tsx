@@ -2,39 +2,47 @@ import React from "react";
 import ApplicantItem from "./ApplicantItem";
 import * as DatabaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
-function ApplicantList(props: any) {
-  const listings = props.items.map((item, index) => {
-    return <ApplicantItem key={index} {...item} />;
-  });
-  return <>{listings}</>;
-}
 
 export default function ApplicantsContainer(props: any) {
   const [applicantSmallData, setApplicantSmallData] = React.useState([]);
-  const [applicantUIDs, setApplicantUIDs] = React.useState([]);
   const { user, loadingUser } = useUser();
   const listingId = props.listingId;
   const userId = user?.uid;
+
+  function handleApprove(studentUid: string) {
+    return () => {
+      (async () => {
+        await DatabaseService.approveApplicant(userId, studentUid, listingId);
+      })();
+    };
+  }
+
+  function handleReject(studentUid: string, index: number) {
+    return () => {
+      (async () => {
+        await DatabaseService.rejectApplicant(userId, studentUid, listingId);
+        setApplicantSmallData((prevApplicantData) => {
+          const newApplicantData = [...prevApplicantData];
+          newApplicantData.splice(index, 1);
+          return newApplicantData;
+        });
+      })();
+    };
+  }
   React.useEffect(() => {
-    (async () => {
-      if (!loadingUser) {
+    !loadingUser &&
+      user &&
+      (async function fetchApplicantData() {
+        let applicantUids = null;
         try {
-          const applicantUids = await DatabaseService.getApplicantsForListing(userId, listingId);
-          setApplicantUIDs(applicantUids);
+          applicantUids = await DatabaseService.getApplicantsForListing(userId, listingId);
         } catch (err) {
           console.log(err);
         }
-      }
-    })();
-  }, [listingId, userId, loadingUser]);
 
-  React.useEffect(() => {
-    applicantUIDs &&
-      (async function fetchApplicantData() {
-        const result = await applicantUIDs.reduce(async function (currentApplicantList, currentUID: string) {
+        const result = await applicantUids.reduce(async function (currentApplicantList, currentUID) {
           try {
             const applicantData = await DatabaseService.getStudentProfile(currentUID);
-
             let positionString = "Undeclared";
             let locationString = "Undeclared";
             let educationString = "Undeclared";
@@ -73,7 +81,8 @@ export default function ApplicantsContainer(props: any) {
               position: positionString,
               location: locationString,
               education: educationString,
-              uid: currentUID,
+              studentUid: currentUID,
+              listingId: listingId,
             };
             const currentList = await currentApplicantList;
             currentList.push(applicantShrinkedData);
@@ -84,49 +93,22 @@ export default function ApplicantsContainer(props: any) {
         }, Promise.resolve([]));
         setApplicantSmallData(result);
       })();
-  }, [applicantUIDs]);
-
-  /*   const items = [
-    {
-      name: "John Doe",
-      dateApplied: "12/13/2020",
-      position: "Data Engineer",
-      location: "İstanbul, Turkey",
-      education: "Istanbul Technical University",
-      uid: "withid2",
-    },
-    {
-      name: "Mary Jane",
-      dateApplied: "3/45/2020",
-      position: "Data Manager",
-      location: "İstanbul, Turkey",
-      education: "Istanbul Technical University",
-      uid: "withid1",
-    },
-    {
-      name: "Tom Holland",
-      dateApplied: "3/2/2020",
-      position: "Software Engineer",
-      location: "İstanbul, Turkey",
-      education: "Koc University",
-      uid: "withid4",
-    },
-    {
-      name: "Rick Sanchez",
-      dateApplied: "3/9/2020",
-      position: "Embedded System Engineer",
-      location: "İstanbul, Turkey",
-      education: "Sabanci University",
-      uid: "withid5",
-    },
-  ];
- */
+  }, [listingId, loadingUser, userId, user]);
 
   return (
     <div>
       <h2 className="text-3xl font-bold mb-8">Applicants</h2>
-      <div className="w-128 space-y-4">
-        <ApplicantList items={applicantSmallData} />
+      <div>
+        {applicantSmallData.map((item, index) => {
+          return (
+            <ApplicantItem
+              key={index}
+              handleApprove={handleApprove(item.studentUid)}
+              handleReject={handleReject(item.studentUid, index)}
+              {...item}
+            />
+          );
+        })}
       </div>
     </div>
   );
