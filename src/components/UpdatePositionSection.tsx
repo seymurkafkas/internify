@@ -1,17 +1,12 @@
 import React, { useState } from "react";
-import {
-  Button,
-  //Card,
-  //Elevation,
-  NumericInput,
-  EditableText,
-} from "@blueprintjs/core";
+import { Button, Position, Intent, NumericInput, EditableText, Tooltip, Alert } from "@blueprintjs/core";
 import { DateInput } from "@blueprintjs/datetime";
 // import { ItemRenderer, MultiSelect } from "@blueprintjs/select";
 import * as DatabaseService from "../services/firestore";
 import * as NavigationService from "../services/navigation";
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
+import { AppToaster } from "./Toaster";
 
 const monthNames = [
   "January",
@@ -55,11 +50,28 @@ function UpdatePositionSection(props: Props) {
   const [location, setLocation] = React.useState({ city: "", country: "" });
   const [compensation, setCompensation] = useState(0);
   const [deadline, setDeadline] = useState(null);
+  const [isAlertOpen, setIsAlertOpen] = React.useState(false);
   const { user, loadingUser } = useUser();
   const router = useRouter();
   const userId = user?.uid ?? null;
   const listingId = props.listingId;
   console.log(listingId, userId);
+  const showUpdateToaster = () => {
+    AppToaster.show({
+      message: "Updated.",
+      icon: "cloud",
+      intent: Intent.PRIMARY,
+    });
+  };
+
+  const showDeleteToaster = () => {
+    AppToaster.show({
+      message: "Deleted listing",
+      icon: "trash",
+      intent: Intent.DANGER,
+    });
+  };
+
   React.useEffect(() => {
     (async function () {
       if (user) {
@@ -86,6 +98,7 @@ function UpdatePositionSection(props: Props) {
     (async function () {
       try {
         await DatabaseService.deleteListing(listingId, userId);
+        showDeleteToaster();
         NavigationService.goToMyListingsPage(router);
       } catch (err) {
         console.log(err);
@@ -101,6 +114,7 @@ function UpdatePositionSection(props: Props) {
           userId,
           listingId
         );
+        showUpdateToaster();
       } catch (err) {
         console.log(err);
       }
@@ -167,9 +181,14 @@ function UpdatePositionSection(props: Props) {
             value={title}
             placeholder="Title of the Listing"
           />
-          <Button className="bp3-outlined w-32" onClick={handleDeleteListing}>
-            Close Position
-          </Button>
+          <Tooltip intent={Intent.DANGER} content="Delete" position={Position.RIGHT}>
+            <Button
+              icon="trash"
+              className="bp3-minimal w-20"
+              onClick={() => {
+                setIsAlertOpen(true);
+              }}></Button>
+          </Tooltip>
         </div>
         <div className="text-xl font-bold mb-4">Description</div>
         <EditableText
@@ -211,21 +230,21 @@ function UpdatePositionSection(props: Props) {
             return (
               <div key={index} className="flex mt-2 space-x-2">
                 <input
-                  className="bp3-input .modifier"
+                  className="bp3-input"
                   type="text"
                   dir="auto"
                   onChange={handleRequirementsChange(index)("skill")}
                   value={requirementElement.skill}
                   placeholder="Skill"
                 />
-                <div className="bp3-select .modifier">
+                <div className="bp3-select bp3-minimal">
                   <select value={requirementElement.level} onChange={handleRequirementsChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Intermediate</option>
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-outlined" onClick={removeRequirementItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeRequirementItem(index)}></Button>
               </div>
             );
           })}
@@ -253,10 +272,23 @@ function UpdatePositionSection(props: Props) {
         value={deadline}
       />
       <div className="flex justify-end">
-        <Button onClick={updateListing} className="bp3-outlined">
+        <Button intent={Intent.PRIMARY} icon="saved" onClick={updateListing} className="bp3-minimal">
           Update
         </Button>
       </div>
+      <Alert
+        className=""
+        cancelButtonText="Cancel"
+        confirmButtonText="Delete"
+        icon="remove"
+        intent={Intent.DANGER}
+        isOpen={isAlertOpen}
+        onCancel={() => {
+          setIsAlertOpen(false);
+        }}
+        onConfirm={handleDeleteListing}>
+        <p>Are you sure you want to delete this listing? This cannot be undone.</p>
+      </Alert>
     </div>
   );
 }
