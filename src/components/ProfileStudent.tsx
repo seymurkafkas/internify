@@ -345,7 +345,7 @@ export default function ProfileStudent() {
                     range={educationItem.range}
                     educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
                   <Button
-                    className="ml-8 place-self-center bp3-outlined"
+                    className="ml-8 place-self-center bp3-minimal"
                     icon="cross"
                     onClick={removeEducationItem(index)}></Button>
                 </div>
@@ -373,7 +373,7 @@ export default function ProfileStudent() {
                   range={experienceItem.range}
                   experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
                 <Button
-                  className="ml-8 place-self-center bp3-outlined"
+                  className="ml-8 place-self-center bp3-minimal"
                   icon="cross"
                   onClick={removeExperienceItem(index)}></Button>
               </div>
@@ -402,14 +402,14 @@ export default function ProfileStudent() {
                   value={skillElement.skill}
                   placeholder="Skill"
                 />
-                <div className="bp3-select .modifier">
+                <div className="bp3-select bp3-minimal">
                   <select value={skillElement.level} onChange={handleSkillsChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Intermediate</option>
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-outlined" onClick={removeSkillItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeSkillItem(index)}></Button>
               </div>
             );
           })}
@@ -435,7 +435,7 @@ export default function ProfileStudent() {
                   value={languageElement.language}
                   placeholder="Language"
                 />
-                <div className="bp3-select .modifier">
+                <div className="bp3-select bp3-minimal">
                   <select value={languageElement.level} onChange={handleLanguagesChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Elementary </option>
@@ -444,7 +444,7 @@ export default function ProfileStudent() {
                     <option value="5">Native</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-outlined" onClick={removeLanguageItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeLanguageItem(index)}></Button>
               </div>
             );
           })}
@@ -470,7 +470,7 @@ export default function ProfileStudent() {
                   value={interestItem}
                   placeholder="Interest"
                 />
-                <Button icon="cross" className="bp3-outlined" onClick={removeInterestItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeInterestItem(index)}></Button>
               </div>
             );
           })}
