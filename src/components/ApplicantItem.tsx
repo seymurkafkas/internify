@@ -1,7 +1,7 @@
 import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
-import { Button, Card, Elevation } from "@blueprintjs/core";
+import { Button, Card, Elevation, Position, Tooltip, Intent, Alert } from "@blueprintjs/core";
 
 interface Props {
   studentUid: string;
@@ -16,7 +16,8 @@ interface Props {
 
 export default function ApplicantItem(props: Props) {
   const router = useRouter();
-
+  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  const [isApproveDialogOpen, setIsApproveDialogOpen] = React.useState(false);
   function handleClick() {
     Navigation.goToViewApplicantPage(router, props.studentUid);
   }
@@ -45,10 +46,58 @@ export default function ApplicantItem(props: Props) {
         </div>
       </Card>
       <div className="ml-4 flex flex-col justify-between ">
-        <Button onClick={props.handleApprove} className="mt-4 bp3-minimal" icon="endorsed"></Button>
-        <Button onClick={props.handleReject} className="mt-4 bp3-minimal" icon="delete"></Button>
-        <Button onClick={handleClick} className=" mt-6 bp3-minimal" icon="eye-open"></Button>
+        <Tooltip intent={Intent.SUCCESS} content="Approve" position={Position.RIGHT}>
+          <Button
+            onClick={() => {
+              setIsApproveDialogOpen(true);
+            }}
+            className="mt-4 bp3-minimal"
+            icon="endorsed"></Button>
+        </Tooltip>
+        <Tooltip intent={Intent.DANGER} content="Reject" position={Position.RIGHT}>
+          <Button
+            onClick={() => {
+              setIsDialogOpen(true);
+            }}
+            className="mt-4 bp3-minimal"
+            icon="delete"></Button>
+        </Tooltip>
+        <Tooltip content="View Profile" position={Position.RIGHT}>
+          <Button onClick={handleClick} className=" mt-6 bp3-minimal" icon="eye-open"></Button>
+        </Tooltip>
       </div>
+
+      <Alert
+        className=""
+        cancelButtonText="Cancel"
+        confirmButtonText="Delete"
+        icon="remove"
+        intent={Intent.DANGER}
+        isOpen={isDialogOpen}
+        onCancel={() => {
+          setIsDialogOpen(false);
+        }}
+        onConfirm={props.handleReject}>
+        <p>
+          Are you sure you want to reject <b>{props.name}</b> ?
+        </p>
+      </Alert>
+
+      <Alert
+        className=""
+        cancelButtonText="Cancel"
+        confirmButtonText="Approve"
+        icon="confirm"
+        intent={Intent.SUCCESS}
+        isOpen={isApproveDialogOpen}
+        onCancel={() => {
+          setIsApproveDialogOpen(false);
+        }}
+        onConfirm={props.handleApprove}>
+        <p>
+          If you approve <b>{props.name}</b>, the listing will be closed. Do you wish to continue?
+        </p>
+      </Alert>
     </div>
   );
 }
