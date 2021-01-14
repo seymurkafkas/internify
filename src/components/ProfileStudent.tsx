@@ -491,7 +491,7 @@ export default function ProfileStudent() {
           value={userData.description}
           selectAllOnFocus={true}
         />
-        <Button className="bp3-outlined" onClick={handleSaveProfile}>
+        <Button intent={Intent.PRIMARY} icon="saved" className="bp3-minimal" onClick={handleSaveProfile}>
           Update
         </Button>
       </div>

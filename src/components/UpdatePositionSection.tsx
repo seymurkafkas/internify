@@ -56,6 +56,7 @@ function UpdatePositionSection(props: Props) {
   const userId = user?.uid ?? null;
   const listingId = props.listingId;
   console.log(listingId, userId);
+
   const showUpdateToaster = () => {
     AppToaster.show({
       message: "Updated.",

@@ -1,10 +1,12 @@
 import React from "react";
-import { Button } from "@blueprintjs/core";
+import { Button, Intent } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
 import * as Navigation from "../services/navigation";
+import { AppToaster } from "../components/Toaster";
+
 interface ListingData {
   title: string;
   companyName: string;
@@ -37,9 +39,32 @@ export default function JobsListingDetailContainer(props: any) {
   });
   const { user, loadingUser } = useUser();
   const router = useRouter();
+
+  const showApplyToaster = () => {
+    AppToaster.show({
+      message: "Applied successfully",
+      icon: "confirm",
+      intent: Intent.NONE,
+    });
+  };
+
+  const showWithdrawToaster = () => {
+    AppToaster.show({
+      message: "Application Withdrawn",
+      icon: "confirm",
+      intent: Intent.NONE,
+    });
+  };
+
   function handleApplyButtonClick() {
     (async () => {
       await DatabaseService.applyForListing(listingId, employerUid, user?.uid ?? null);
+      setListingDetail((prevDetails) => {
+        const newDetails = { ...prevDetails };
+        newDetails.applicationCount += 1;
+        return newDetails;
+      });
+      showApplyToaster();
       setIsAnApplicant(true);
     })();
   }
@@ -47,6 +72,12 @@ export default function JobsListingDetailContainer(props: any) {
   function handleWithdrawButtonClick() {
     (async () => {
       await DatabaseService.withdrawApplication(listingId, employerUid, user?.uid ?? null);
+      setListingDetail((prevDetails) => {
+        const newDetails = { ...prevDetails };
+        newDetails.applicationCount -= 1;
+        return newDetails;
+      });
+      showWithdrawToaster();
       setIsAnApplicant(false);
     })();
   }
