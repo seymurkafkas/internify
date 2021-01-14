@@ -9,13 +9,13 @@ const instance = firebase.auth();
  * @param password - The user's password.
  */
 export async function createUser(email: string, password: string) {
-  return instance.createUserWithEmailAndPassword(email, password);
+  return await instance.createUserWithEmailAndPassword(email, password);
 }
 
-export function logIn(email: string, password: string) {
-  return instance.signInWithEmailAndPassword(email, password);
+export async function logIn(email: string, password: string) {
+  return await instance.signInWithEmailAndPassword(email, password);
 }
 
-export function signOut() {
-  return instance.signOut();
+export async function signOut() {
+  return await instance.signOut();
 }

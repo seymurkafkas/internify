@@ -21,7 +21,9 @@ interface Props {}
 
 export default function LayoutSignedInStudent(props: PropsWithChildren<Props>) {
   function handleSignOut() {
-    signOut();
+    (async () => {
+      await signOut();
+    })();
   }
   const router = useRouter();
 
