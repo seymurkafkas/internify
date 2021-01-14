@@ -14,7 +14,13 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
   const [loadingUser, setLoadingUser] = useState(true); // Helpful, to update the UI accordingly.
   const router = useRouter();
 
-  if (!user && router.pathname !== "/Login" && router.pathname !== "/Register" && router.pathname !== "/") {
+  if (
+    !user &&
+    !loadingUser &&
+    router.pathname !== "/Login" &&
+    router.pathname !== "/Register" &&
+    router.pathname !== "/"
+  ) {
     //Only redirect if in another page than login or register or index
     (async () => {
       await goToIndex(router);
