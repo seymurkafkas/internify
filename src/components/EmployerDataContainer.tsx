@@ -4,6 +4,7 @@ import { useUser } from "../services/auth/userContext";
 import SmallListingContainerStudent from "./SmallListingContainerStudent";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
+import * as Storage from "../services/storage";
 
 interface Props {
   employerUid: string;
@@ -18,6 +19,7 @@ export default function EmployerDataContainer(props: Props) {
     sector: "",
   });
   const [loadingData, setLoadingData] = React.useState(true);
+  const [picUrl, setPicUrl] = React.useState(Storage.standardPhoto);
   const [loadingListingData, setLoadingListingData] = React.useState(true);
   const [noDataAvailable, setNoDataAvailable] = React.useState(true);
   const [listings, setListings] = React.useState([]);
@@ -53,6 +55,10 @@ export default function EmployerDataContainer(props: Props) {
           const listingData = await databaseService.getEmployerListings(employerUid);
 
           setListings(listingData);
+          const profilePicUrl = await Storage.getProfilePictureUrl(employerUid);
+          if (profilePicUrl) {
+            setPicUrl(profilePicUrl);
+          }
         } catch (err) {
           console.log(err);
         }
@@ -79,9 +85,7 @@ export default function EmployerDataContainer(props: Props) {
     <div className="flex flex-row justify-between mr-128 mt-16 ml-64">
       <div>
         <div className="flex content-center space-x-8">
-          <img
-            className="rounded-full h-36 w-36"
-            src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
+          <img className="rounded-full h-36 w-36" src={picUrl}></img>
           <div className="flex flex-col mt-8">
             <p className="text-xl">{profileDataState.sector} Sector of</p>
             <p className="text-5xl font-bold">{profileDataState.companyName}</p>
