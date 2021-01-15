@@ -116,17 +116,6 @@ function getAverageCompensation(lings) {
   return sum / lings.length;
 }
 
-async function saveRecommendation(recs: any, userId: any) {
-  return async function () {
-    try {
-      await db.collection("Students").doc(userId).set({ recommendations: recs }, { merge: true });
-    } catch (err) {
-      console.log(err);
-    }
-    return;
-  };
-}
-
 export async function setRecommendations() {
   const listings = await getAllListings();
   const students = await getAllStudents();
@@ -157,7 +146,7 @@ export async function setRecommendations() {
 
     //save for each student
     try {
-      await saveRecommendation(recs, stud.id);
+      await saveRecommendations(recs, stud.id);
     } catch (err) {
       console.log(err);
     }
@@ -184,20 +173,21 @@ export async function getAllStudents() {
   }
 }
 
-export function saveRecommendations(recs: any, userId: string) {
-  return async function () {
-    try {
-      await db
-        .collection("Students")
-        .doc(userId)
-        .update({
+export async function saveRecommendations(recs: any, userId: string) {
+  try {
+    await db
+      .collection("Students")
+      .doc(userId)
+      .set(
+        {
           recommendations: firebase.firestore.FieldValue.arrayUnion(recs),
-        });
-    } catch (err) {
-      console.log(err);
-    }
-    return;
-  };
+        },
+        { merge: true }
+      );
+  } catch (err) {
+    console.log(err);
+  }
+  return;
 }
 
 export async function saveStudentProfile(profileData: StudentProfileData, userId: string) {
