@@ -31,7 +31,7 @@ export default function ApplicantConcludedItem(props: Props) {
     })();
   }, [props.studentUid]);
   return (
-    <div className="flex flex-row items-center mt-11">
+    <div className="flex flex-row items-center">
       <Card className="w-160 border-xl" interactive={true}>
         <div className="flex flex-row space-x-2">
           <img className=" rounded-full h-28 w-28 mr-3" src={profilePicUrl}></img>

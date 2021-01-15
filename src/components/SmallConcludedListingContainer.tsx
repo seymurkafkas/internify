@@ -14,7 +14,7 @@ interface Props {
 
 export default function SmallListingContainer(props: Props) {
   return (
-    <Card className="w-96 mb-8" interactive={true} elevation={Elevation.TWO}>
+    <Card className="w-96" interactive={true} elevation={Elevation.TWO}>
       <div>
         <div className="flex justify-between">
           <p className="font-bold text-xl mb-2">{props.title}</p>
