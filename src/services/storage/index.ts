@@ -5,7 +5,7 @@ import "firebase/storage";
 const storage = firebase.storage();
 
 export const standardPhoto =
-  "https://lh3.googleusercontent.com/proxy/tadsVIOsABGAk9SvE9-7S0sJxRCP8O15YVY4JcdYODm9SezOWoxPOBuEwWTTC83UnpbfbB1wFbtcwHjAyDXN5fRUg1KjXCTPedv6mfbwxjRQA60puQMLTsgVGEGaP0gbapMpk8KunA";
+  "https://www.dovercourt.org/wp-content/uploads/2019/11/610-6104451_image-placeholder-png-user-profile-placeholder-image-png.jpg";
 
 function userPictureReference(userId: string) {
   return storage.ref().child(`users/${userId}/profilePicture.jpg`);

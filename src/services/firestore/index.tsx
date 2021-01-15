@@ -207,7 +207,6 @@ export async function getMyConcludedListings(userId: string) {
     userDataResponse.forEach((doc) => {
       resultArr.push({
         ...doc.data(),
-        applicationCount: doc.data().applicants.length,
         listingId: doc.id,
       });
     });
@@ -481,7 +480,7 @@ export async function getEmployerListings(employerUid: string) {
 
 export async function getAllListings() {
   try {
-    const { docs: listingDocs } = await await db.collectionGroup("Listings").get();
+    const { docs: listingDocs } = await db.collectionGroup("Listings").get();
     const ListingPromises = listingDocs.map(async (doc) => {
       /* eslint-disable-next-line */
       const { applicants, ...rest } = doc.data();
@@ -507,11 +506,9 @@ export async function approveApplicant(employerUid: string, studentUid: string, 
     const approvedListingId = await db.collection("Employers").doc(employerUid).collection("ConcludedListings").doc();
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { applicants, ...rest } = dataResponse.data();
-    approvedListingId.set({ ...rest, approvedApplicant: studentUid });
-
+    const { applicants, rejectedApplicants, ...rest } = dataResponse.data();
+    await approvedListingId.set({ ...rest, approvedApplicant: studentUid });
     await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).delete();
-
     await db
       .collection("Students")
       .doc(studentUid)

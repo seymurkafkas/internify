@@ -33,7 +33,7 @@ export default function ApplicantsContainer(props: any) {
     !loadingUser &&
       user &&
       (async function fetchApplicantData() {
-        let applicantUids = null;
+        let applicantUids = [];
         try {
           applicantUids = await DatabaseService.getApplicantsForListing(userId, listingId);
         } catch (err) {

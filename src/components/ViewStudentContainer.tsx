@@ -164,7 +164,7 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
         console.log(err);
       }
     })();
-  });
+  }, [applicantUid]);
 
   let locationString = "Undeclared";
   if (applicantData.location.city && applicantData.location.country) {
