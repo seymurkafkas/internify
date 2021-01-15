@@ -4,7 +4,6 @@ import ProfileStudent from "../components/ProfileStudent";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import EmployerProfile from "../components/EmployerProfile";
 import { useUser } from "../services/auth/userContext";
-import * as databaseService from "../services/firestore";
 
 export default function Profile() {
   const { user, loadingUser } = useUser();
