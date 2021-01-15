@@ -3,6 +3,7 @@ import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import { useUser } from "../services/auth/userContext";
 import MyConcludedApplications from "../components/MyConcludedApplications";
+import MyConcludedListings from "../components/MyConcludedListings";
 
 export default function Login() {
   const user = useUser();
@@ -17,7 +18,7 @@ export default function Login() {
   } else if (typeOfUser === "Employer") {
     content = (
       <LayoutSignedInEmployer>
-        <div />
+        <MyConcludedListings></MyConcludedListings>
       </LayoutSignedInEmployer>
     );
   } else {
