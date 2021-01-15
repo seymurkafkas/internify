@@ -23,15 +23,10 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
   const router = useRouter();
 
   function handleSignOut() {
-    signOut();
+    (async () => {
+      await signOut();
+    })();
   }
-  const settings = (
-    <Menu>
-      <MenuItem icon="settings" text="Settings" />
-      <MenuDivider />
-      <MenuItem icon="log-out" onClick={handleSignOut} text="Sign Out" />
-    </Menu>
-  );
 
   const applicationContent = (
     <Menu>
@@ -54,7 +49,7 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
   );
   return (
     <>
-      <Navbar>
+      <Navbar className="bp3-dark">
         <NavbarGroup align={Alignment.LEFT}>
           <NavbarHeading>INTERNIFY</NavbarHeading>
           <NavbarDivider />
@@ -70,9 +65,7 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
             text="Profile"
           />
           <NavbarDivider />
-          <Popover content={settings} minimal position={Position.TOP}>
-            <Button icon="cog" text="" minimal />
-          </Popover>
+          <Button className={Classes.MINIMAL} icon="log-out" onClick={handleSignOut} text="Sign Out"></Button>
         </NavbarGroup>
       </Navbar>
       {props.children}

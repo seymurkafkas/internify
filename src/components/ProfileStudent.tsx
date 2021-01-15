@@ -1,10 +1,12 @@
 import React from "react";
-import { EditableText, Button } from "@blueprintjs/core";
+import { EditableText, Button, Position, Tooltip, Intent } from "@blueprintjs/core";
 import EnrolledItem from "./EnrolledItem";
 import { DateRange } from "@blueprintjs/datetime";
 import * as databaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
 import { enrolledItemTransformDate } from "../util/date";
+import { AppToaster } from "../components/Toaster";
+import * as storage from "../services/storage";
 
 interface EducationItem {
   institutionName: string;
@@ -28,15 +30,51 @@ const constants = {
 
 export default function ProfileStudent() {
   const [loadingData, setLoadingData] = React.useState(true);
-  const [name, setName] = React.useState("");
-  const [location, setLocation] = React.useState({ city: "", country: "" });
-  const [education, setEducation] = React.useState([]);
-  const [description, setDescription] = React.useState("");
-  const [skills, setSkills] = React.useState([]);
-  const [languages, setLanguages] = React.useState([]);
-  const [interests, setInterests] = React.useState([]);
-  const [experience, setExperience] = React.useState([]);
+  const [userData, setUserData] = React.useState({
+    name: "",
+    location: { city: "", country: "" },
+    education: [],
+    description: "",
+    skills: [],
+    languages: [],
+    interests: [],
+    experience: [],
+  });
+
+  const [profilePicUrl, setProfilePicUrl] = React.useState(storage.standardPhoto);
   const { user, loadingUser } = useUser();
+  const hiddenFileInput = React.useRef(null);
+
+  const handleUploadClick = () => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleUploadChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    if (fileUploaded) {
+      (async () => {
+        try {
+          await storage.uploadProfilePicture(uid, fileUploaded);
+          const newProfilePic = await storage.getProfilePictureUrl(uid);
+          setProfilePicUrl(newProfilePic);
+          showUploadSuccessMessage();
+        } catch (err) {
+          showUploadFailureMessage(err);
+        }
+      })();
+    }
+  };
+
+  const handlePhotoDelete = () => {
+    (async () => {
+      try {
+        await storage.deleteProfilePicture(uid);
+        setProfilePicUrl(storage.standardPhoto);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  };
   const uid = user?.uid ?? null;
 
   React.useEffect(() => {
@@ -44,27 +82,15 @@ export default function ProfileStudent() {
       if (user) {
         try {
           const studentProfileData = await databaseService.getStudentProfile(uid);
+          console.log(studentProfileData);
           if (studentProfileData) {
-            const {
-              name: newName,
-              location: newLocation,
-              education: newEducation,
-              description: newDescription,
-              skills: newSkills,
-              languages: newLanguages,
-              interests: newInterests,
-              experience: newExperience,
-            } = studentProfileData;
-            enrolledItemTransformDate(newEducation);
-            enrolledItemTransformDate(newExperience);
-            setName(newName);
-            setLocation(newLocation);
-            setEducation(newEducation);
-            setDescription(newDescription);
-            setSkills(newSkills);
-            setLanguages(newLanguages);
-            setInterests(newInterests);
-            setExperience(newExperience);
+            enrolledItemTransformDate(studentProfileData.experience);
+            enrolledItemTransformDate(studentProfileData.education);
+            setUserData(studentProfileData);
+            const newProfilePic = await storage.getProfilePictureUrl(uid);
+            if (newProfilePic) {
+              setProfilePicUrl(newProfilePic);
+            }
           }
           setLoadingData(false);
         } catch (err) {
@@ -75,58 +101,60 @@ export default function ProfileStudent() {
   }, [user, uid]);
 
   function addInterestItem() {
-    setInterests((prevInterests) => {
-      return [...prevInterests, ""];
+    setUserData((userData) => {
+      return { ...userData, interests: [...userData.interests, ""] };
     });
   }
 
   function removeInterestItem(index: number) {
     return () => {
-      setInterests((prevInterests) => {
-        const newInterests = [...prevInterests];
+      setUserData((userData) => {
+        const newInterests = [...userData.interests];
         newInterests.splice(index, 1);
-        return newInterests;
+
+        return { ...userData, interests: newInterests };
       });
     };
   }
 
   function handleInterestsChange(index: number) {
     return function (event: React.ChangeEvent<HTMLInputElement>) {
-      setInterests((prevInterests) => {
-        const newInterests = [...prevInterests];
+      setUserData((prevUserData) => {
+        const newInterests = [...prevUserData.interests];
         newInterests[index] = event.currentTarget.value;
-        return newInterests;
+        return { ...prevUserData, interests: newInterests };
       });
     };
   }
   function addSkillItem() {
-    setSkills((prevSkills) => {
-      return [...prevSkills, { skill: "", level: "1" }];
+    setUserData((prevUserData) => {
+      return { ...prevUserData, skills: [...prevUserData.skills, { skill: "", level: "1" }] };
     });
   }
 
   function removeSkillItem(index: number) {
     return () => {
-      setSkills((prevSkills) => {
-        const newSkills = [...prevSkills];
+      setUserData((prevUserData) => {
+        const newSkills = [...prevUserData.skills];
         newSkills.splice(index, 1);
-        return newSkills;
+        return { ...prevUserData, skills: newSkills };
       });
     };
   }
 
   function addLanguageItem() {
-    setLanguages((prevLanguages) => {
-      return [...prevLanguages, { language: "", level: "1" }];
+    setUserData((prevUserData) => {
+      return { ...prevUserData, languages: [...prevUserData.languages, { language: "", level: "1" }] };
     });
   }
 
   function removeLanguageItem(index: number) {
     return () => {
-      setLanguages((prevLanguages) => {
-        const newLanguages = [...prevLanguages];
+      setUserData((prevUserData) => {
+        const newLanguages = [...prevUserData.languages];
         newLanguages.splice(index, 1);
-        return newLanguages;
+
+        return { ...prevUserData, languages: newLanguages };
       });
     };
   }
@@ -135,10 +163,11 @@ export default function ProfileStudent() {
     return function (changedItem: string) {
       const subFunction = (event: any) => {
         const newValue = changedItem === "level" ? event.target.value : event.currentTarget.value;
-        setSkills((prevSkills) => {
-          const newSkills = [...prevSkills];
+
+        setUserData((prevUserData) => {
+          const newSkills = [...prevUserData.skills];
           newSkills[index] = { ...newSkills[index], [changedItem]: newValue };
-          return newSkills;
+          return { ...prevUserData, skills: newSkills };
         });
       };
       return subFunction;
@@ -149,10 +178,11 @@ export default function ProfileStudent() {
     return function (changedItem: string) {
       const subFunction = (event: any) => {
         const newValue = changedItem === "level" ? event.target.value : event.currentTarget.value;
-        setLanguages((prevLanguages) => {
-          const newLanguages = [...prevLanguages];
+
+        setUserData((prevUserData) => {
+          const newLanguages = [...prevUserData.languages];
           newLanguages[index] = { ...newLanguages[index], [changedItem]: newValue };
-          return newLanguages;
+          return { ...prevUserData, languages: newLanguages };
         });
       };
       return subFunction;
@@ -160,36 +190,44 @@ export default function ProfileStudent() {
   }
 
   function handleNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setName(event.target.value);
+    setUserData((prevUserData) => {
+      return { ...prevUserData, name: event.target.value };
+    });
   }
   function addEducationItem() {
-    setEducation((prevEducation) => {
-      return [...prevEducation, { institutionName: "", degreeName: "", range: [null, null] }];
+    setUserData((prevUserData) => {
+      return {
+        ...prevUserData,
+        education: [...prevUserData.education, { institutionName: "", degreeName: "", range: [null, null] }],
+      };
     });
   }
 
   function removeEducationItem(index: number) {
     return () => {
-      setEducation((prevEducation) => {
-        const newEducation = [...prevEducation];
+      setUserData((prevUserData) => {
+        const newEducation = [...prevUserData.education];
         newEducation.splice(index, 1);
-        return newEducation;
+        return { ...prevUserData, education: newEducation };
       });
     };
   }
 
   function addExperienceItem() {
-    setExperience((prevExperience) => {
-      return [...prevExperience, { companyName: "", positionName: "", range: [null, null] }];
+    setUserData((prevUserData) => {
+      return {
+        ...prevUserData,
+        experience: [...prevUserData.experience, { companyName: "", positionName: "", range: [null, null] }],
+      };
     });
   }
 
   function removeExperienceItem(index: number) {
     return () => {
-      setExperience((prevExperience) => {
-        const newExperience = [...prevExperience];
+      setUserData((prevUserData) => {
+        const newExperience = [...prevUserData.experience];
         newExperience.splice(index, 1);
-        return newExperience;
+        return { ...prevUserData, experience: newExperience };
       });
     };
   }
@@ -198,18 +236,18 @@ export default function ProfileStudent() {
     return function (updatedPart: string) {
       if (updatedPart === "range") {
         return function (selectedDates: DateRange | undefined) {
-          setEducation((prevEducation) => {
-            const newEducation = [...prevEducation];
+          setUserData((prevUserData) => {
+            const newEducation = [...prevUserData.education];
             newEducation[index] = { ...newEducation[index], range: selectedDates };
-            return newEducation;
+            return { ...prevUserData, education: newEducation };
           });
         };
       } else {
         return function (event: React.ChangeEvent<HTMLInputElement>) {
-          setEducation((prevEducation) => {
-            const newEducation = [...prevEducation];
+          setUserData((prevUserData) => {
+            const newEducation = [...prevUserData.education];
             newEducation[index] = { ...newEducation[index], [updatedPart]: event.target.value };
-            return newEducation;
+            return { ...prevUserData, education: newEducation };
           });
         };
       }
@@ -220,18 +258,18 @@ export default function ProfileStudent() {
     return function (updatedPart: string) {
       if (updatedPart === "range") {
         return function (selectedDates: DateRange | undefined) {
-          setExperience((prevExperience) => {
-            const newExperience = [...prevExperience];
+          setUserData((prevUserData) => {
+            const newExperience = [...prevUserData.experience];
             newExperience[index] = { ...newExperience[index], range: selectedDates };
-            return newExperience;
+            return { ...prevUserData, experience: newExperience };
           });
         };
       } else {
         return function (event: React.ChangeEvent<HTMLInputElement>) {
-          setExperience((prevExperience) => {
-            const newExperience = [...prevExperience];
+          setUserData((prevUserData) => {
+            const newExperience = [...prevUserData.experience];
             newExperience[index] = { ...newExperience[index], [updatedPart]: event.target.value };
-            return newExperience;
+            return { ...prevUserData, experience: newExperience };
           });
         };
       }
@@ -242,10 +280,53 @@ export default function ProfileStudent() {
     return function (event: React.ChangeEvent<HTMLInputElement>) {
       const updatedSection = { [updatedPart]: event.target.value };
 
-      setLocation((prevLocation) => {
-        return { ...prevLocation, ...updatedSection };
+      setUserData((prevUserData) => {
+        return { ...prevUserData, location: { ...prevUserData.location, ...updatedSection } };
       });
     };
+  }
+
+  const showSuccessMessage = () => {
+    AppToaster.show({
+      message: "Profile Saved.",
+      icon: "tick-circle",
+      intent: Intent.SUCCESS,
+    });
+  };
+
+  const showFailureMessage = () => {
+    AppToaster.show({
+      message: "Update failed. Try again later!",
+      icon: "warning-sign",
+      intent: Intent.DANGER,
+    });
+  };
+
+  const showUploadFailureMessage = (error: string) => {
+    AppToaster.show({
+      message: error,
+      intent: Intent.DANGER,
+    });
+  };
+
+  const showUploadSuccessMessage = () => {
+    AppToaster.show({
+      message: "Upload successful!",
+      intent: Intent.SUCCESS,
+    });
+  };
+
+  function handleSaveProfile() {
+    (async () => {
+      try {
+        await databaseService.saveStudentProfile(userData, uid);
+        showSuccessMessage();
+        console.log("success");
+      } catch (err) {
+        showFailureMessage();
+      }
+    })();
+    console.log(userData);
   }
 
   if (loadingUser || !user) {
@@ -255,45 +336,59 @@ export default function ProfileStudent() {
   }
   return (
     <>
+      <input type="file" ref={hiddenFileInput} onChange={handleUploadChange} className="hidden" />
       <p className="text-5xl font-light mt-8 ml-48">My Profile</p>
-      <img
-        className=" rounded-full absolute h-36 w-36 mt-8 ml-48"
-        src="https://i1.sndcdn.com/avatars-000564668493-ths2jx-t500x500.jpg"></img>
-      <div className="flex flex-col items-start justify-start absolute space-y-4 ml-48 mt-8">
-        <div className="ml-44">
-          <div>
-            <b>Name</b>
+
+      <div className="flex flex-col items-start justify-start space-y-4 ml-48 mt-8">
+        <div className="flex flex-row items-start justify-start">
+          <div className="ml-24 flex flex-col justify-start">
+            <div className="flex flex-row justify-evenly">
+              <Tooltip intent={Intent.NONE} content="Upload Photo" position={Position.TOP}>
+                <Button icon="camera" className="bp3-minimal" onClick={handleUploadClick}></Button>
+              </Tooltip>
+              <Tooltip intent={Intent.NONE} content="Delete Photo" position={Position.TOP}>
+                <Button icon="trash" className="bp3-minimal" onClick={handlePhotoDelete}></Button>
+              </Tooltip>
+            </div>
+            <img className=" rounded-full h-36 w-36 " src={profilePicUrl}></img>
           </div>
-          <input
-            className="bp3-input .modifier mt-2"
-            type="text"
-            dir="auto"
-            onChange={handleNameChange}
-            value={name}
-            placeholder="John Smith"
-          />
-        </div>
-        <div className="ml-44">
           <div>
-            <b>Location</b>
-          </div>
-          <div className="space-x-4 mt-2">
-            <input
-              className="bp3-input .modifier"
-              type="text"
-              dir="auto"
-              onChange={handleLocationChange("city")}
-              value={location.city}
-              placeholder="Istanbul"
-            />
-            <input
-              className="bp3-input .modifier"
-              type="text"
-              dir="auto"
-              onChange={handleLocationChange("country")}
-              value={location.country}
-              placeholder="Turkey"
-            />
+            <div className="ml-20">
+              <div>
+                <b>Name</b>
+              </div>
+              <input
+                className="bp3-input .modifier mt-2"
+                type="text"
+                dir="auto"
+                onChange={handleNameChange}
+                value={userData.name}
+                placeholder="John Smith"
+              />
+            </div>
+            <div className="ml-20">
+              <div className="mt-6">
+                <b>Location</b>
+              </div>
+              <div className="space-x-4 mt-2">
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleLocationChange("city")}
+                  value={userData.location.city}
+                  placeholder="Istanbul"
+                />
+                <input
+                  className="bp3-input .modifier"
+                  type="text"
+                  dir="auto"
+                  onChange={handleLocationChange("country")}
+                  value={userData.location.country}
+                  placeholder="Turkey"
+                />
+              </div>
+            </div>
           </div>
         </div>
         <div>
@@ -305,10 +400,10 @@ export default function ProfileStudent() {
               icon="add"
               className="mt-4 bp3-outlined"
               onClick={addEducationItem}
-              disabled={education.length === constants.maxEducationCount}
+              disabled={userData.education.length === constants.maxEducationCount}
             />
             <div>
-              {education.map((educationItem: EducationItem, index: number) => (
+              {userData.education.map((educationItem: EducationItem, index: number) => (
                 <div key={index} className="box-border rounded-lg border-gray-300 flex border-4 p-4 mt-2">
                   <EnrolledItem
                     experience={false}
@@ -317,7 +412,7 @@ export default function ProfileStudent() {
                     range={educationItem.range}
                     educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
                   <Button
-                    className="ml-8 place-self-center bp3-outlined"
+                    className="ml-8 place-self-center bp3-minimal"
                     icon="cross"
                     onClick={removeEducationItem(index)}></Button>
                 </div>
@@ -334,9 +429,9 @@ export default function ProfileStudent() {
               className="mt-4 bp3-outlined"
               icon="add"
               onClick={addExperienceItem}
-              disabled={experience.length === constants.maxExperienceCount}
+              disabled={userData.experience.length === constants.maxExperienceCount}
             />
-            {experience.map((experienceItem: ExperienceItem, index: number) => (
+            {userData.experience.map((experienceItem: ExperienceItem, index: number) => (
               <div key={index} className="box-border rounded-lg border-gray-300 flex border-4 p-4 mt-2">
                 <EnrolledItem
                   experience
@@ -345,7 +440,7 @@ export default function ProfileStudent() {
                   range={experienceItem.range}
                   experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
                 <Button
-                  className="ml-8 place-self-center bp3-outlined"
+                  className="ml-8 place-self-center bp3-minimal"
                   icon="cross"
                   onClick={removeExperienceItem(index)}></Button>
               </div>
@@ -361,9 +456,9 @@ export default function ProfileStudent() {
             icon="add"
             className="bp3-outlined"
             onClick={addSkillItem}
-            disabled={skills.length === constants.maxSkillsCount}
+            disabled={userData.skills.length === constants.maxSkillsCount}
           />
-          {skills.map((skillElement, index) => {
+          {userData.skills.map((skillElement, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
                 <input
@@ -374,14 +469,14 @@ export default function ProfileStudent() {
                   value={skillElement.skill}
                   placeholder="Skill"
                 />
-                <div className="bp3-select .modifier">
+                <div className="bp3-select bp3-minimal">
                   <select value={skillElement.level} onChange={handleSkillsChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Intermediate</option>
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-outlined" onClick={removeSkillItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeSkillItem(index)}></Button>
               </div>
             );
           })}
@@ -394,9 +489,9 @@ export default function ProfileStudent() {
             icon="add"
             className="bp3-outlined"
             onClick={addLanguageItem}
-            disabled={languages.length === constants.maxLanguagesCount}
+            disabled={userData.languages.length === constants.maxLanguagesCount}
           />
-          {languages.map((languageElement, index) => {
+          {userData.languages.map((languageElement, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
                 <input
@@ -407,7 +502,7 @@ export default function ProfileStudent() {
                   value={languageElement.language}
                   placeholder="Language"
                 />
-                <div className="bp3-select .modifier">
+                <div className="bp3-select bp3-minimal">
                   <select value={languageElement.level} onChange={handleLanguagesChange(index)("level")}>
                     <option value="1">Beginner</option>
                     <option value="2">Elementary </option>
@@ -416,7 +511,7 @@ export default function ProfileStudent() {
                     <option value="5">Native</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-outlined" onClick={removeLanguageItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeLanguageItem(index)}></Button>
               </div>
             );
           })}
@@ -429,9 +524,9 @@ export default function ProfileStudent() {
             icon="add"
             className="bp3-outlined"
             onClick={addInterestItem}
-            disabled={interests.length === constants.maxInterestsCount}
+            disabled={userData.interests.length === constants.maxInterestsCount}
           />
-          {interests.map((interestItem, index) => {
+          {userData.interests.map((interestItem, index) => {
             return (
               <div key={index} className="flex mt-2 space-x-2">
                 <input
@@ -442,7 +537,7 @@ export default function ProfileStudent() {
                   value={interestItem}
                   placeholder="Interest"
                 />
-                <Button icon="cross" className="bp3-outlined" onClick={removeInterestItem(index)}></Button>
+                <Button icon="cross" className="bp3-minimal" onClick={removeInterestItem(index)}></Button>
               </div>
             );
           })}
@@ -454,19 +549,16 @@ export default function ProfileStudent() {
           className="ml-1 w-128 h-32"
           alwaysRenderInput={true}
           onChange={(newDescription: string) => {
-            setDescription(newDescription);
+            setUserData((prevUserData) => {
+              return { ...prevUserData, description: newDescription };
+            });
           }}
           maxLength={300}
           placeholder="Tell us about yourself"
-          value={description}
+          value={userData.description}
           selectAllOnFocus={true}
         />
-        <Button
-          className="bp3-outlined"
-          onClick={databaseService.saveStudentProfile(
-            { name, location, education, description, skills, languages, interests, experience },
-            uid
-          )}>
+        <Button intent={Intent.PRIMARY} icon="saved" className="bp3-minimal" onClick={handleSaveProfile}>
           Update
         </Button>
       </div>

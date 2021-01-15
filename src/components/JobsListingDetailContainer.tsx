@@ -1,10 +1,12 @@
 import React from "react";
-import { Button } from "@blueprintjs/core";
+import { Button, Intent } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
 import * as Navigation from "../services/navigation";
+import { AppToaster } from "../components/Toaster";
+
 interface ListingData {
   title: string;
   companyName: string;
@@ -37,9 +39,32 @@ export default function JobsListingDetailContainer(props: any) {
   });
   const { user, loadingUser } = useUser();
   const router = useRouter();
+
+  const showApplyToaster = () => {
+    AppToaster.show({
+      message: "Applied successfully",
+      icon: "confirm",
+      intent: Intent.NONE,
+    });
+  };
+
+  const showWithdrawToaster = () => {
+    AppToaster.show({
+      message: "Application Withdrawn",
+      icon: "confirm",
+      intent: Intent.NONE,
+    });
+  };
+
   function handleApplyButtonClick() {
     (async () => {
       await DatabaseService.applyForListing(listingId, employerUid, user?.uid ?? null);
+      setListingDetail((prevDetails) => {
+        const newDetails = { ...prevDetails };
+        newDetails.applicationCount += 1;
+        return newDetails;
+      });
+      showApplyToaster();
       setIsAnApplicant(true);
     })();
   }
@@ -47,6 +72,12 @@ export default function JobsListingDetailContainer(props: any) {
   function handleWithdrawButtonClick() {
     (async () => {
       await DatabaseService.withdrawApplication(listingId, employerUid, user?.uid ?? null);
+      setListingDetail((prevDetails) => {
+        const newDetails = { ...prevDetails };
+        newDetails.applicationCount -= 1;
+        return newDetails;
+      });
+      showWithdrawToaster();
       setIsAnApplicant(false);
     })();
   }
@@ -111,12 +142,15 @@ export default function JobsListingDetailContainer(props: any) {
   }
 
   return (
-    <div className="w-160">
+    <div className="w-192">
       <div>
         <div className="flex flex-row justify-between">
           <p className="text-4xl font-bold">{listingDetail?.title}</p>
           <div className="flex flex-row items-center">
             <p className="mr-4 text-lg">${listingDetail?.compensation}</p>
+            <Button className="w-30 bp3-outlined mr-4" onClick={handleClickOnCompany}>
+              <b>View Company</b>
+            </Button>
             {!isAnApplicant ? (
               <Button className="w-16 bp3-outlined" onClick={handleApplyButtonClick}>
                 <b>Apply</b>
@@ -129,7 +163,7 @@ export default function JobsListingDetailContainer(props: any) {
           </div>
         </div>
         <div className="mt-4">
-          <p onClick={handleClickOnCompany}>{listingDetail?.companyName ?? "Undeclared"}</p>
+          <p>{listingDetail?.companyName ?? "Undeclared"}</p>
           <p>
             in <b>{locationString}</b>
           </p>
@@ -157,7 +191,7 @@ export default function JobsListingDetailContainer(props: any) {
           })}
         </div>
 
-        <div className="flex flex-col items-center ml-128 mt-8">
+        <div className="flex flex-col items-center ml-160 mt-8">
           <div>Apply before</div>
           <b>{deadlineString}</b>
         </div>

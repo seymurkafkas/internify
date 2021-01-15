@@ -6,7 +6,7 @@ export const onDelete = functions.firestore
   .onDelete(async (snap, context) => {
     const { employerUid, listingId } = context.params;
     const applicantsList = snap.data().applicants as string[];
-
+    const rejectedApplicantsList = snap.data().rejectedApplicants as string[];
     const deletionTasks = applicantsList.map(async (applicantUid) => {
       await admin
         .firestore()
@@ -20,8 +20,22 @@ export const onDelete = functions.firestore
         });
     });
 
+    const deletionTasksRejected = rejectedApplicantsList.map(async (applicantUid) => {
+      await admin
+        .firestore()
+        .collection("Students")
+        .doc(applicantUid)
+        .update({
+          rejectedApplications: admin.firestore.FieldValue.arrayRemove({
+            employerUid,
+            listingId,
+          }),
+        });
+    });
+
     try {
       await Promise.all(deletionTasks);
+      await Promise.all(deletionTasksRejected);
 
       functions.logger.log("Successfully deleted references for applicants.");
     } catch (err) {

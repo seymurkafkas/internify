@@ -13,6 +13,20 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
   const [user, setUser] = useState(null);
   const [loadingUser, setLoadingUser] = useState(true); // Helpful, to update the UI accordingly.
   const router = useRouter();
+
+  if (
+    !user &&
+    !loadingUser &&
+    router.pathname !== "/Login" &&
+    router.pathname !== "/Register" &&
+    router.pathname !== "/"
+  ) {
+    //Only redirect if in another page than login or register or index
+    (async () => {
+      await goToIndex(router);
+    })();
+  }
+
   useEffect(() => {
     // Listen authenticated user
     const unsubscriber = firebase.auth().onAuthStateChanged(async (user) => {
@@ -26,11 +40,6 @@ export default function UserProvider(props: PropsWithChildren<Props>) {
           setUser({ uid: user_id, displayName, email, photoURL, userType });
         } else {
           setUser(null);
-          setLoadingUser(false);
-          if (router.pathname !== "/Login" && router.pathname !== "/Register" && router.pathname !== "/") {
-            //Only redirect if in another page than login or register or index
-            goToIndex(router);
-          }
         }
       } catch (error) {
         // Most probably a connection error. Handle appropriately.

@@ -1,7 +1,8 @@
 import React from "react";
 import styles from "./styles.module.css";
-import { Button } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
+import * as Storage from "../services/storage";
+
 import { stringifyDate } from "../util/date";
 
 function ExperinceItem(props: any) {
@@ -99,6 +100,7 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
   });
 
   const [loadingData, setLoadingData] = React.useState(true);
+  const [profilePicUrl, setProfilePicUrl] = React.useState(Storage.standardPhoto);
 
   const applicantUid = props.applicantUid;
   /*   const item = {
@@ -152,6 +154,11 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
         if (fetchedApplicantData) {
           setApplicantData(fetchedApplicantData);
         }
+
+        const newProfilePic = await Storage.getProfilePictureUrl(applicantUid);
+        if (newProfilePic) {
+          setProfilePicUrl(newProfilePic);
+        }
         setLoadingData(false);
       } catch (err) {
         console.log(err);
@@ -173,20 +180,21 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
   return (
     <div className={[styles.ViewStudentContainer, "flex", "flex-col"].join(" ")}>
       <div className={[styles.ViewStudentContainer, "flex", "justify-between"].join(" ")}>
-        <div className="left">
-          <h3>{applicantData.name}</h3>
-          <p>
-            <span>from </span>
-            <b>{locationString}</b>
-          </p>
+        <div className="flex flex-row">
+          <img className=" rounded-full h-36 w-36 mr-3" src={profilePicUrl}></img>
+          <div>
+            <h3>
+              <b>{applicantData.name}</b>
+            </h3>
+            <p>
+              <span>from </span>
+              <b>{locationString}</b>
+            </p>
+          </div>
           <br />
         </div>
         <div className={["flex", "justify-between", "flex-col"].join(" ")}></div>
       </div>
-      <div className={styles.mt32}>
-        <Button className={["bp3-outlined", styles.btnPill].join(" ")}>View CV</Button>
-      </div>
-
       <div className={styles.informationTable}>
         <div className="flex flex-row">
           <div>Description</div>
