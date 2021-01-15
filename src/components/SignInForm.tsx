@@ -6,6 +6,7 @@ import { Button, InputGroup, Intent, Card, Elevation, Tooltip } from "@blueprint
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
 import * as Navigation from "../services/navigation";
+import { AppToaster } from "../components/Toaster";
 
 export default function SignInForm() {
   const [email, setEmail] = React.useState("");
@@ -13,6 +14,19 @@ export default function SignInForm() {
   const [showPassword, setShowPassword] = React.useState(false);
   const { user, setUser } = useUser();
   const router = useRouter();
+
+  const showSignInToaster = () => {
+    AppToaster.show({
+      message: "Incorrect Password or E-Mail. Please try again.",
+      icon: "warning-sign",
+      intent: Intent.DANGER,
+    });
+  };
+
+  function handleIncorrectPassword() {
+    showSignInToaster();
+    setPassword("");
+  }
 
   if (user) {
     Navigation.goToHome(router);
@@ -33,9 +47,9 @@ export default function SignInForm() {
       try {
         const userResponse = await Auth.logIn(email, password);
         setUser(userResponse);
-        Navigation.goToHome(router);
+        await Navigation.goToHome(router);
       } catch (err) {
-        console.log("Unknown Error");
+        handleIncorrectPassword();
       }
     })();
   }

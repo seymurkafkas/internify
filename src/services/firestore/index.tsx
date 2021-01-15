@@ -200,15 +200,13 @@ export function saveRecommendations(recs: any, userId: string) {
   };
 }
 
-export function saveStudentProfile(profileData: StudentProfileData, userId: string) {
-  return async function () {
-    try {
-      await db.collection("Students").doc(userId).set(profileData, { merge: true });
-    } catch (err) {
-      console.log(err);
-    }
-    return;
-  };
+export async function saveStudentProfile(profileData: StudentProfileData, userId: string) {
+  try {
+    await db.collection("Students").doc(userId).set(profileData, { merge: true });
+  } catch (err) {
+    console.log(err);
+  }
+  return;
 }
 
 export async function getStudentProfile(userId: string) {
@@ -252,6 +250,23 @@ export async function getEmployerProfile(userId: string) {
 export async function getMyListings(userId: string) {
   try {
     const userDataResponse = await db.collection("Employers").doc(userId).collection("Listings").get();
+    const resultArr = [];
+    userDataResponse.forEach((doc) => {
+      resultArr.push({
+        ...doc.data(),
+        applicationCount: doc.data().applicants.length,
+        listingId: doc.id,
+      });
+    });
+    return resultArr;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMyConcludedListings(userId: string) {
+  try {
+    const userDataResponse = await db.collection("Employers").doc(userId).collection("ConcludedListings").get();
     const resultArr = [];
     userDataResponse.forEach((doc) => {
       resultArr.push({
@@ -438,6 +453,79 @@ export async function getMyApplications(studentUid: string) {
   }
 }
 
+export async function getMyApprovedApplications(studentUid: string) {
+  try {
+    const appliedListings =
+      (await db.collection("Students").doc(studentUid).get())?.data()?.approvedApplications ?? null;
+    if (!appliedListings) {
+      return null;
+    }
+
+    const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
+      const listingData = (
+        await db.collection("Employers").doc(employerUid).collection("ConcludedListings").doc(listingId).get()
+      ).data();
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { applicants, ...rest } = listingData;
+
+      const queryResult = await db.collection("Employers").doc(employerUid).get();
+      const { companyName } = queryResult.data(); //Also email here
+      const newListingData = {
+        ...rest,
+        //  applicationCount: applicants.length,
+        employerUid,
+        listingId,
+        companyName,
+      };
+      return newListingData;
+    });
+
+    const result = await Promise.all(appliedListingsData);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function getMyRejectedApplications(studentUid: string) {
+  try {
+    const appliedListings =
+      (await db.collection("Students").doc(studentUid).get())?.data()?.rejectedApplications ?? null;
+    if (!appliedListings) {
+      return null;
+    }
+
+    console.log(appliedListings);
+    const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
+      const listingData = (
+        await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get()
+      ).data();
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { applicants, ...rest } = listingData;
+
+      const queryResult = await db.collection("Employers").doc(employerUid).get();
+      const { companyName } = queryResult.data(); //Also email here
+      const newListingData = {
+        ...rest,
+        //  applicationCount: applicants.length,
+        employerUid,
+        listingId,
+        companyName,
+      };
+      return newListingData;
+    });
+
+    const result = await Promise.all(appliedListingsData);
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 export async function getEmployerListings(employerUid: string) {
   try {
     const { docs: listingDocs } = await db.collection("Employers").doc(employerUid).collection("Listings").get();
@@ -472,6 +560,55 @@ export async function getAllListings() {
       };
     });
     return await Promise.all(ListingPromises);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function approveApplicant(employerUid: string, studentUid: string, listingId: string) {
+  try {
+    const dataResponse = await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get();
+    const approvedListingId = await db.collection("Employers").doc(employerUid).collection("ConcludedListings").doc();
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { applicants, ...rest } = dataResponse.data();
+    approvedListingId.set({ ...rest, approvedApplicant: studentUid });
+
+    await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).delete();
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        approvedApplications: firebase.firestore.FieldValue.arrayUnion({
+          employerUid,
+          listingId: approvedListingId.id,
+        }),
+      });
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function rejectApplicant(employerUid: string, studentUid: string, listingId: string) {
+  try {
+    await db
+      .collection("Employers")
+      .doc(employerUid)
+      .collection("Listings")
+      .doc(listingId)
+      .update({
+        rejectedApplicants: firebase.firestore.FieldValue.arrayUnion(studentUid),
+        applicants: firebase.firestore.FieldValue.arrayRemove(studentUid),
+      });
+
+    await db
+      .collection("Students")
+      .doc(studentUid)
+      .update({
+        myApplications: firebase.firestore.FieldValue.arrayRemove({ employerUid, listingId }),
+        rejectedApplications: firebase.firestore.FieldValue.arrayUnion({ employerUid, listingId }),
+      });
   } catch (err) {
     console.log(err);
   }

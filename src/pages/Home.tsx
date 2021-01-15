@@ -2,6 +2,7 @@ import React from "react";
 import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import LayoutSignedInEmployer from "../components/LayoutSignedInEmployer";
 import { useUser } from "../services/auth/userContext";
+import MyConcludedApplications from "../components/MyConcludedApplications";
 
 export default function Login() {
   const user = useUser();
@@ -10,7 +11,7 @@ export default function Login() {
   if (typeOfUser === "Student") {
     content = (
       <LayoutSignedInStudent>
-        <div />
+        <MyConcludedApplications></MyConcludedApplications>
       </LayoutSignedInStudent>
     );
   } else if (typeOfUser === "Employer") {
