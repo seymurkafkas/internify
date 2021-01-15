@@ -11,16 +11,22 @@ function userPictureReference(userId: string) {
   return storage.ref().child(`users/${userId}/profilePicture.jpg`);
 }
 
-export async function uploadProfilePicture(userId: string, blob: Blob) {
-  if (!blob) {
-    throw "empty";
+export async function uploadProfilePicture(userId: string, file: File) {
+  if (!file) {
+    throw "File is empty!";
   }
-  console.log(blob);
-  const metadata = {
-    contentType: "image/jpeg",
-  };
-  const ref = userPictureReference(userId);
-  await ref.put(blob, metadata);
+  if (file.type !== "image/jpeg") {
+    throw "Invalid format. Please select a JPEG file";
+  }
+  try {
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+    const ref = userPictureReference(userId);
+    await ref.put(file, metadata);
+  } catch (err) {
+    throw "Could not upload the photo! Try again later";
+  }
 }
 
 export async function deleteProfilePicture(userId: string) {

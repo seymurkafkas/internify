@@ -63,7 +63,7 @@ export default function EmployerProfile() {
           setProfilePicUrl(newProfilePic);
           showUploadSuccessMessage();
         } catch (err) {
-          showUploadFailureMessage("Could not upload the photo! Try again later.");
+          showUploadFailureMessage(err);
         }
       })();
     }
