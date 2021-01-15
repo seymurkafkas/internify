@@ -59,6 +59,8 @@ export default function MyConcludedApplications() {
   return (
     <div className="flex flex-col justify-start mt-16 ml-96">
       <div>
+        {" "}
+        <div>Approved</div>
         {myApplications.approved.length > 0 &&
           myApplications.approved.map((applicationItem, index) => {
             return (
@@ -75,6 +77,7 @@ export default function MyConcludedApplications() {
           })}
       </div>
       <div>
+        <div>Rejected</div>
         {myApplications.rejected.length > 0 &&
           myApplications.rejected.map((applicationItem, index) => {
             return (

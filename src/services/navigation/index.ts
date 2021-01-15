@@ -21,7 +21,7 @@ export async function goToProfilePage(router: NextRouter) {
 }
 
 export async function goToExplorePage(router: NextRouter) {
-  await router.push("/");
+  await router.push("/Explore");
 }
 
 export async function goToPostAListingPage(router: NextRouter) {
