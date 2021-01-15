@@ -1,7 +1,7 @@
 import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
-import { Button, Card, Elevation, Position, Tooltip, Intent, Alert } from "@blueprintjs/core";
+import { Button, Card, Position, Tooltip, Intent, Alert } from "@blueprintjs/core";
 import * as Storage from "../services/storage";
 
 interface Props {
@@ -33,32 +33,34 @@ export default function ApplicantItem(props: Props) {
   });
   return (
     <div className="flex flex-row items-center mt-11">
-      <img className=" rounded-full h-28 w-28 mr-3" src={profilePicUrl}></img>
-      <Card className="w-96" interactive={true} elevation={Elevation.THREE}>
-        <div>
-          <p>
-            <b>{props.name}</b>
-          </p>
-          <p>
-            Previous Work: <b>{props.position}</b>
-          </p>
+      <Card className="w-160 border-xl" interactive={true}>
+        <div className="flex flex-row space-x-2">
+          <img className=" rounded-full h-28 w-28 mr-3" src={profilePicUrl}></img>
+          <div>
+            <p className="text-xl">
+              <b>{props.name}</b>
+            </p>
+            <br />
+            <p>
+              Previous Work: <b>{props.position}</b>
+            </p>
 
-          <p>
-            in <b>{props.location}</b>
-          </p>
-          <br />
-          <p>
-            Education: <b>{props.education}</b>
-          </p>
+            <p>
+              in <b>{props.location}</b>
+            </p>
+            <p>
+              Education: <b>{props.education}</b>
+            </p>
+          </div>
         </div>
       </Card>
-      <div className="ml-4 flex flex-col justify-between ">
+      <div className="ml-4 flex flex-col space-y-2">
         <Tooltip intent={Intent.SUCCESS} content="Approve" position={Position.RIGHT}>
           <Button
             onClick={() => {
               setIsApproveDialogOpen(true);
             }}
-            className="mt-4 bp3-minimal"
+            className="bp3-minimal"
             icon="endorsed"></Button>
         </Tooltip>
         <Tooltip intent={Intent.DANGER} content="Reject" position={Position.RIGHT}>
@@ -66,11 +68,11 @@ export default function ApplicantItem(props: Props) {
             onClick={() => {
               setIsDialogOpen(true);
             }}
-            className="mt-4 bp3-minimal"
+            className="bp3-minimal"
             icon="delete"></Button>
         </Tooltip>
         <Tooltip content="View Profile" position={Position.RIGHT}>
-          <Button onClick={handleClick} className=" mt-6 bp3-minimal" icon="eye-open"></Button>
+          <Button onClick={handleClick} className="bp3-minimal" icon="eye-open"></Button>
         </Tooltip>
       </div>
 
