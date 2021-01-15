@@ -133,6 +133,7 @@ export async function setRecommendations() {
       recs.push({
         score,
         listingId: ling.listingId,
+        employerUid: ling.employerUid,
       });
     });
 
@@ -175,15 +176,12 @@ export async function getAllStudents() {
 
 export async function saveRecommendations(recs: any, userId: string) {
   try {
-    await db
-      .collection("Students")
-      .doc(userId)
-      .set(
-        {
-          recommendations: firebase.firestore.FieldValue.arrayUnion(recs),
-        },
-        { merge: true }
-      );
+    await db.collection("Students").doc(userId).set(
+      {
+        recommendations: recs,
+      },
+      { merge: true }
+    );
   } catch (err) {
     console.log(err);
   }
