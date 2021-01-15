@@ -30,7 +30,7 @@ export default function ApplicantItem(props: Props) {
         setProfilePicUrl(newProfilePic);
       }
     })();
-  });
+  }, [props.studentUid]);
   return (
     <div className="flex flex-row items-center mt-11">
       <Card className="w-160 border-xl" interactive={true}>
