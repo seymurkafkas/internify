@@ -34,7 +34,7 @@ export async function setRecommendationsforAll() {
 
   const avgComp = Recommendation.getAverageCompensation(listings);
 
-  const allRecs = [];
+  // const allRecs = [];
 
   students.forEach(async (stud) => {
     const recs = [];
@@ -49,23 +49,59 @@ export async function setRecommendationsforAll() {
       });
     });
 
-    recs.sort(function (a, b) {
+    recs.sort(function (b, a) {
       return a.score - b.score;
     });
 
-    recs.slice(0, 3); //get top N
+    const trimmedRecs = recs.slice(0, 3); //get top 4
 
-    allRecs.push(recs);
+    // allRecs.push(recs);
 
     //save for each student
     try {
-      await saveRecommendations(recs, stud.id);
+      await saveRecommendations(trimmedRecs, stud.id);
     } catch (err) {
       console.log(err);
     }
   });
 
   return;
+}
+
+export async function setOrGetRecommendationsforStudent(studentUid: string) {
+  const studentData = (await db.collection("Students").doc(studentUid).get()).data();
+  if (studentData.recommendations?.length >= 0 ?? null) {
+    return studentData.recommendations;
+  }
+
+  const listings = await getAllListings();
+  const avgComp = Recommendation.getAverageCompensation(listings);
+  const recs = [];
+
+  listings.forEach((ling) => {
+    //compare them and add to recs with a score
+    const score = Recommendation.getListingScore(studentData, ling, avgComp);
+    recs.push({
+      score,
+      listingId: ling.listingId,
+      employerUid: ling.employerUid,
+    });
+  });
+
+  recs.sort(function (b, a) {
+    return a.score - b.score;
+  });
+
+  const trimmedRecs = recs.slice(0, 3); //get top N
+
+  //save for each student
+  try {
+    await saveRecommendations(trimmedRecs, studentUid);
+  } catch (err) {
+    console.log(err);
+  }
+
+  return trimmedRecs;
 }
 
 export async function getAllStudents() {
