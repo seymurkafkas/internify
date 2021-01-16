@@ -156,3 +156,12 @@ textarea.inputUnderline,
   min-width: 120px;
   font-weight: bold;
 }
+
+.star {
+  font-size: 0.6em !important;
+  vertical-align: middle !important;
+}
+
+.star *+* {
+    margin-left: 2px;
+}
