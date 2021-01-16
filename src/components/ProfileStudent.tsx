@@ -350,7 +350,7 @@ export default function ProfileStudent() {
                 <Button icon="trash" className="bp3-minimal" onClick={handlePhotoDelete}></Button>
               </Tooltip>
             </div>
-            <img className=" rounded-full h-36 w-36 " src={profilePicUrl}></img>
+            <img className=" rounded-full h-36 w-36 max-w-none " src={profilePicUrl}></img>
           </div>
           <div>
             <div className="ml-20">
