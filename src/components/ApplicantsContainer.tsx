@@ -2,17 +2,28 @@ import React from "react";
 import ApplicantItem from "./ApplicantItem";
 import * as DatabaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
+import { useRouter } from "next/router";
+import { AppToaster } from "./Toaster";
+import { Intent } from "@blueprintjs/core";
+import * as Navigation from "../services/navigation";
 
 export default function ApplicantsContainer(props: any) {
   const [applicantSmallData, setApplicantSmallData] = React.useState([]);
   const { user, loadingUser } = useUser();
   const listingId = props.listingId;
+  const router = useRouter();
   const userId = user?.uid;
 
   function handleApprove(studentUid: string) {
     return () => {
       (async () => {
         await DatabaseService.approveApplicant(userId, studentUid, listingId);
+        AppToaster.show({
+          message: "Successfully approved candidate. Listing is now closed",
+          icon: "tick-circle",
+          intent: Intent.SUCCESS,
+        });
+        await Navigation.goToHome(router);
       })();
     };
   }
@@ -21,10 +32,15 @@ export default function ApplicantsContainer(props: any) {
     return () => {
       (async () => {
         await DatabaseService.rejectApplicant(userId, studentUid, listingId);
+
         setApplicantSmallData((prevApplicantData) => {
           const newApplicantData = [...prevApplicantData];
           newApplicantData.splice(index, 1);
           return newApplicantData;
+        });
+        AppToaster.show({
+          message: "Successfully rejected candidate.",
+          intent: Intent.SUCCESS,
         });
       })();
     };
