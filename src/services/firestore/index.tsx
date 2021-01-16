@@ -92,7 +92,7 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
     return a.score - b.score;
   });
 
-  const trimmedRecs = recs.slice(0, 3); //get top N
+  const trimmedRecs = recs.slice(0, 5); //get top N
 
   //save for each student
   try {

@@ -1,6 +1,7 @@
 import React from "react";
 import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import { useUser } from "../services/auth/userContext";
+import RecommendedListingContainer from "../components/RecommendedListingContainer";
 import * as DatabaseService from "../services/firestore";
 //import * as Navigation from "../services/navigation";
 //import { useRouter } from "next/router";
@@ -18,7 +19,16 @@ export default function Explore() {
         try {
           const myRecommendedListingsData = await DatabaseService.setOrGetRecommendationsforStudent(userId);
           if (myRecommendedListingsData) {
-            setMyRecommendedListings(myRecommendedListingsData);
+            const mRLDAggregated = await Promise.all(
+              myRecommendedListingsData.map(async (item) => {
+                const listing = await DatabaseService.getListingData(item.employerUid, item.listingId);
+                return {
+                  score: item.score,
+                  ...listing,
+                };
+              })
+            );
+            setMyRecommendedListings(mRLDAggregated);
           }
         } catch (err) {
           console.log(err);
@@ -48,7 +58,9 @@ export default function Explore() {
   console.log(myRecommendedListings);
   return (
     <LayoutSignedInStudent>
-      <div className="flex flex-col justify-start mt-16 ml-96"></div>
+      <div className="flex flex-col justify-start mt-16 ml-96">
+        <RecommendedListingContainer items={myRecommendedListings} />
+      </div>
     </LayoutSignedInStudent>
   );
 }

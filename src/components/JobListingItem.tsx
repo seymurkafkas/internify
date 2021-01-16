@@ -7,6 +7,7 @@ import {
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import { stringifyDate } from "../util/date";
+import styles from "./styles.module.css";
 
 interface Props {
   listingId: string;
@@ -18,6 +19,17 @@ interface Props {
   description: string;
   applicationCount: number;
   compensation: number;
+  type: string;
+  score: number;
+}
+
+function Stars(props: any) {
+  const starCount = Math.abs(props.score / 26 + 1);
+  const starItems = [];
+  for (let i = 0; i < starCount; i++) {
+    starItems.push(<span>★</span>);
+  }
+  return <span className={styles.star}>{starItems}</span>;
 }
 
 export default function JobListingItem(props: Props) {
@@ -41,7 +53,10 @@ export default function JobListingItem(props: Props) {
       elevation={Elevation.TWO}>
       <div>
         <div className="flex justify-between mb-2">
-          <p className="text-3xl font-bold">{props?.title}</p>
+          <p className="text-xl font-bold">
+            {props?.title} {props.type === "recommended" && <Stars score={props.score} />}
+          </p>
+
           <p>{stringifyDate(props?.deadline?.toDate() ?? null)}</p>
         </div>
         <p>{props?.companyName}</p>
