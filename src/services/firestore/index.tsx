@@ -103,14 +103,14 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
 
     trimmedRecs.forEach((listing) => {
       if (recommendedListings[ListingUtil.stringifyListing(listing)]) {
-        recommendedListings[ListingUtil.stringifyListing(listing)].push(studentUid);
+        recommendedListings[ListingUtil.stringifyListing(listing)].push({ studentUid, score: listing.score });
       } else {
-        recommendedListings[ListingUtil.stringifyListing(listing)] = [studentUid];
+        recommendedListings[ListingUtil.stringifyListing(listing)] = [{ studentUid, score: listing.score }];
       }
     });
 
     const recordRecommendedStudentsPromises = Object.keys(recommendedListings).map(async (stringifieldListing) => {
-      const recommendedStudents = recommendedListings[stringifieldListing];
+      const recommendedStudentsAndScores = recommendedListings[stringifieldListing];
 
       const { listingId: currentListingUid, employerUid: currentEmployerUid } = ListingUtil.getListingFromString(
         stringifieldListing
@@ -122,7 +122,7 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
         .collection("Listings")
         .doc(currentListingUid)
         .update({
-          recommendedStudents: firebase.firestore.FieldValue.arrayUnion(...recommendedStudents),
+          recommendedApplicants: firebase.firestore.FieldValue.arrayUnion(...recommendedStudentsAndScores),
         });
       return;
     });
