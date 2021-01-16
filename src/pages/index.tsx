@@ -1,20 +1,29 @@
-import Link from "next/link";
-import styles from "../components/styles.module.css";
+import * as Navigation from "../services/navigation";
+import { useRouter } from "next/router";
+import { Card, Elevation } from "@blueprintjs/core";
 export default function Home() {
+  const router = useRouter();
   return (
-    <div className="absolute w-full h-full bg-auth-background">
-      <div className="absolute inset-1/2  h-2/6 w-1/6 justify-around items-center transform -translate-x-1/2 -translate-y-1/2  flex flex-row">
-        <div className={styles.IndexButtons}>
-          <Link href="/Register">
-            <a>Register</a>
-          </Link>
+    <div className="absolute justify-center items-center flex w-full h-full bg-auth-background">
+      <Card
+        elevation={Elevation.THREE}
+        className="flex flex-col w-96 h-64 border-xl items-center justify-center space-y-4">
+        <div className="text-4xl font-thin mb-6">INTERNIFY</div>
+        <div
+          className="cursor-pointer flex place-items-center justify-center text-white bg-indigo-800 hover:bg-indigo-600 w-64 h-10"
+          onClick={() => {
+            Navigation.goToRegister(router);
+          }}>
+          <div className="text-lg">Register</div>
         </div>
-        <div className={styles.IndexButtons}>
-          <Link href="/Login">
-            <a>Login</a>
-          </Link>
+        <div
+          className="cursor-pointer flex place-items-center justify-center text-white bg-indigo-800 hover:bg-indigo-600 w-64 h-10"
+          onClick={() => {
+            Navigation.goToLogin(router);
+          }}>
+          <div className="text-lg">Login</div>
         </div>
-      </div>
+      </Card>
     </div>
   );
 }
