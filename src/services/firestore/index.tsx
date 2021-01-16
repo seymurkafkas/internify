@@ -3,6 +3,7 @@ import firebase from "firebase";
 import "firebase/firestore";
 import { DateRange } from "@blueprintjs/datetime";
 import * as Recommendation from "../../util/recommendation";
+import * as ListingUtil from "../../util/listing";
 
 const db = firebase.firestore();
 
@@ -94,9 +95,38 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
 
   const trimmedRecs = recs.slice(0, 3); //get top N
 
-  //save for each student
+  //save for student
   try {
     await saveRecommendations(trimmedRecs, studentUid);
+
+    const recommendedListings = {};
+
+    trimmedRecs.forEach((listing) => {
+      if (recommendedListings[ListingUtil.stringifyListing(listing)]) {
+        recommendedListings[ListingUtil.stringifyListing(listing)].push(studentUid);
+      } else {
+        recommendedListings[ListingUtil.stringifyListing(listing)] = [studentUid];
+      }
+    });
+
+    const recordRecommendedStudentsPromises = Object.keys(recommendedListings).map(async (stringifieldListing) => {
+      const recommendedStudents = recommendedListings[stringifieldListing];
+
+      const { listingId: currentListingUid, employerUid: currentEmployerUid } = ListingUtil.getListingFromString(
+        stringifieldListing
+      );
+
+      await db
+        .collection("Employers")
+        .doc(currentEmployerUid)
+        .collection("Listings")
+        .doc(currentListingUid)
+        .update({
+          recommendedStudents: firebase.firestore.FieldValue.arrayUnion(...recommendedStudents),
+        });
+      return;
+    });
+    await Promise.all(recordRecommendedStudentsPromises);
   } catch (err) {
     console.log(err);
   }
