@@ -8,6 +8,14 @@ export async function goToIndex(router: NextRouter) {
   await router.push("/");
 }
 
+export async function goToLogin(router: NextRouter) {
+  await router.push("/Login");
+}
+
+export async function goToRegister(router: NextRouter) {
+  await router.push("/Register");
+}
+
 export async function goToSearchPage(router: NextRouter) {
   await router.push("/Search");
 }
