@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  //Button,
-  Card,
-  Elevation,
-} from "@blueprintjs/core";
+import { Text, Card, Elevation } from "@blueprintjs/core";
 
 interface Props {
   title: string;
@@ -17,12 +13,14 @@ export default function SmallListingContainer(props: Props) {
     <Card className="w-96" interactive={false} elevation={Elevation.TWO}>
       <div>
         <div className="flex justify-between">
-          <p className="font-bold text-xl mb-2">{props.title}</p>
+          <Text className="font-bold text-xl mb-2 w-56" ellipsize={true}>
+            {props.title}
+          </Text>
           <p>{props.deadline}</p>
         </div>
-        <p>
+        <Text className="w-56" ellipsize={true}>
           in <b>{props.location}</b>
-        </p>
+        </Text>
         <div className="flex justify-between">
           <p></p>
           <div className="font-bold">${props.compensation}</div>
