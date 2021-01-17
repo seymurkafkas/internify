@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Intent } from "@blueprintjs/core";
+import { Intent } from "@blueprintjs/core";
 import * as DatabaseService from "../services/firestore";
 import { stringifyDate } from "../util/date";
 import { useUser } from "../services/auth/userContext";
@@ -148,17 +148,23 @@ export default function JobsListingDetailContainer(props: any) {
           <p className="text-4xl font-bold">{listingDetail?.title}</p>
           <div className="flex flex-row items-center">
             <p className="mr-4 text-lg">${listingDetail?.compensation}</p>
-            <Button className="w-30 bp3-outlined mr-4" onClick={handleClickOnCompany}>
-              <b>View Company</b>
-            </Button>
+            <div
+              className="mr-4 cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-36 h-8"
+              onClick={handleClickOnCompany}>
+              <div className="text-md">View Company</div>
+            </div>
             {!isAnApplicant ? (
-              <Button className="w-16 bp3-outlined" onClick={handleApplyButtonClick}>
-                <b>Apply</b>
-              </Button>
+              <div
+                className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-16 h-8"
+                onClick={handleApplyButtonClick}>
+                <div className="text-md">Apply</div>
+              </div>
             ) : (
-              <Button className="w-24 bp3-outlined" onClick={handleWithdrawButtonClick}>
-                <b>Withdraw</b>
-              </Button>
+              <div
+                className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-24 h-8"
+                onClick={handleWithdrawButtonClick}>
+                <div className="text-md">Withdraw</div>
+              </div>
             )}
           </div>
         </div>
