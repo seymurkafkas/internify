@@ -119,7 +119,7 @@ export default function CreatePositionSection() {
   }
 
   return (
-    <div className="flex justify-start flex-col mr-96 w-96">
+    <div className="flex justify-start flex-col mr-96 w-160">
       <div className="flex justify-between flex-col mb-4">
         <div className="flex justify-between mb-8">
           <EditableText
@@ -131,7 +131,7 @@ export default function CreatePositionSection() {
         </div>
         <div className="text-xl font-bold mb-4">Description</div>
         <EditableText
-          className="mb-6"
+          className="mb-6 w-96"
           onChange={(text) => setDescription(text)}
           multiline={true}
           placeholder="Description"
@@ -201,7 +201,6 @@ export default function CreatePositionSection() {
       <div className="text-xl font-bold mb-4 mt-8">Deadline</div>
 
       <DateInput
-        className="w-32"
         formatDate={(date) => date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear()}
         onChange={(date) => {
           setDeadline(date);
@@ -211,9 +210,11 @@ export default function CreatePositionSection() {
         value={deadline}
       />
       <div className="flex justify-end">
-        <Button onClick={createAListing} className="bp3-outlined">
-          Create
-        </Button>
+        <div
+          className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-36 h-10"
+          onClick={createAListing}>
+          <div className="text-lg">Create</div>
+        </div>
       </div>
     </div>
   );
