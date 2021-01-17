@@ -98,7 +98,7 @@ export default function SignInForm() {
         type={showPassword ? "text" : "password"}
       />
       <div
-        className="cursor-pointer flex place-items-center rounded justify-center text-white bg-indigo-800 hover:bg-indigo-600 w-64 h-10"
+        className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-64 h-10"
         onClick={handleSubmit}>
         <div className="text-lg">Login</div>
       </div>
