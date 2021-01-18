@@ -231,10 +231,12 @@ export default function EmployerProfile() {
               className=""
             />
           </div>
-          <div className="flex justify-end">
-            <Button intent={Intent.PRIMARY} icon="saved" className="bp3-minimal" onClick={handleProfileUpdate}>
-              Update
-            </Button>
+          <div className="flex justify-center">
+            <div
+              className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-36 h-10"
+              onClick={handleProfileUpdate}>
+              <div className="text-lg">Update</div>
+            </div>
           </div>
         </div>
       </div>
