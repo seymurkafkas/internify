@@ -287,7 +287,6 @@ export async function createAListing(listingData: any, userId: string) {
       .doc()
       .set({
         ...listingData,
-        timestamp: new Date(),
         applicants: [],
         createdAt: new Date(),
       });

@@ -41,40 +41,22 @@ export function getListingScore(stud, ling, avgComp) {
     compPercent = 95 + ratio;
   }
 
-  //   console.log("ling.compensation, avgComp");
-  //   console.log(ling.compensation, avgComp);
-  //   const compPercent = Math.random() * 70 + 20;
-
   // requirements yüzde kaç match ediyor
-  //   console.log("ling, stud");
-  //   console.log(ling, stud);
-  //   console.log(ling.requirements, stud.skills);
   const matchPercent = getMatchPercentage(ling.requirements, stud.skills);
-  //   const matchPercent = Math.random() * 60 + 30;
 
   // lokasyon ne kadar yakın
   const locationBonus = stud.location.city === ling.location.city ? 1 : 0;
-  //   const locationBonus = Math.abs(Math.random()) * 100;
 
   // ilan ne kadar süredir aktif
   const now = new Date();
-  const dayInSec = 60 * 60 * 24;
-  console.log("ling", ling);
-  const dayPassed = Math.floor((now.getTime() / 1000 - ling.timestamp.seconds) / dayInSec);
-  console.log("dayPassed", dayPassed);
-
+  const dayInMs = 60 * 60 * 24 * 1000;
+  const lingDate = ling.createdAt.toDate();
+  const dayPassed = Math.floor((now.getTime() - lingDate.getTime()) / dayInMs);
   const activeForPercent = range([1, 60], [100, 1], dayPassed);
 
   // kaç kişi başvurdu
   const applicantsPercent = range([0, 60], [1, 100], ling.applicationCount);
 
-  //comp 30
-  //matchPercent 60
-  //activeFor 10
-  //appliedTimes 10
-
-  //   console.log("compPercent, matchPercent, activeForPercent, appllicantsPercent");
-  //   console.log(compPercent, matchPercent, activeForPercent, appllicantsPercent);
   return (
     (compPercent * 30 + matchPercent * 60 + activeForPercent * 10 + applicantsPercent * 10 + locationBonus * 10) / 100
   );
