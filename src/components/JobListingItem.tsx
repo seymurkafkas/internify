@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  //Button,
-  Card,
-  Elevation,
-} from "@blueprintjs/core";
+import { Text, Card, Elevation } from "@blueprintjs/core";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import { stringifyDate } from "../util/date";
@@ -53,18 +49,21 @@ export default function JobListingItem(props: Props) {
       elevation={Elevation.TWO}>
       <div>
         <div className="flex justify-between mb-2">
-          <p className="text-xl font-bold">
+          <Text className="text-3xl font-bold w-96" ellipsize={true}>
             {props?.title} {props.type === "recommended" && <Stars score={props.score} />}
-          </p>
-
+          </Text>
           <p>{stringifyDate(props?.deadline?.toDate() ?? null)}</p>
         </div>
-        <p>{props?.companyName}</p>
-        <p>
+        <Text className="w-96" ellipsize={true}>
+          {props?.companyName}
+        </Text>
+        <Text className="w-96" ellipsize={true}>
           in <b>{locationString}</b>
-        </p>
+        </Text>
         <br />
-        <p>{props.description}</p>
+        <Text className="w-96" ellipsize={true}>
+          {props.description}
+        </Text>
         <div className="flex justify-between mt-4">
           <p>
             <b>Applicants: {props.applicationCount}</b>

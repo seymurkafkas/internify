@@ -7,35 +7,59 @@ export const onDelete = functions.firestore
     const { employerUid, listingId } = context.params;
     const applicantsList = snap.data().applicants as string[];
     const rejectedApplicantsList = snap.data().rejectedApplicants as string[];
-    const deletionTasks = applicantsList.map(async (applicantUid) => {
-      await admin
-        .firestore()
-        .collection("Students")
-        .doc(applicantUid)
-        .update({
-          myApplications: admin.firestore.FieldValue.arrayRemove({
-            employerUid,
-            listingId,
-          }),
-        });
-    });
+    const recommendedApplicantsList = snap.data().recommendedApplicants;
 
-    const deletionTasksRejected = rejectedApplicantsList.map(async (applicantUid) => {
-      await admin
-        .firestore()
-        .collection("Students")
-        .doc(applicantUid)
-        .update({
-          rejectedApplications: admin.firestore.FieldValue.arrayRemove({
-            employerUid,
-            listingId,
-          }),
-        });
-    });
+    console.log(recommendedApplicantsList);
 
     try {
-      await Promise.all(deletionTasks);
-      await Promise.all(deletionTasksRejected);
+      if (applicantsList) {
+        const deletionTasks = applicantsList.map(async (applicantUid) => {
+          await admin
+            .firestore()
+            .collection("Students")
+            .doc(applicantUid)
+            .update({
+              myApplications: admin.firestore.FieldValue.arrayRemove({
+                employerUid,
+                listingId,
+              }),
+            });
+        });
+        await Promise.all(deletionTasks);
+      }
+
+      if (rejectedApplicantsList) {
+        const deletionTasksRejected = rejectedApplicantsList.map(async (applicantUid) => {
+          await admin
+            .firestore()
+            .collection("Students")
+            .doc(applicantUid)
+            .update({
+              rejectedApplications: admin.firestore.FieldValue.arrayRemove({
+                employerUid,
+                listingId,
+              }),
+            });
+        });
+        await Promise.all(deletionTasksRejected);
+      }
+
+      if (recommendedApplicantsList) {
+        const deletionTasksRecommended = recommendedApplicantsList.map(async ({ studentUid, score }: any) => {
+          await admin
+            .firestore()
+            .collection("Students")
+            .doc(studentUid)
+            .update({
+              recommendations: admin.firestore.FieldValue.arrayRemove({
+                employerUid,
+                listingId,
+                score,
+              }),
+            });
+        });
+        await Promise.all(deletionTasksRecommended);
+      }
 
       functions.logger.log("Successfully deleted references for applicants.");
     } catch (err) {

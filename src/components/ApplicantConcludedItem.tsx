@@ -1,7 +1,7 @@
 import React from "react";
 import * as Navigation from "../services/navigation/index";
 import { useRouter } from "next/router";
-import { Button, Card, Position, Tooltip } from "@blueprintjs/core";
+import { Button, Card, Position, Tooltip, Elevation } from "@blueprintjs/core";
 import * as Storage from "../services/storage";
 
 interface Props {
@@ -32,9 +32,9 @@ export default function ApplicantConcludedItem(props: Props) {
   }, [props.studentUid]);
   return (
     <div className="flex flex-row items-center">
-      <Card className="w-160 border-xl" interactive={true}>
+      <Card className="w-128" interactive={false} elevation={Elevation.TWO}>
         <div className="flex flex-row space-x-2">
-          <img className=" rounded-full h-28 w-28 mr-3" src={profilePicUrl}></img>
+          <img className=" rounded-full h-28 w-28 mr-3 max-w-none" src={profilePicUrl}></img>
           <div>
             <p className="text-xl">
               <b>{props.name}</b>

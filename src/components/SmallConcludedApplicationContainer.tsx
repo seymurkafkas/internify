@@ -10,9 +10,10 @@ interface Props {
   applicationCount: number;
   compensation: number;
   companyName: string;
+  approved: boolean;
 }
 
-export default function SmallListingContainerStudent(props: Props) {
+export default function SmallConcludedApplicationContainer(props: Props) {
   let locationString = "Undeclared";
 
   if (props.location.city && props.location.country) {
@@ -22,7 +23,11 @@ export default function SmallListingContainerStudent(props: Props) {
   }
 
   return (
-    <Card onClick={props.navigateToLink} className="w-96 mb-8" interactive={true} elevation={Elevation.TWO}>
+    <Card
+      onClick={props.approved ? props.navigateToLink : () => {}}
+      className="w-96 mb-8"
+      interactive={true}
+      elevation={Elevation.TWO}>
       <div>
         <div className="flex justify-between">
           <Text className="font-bold text-xl mb-2 w-56" ellipsize={true}>
