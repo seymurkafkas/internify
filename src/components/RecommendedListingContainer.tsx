@@ -17,8 +17,7 @@ export default function RecommendedListingContainer(props: any) {
     <div className="w-160">
       <h2 className={[styles.titleLarge, styles.mb16].join(" ")}>Recommendations for you</h2>
       <p className={[styles.mb32].join(" ")}>
-        These are collected for you! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo, doloribus nemo ipsa
-        quisquam voluptas, commodi non enim nulla quis?
+        These are collected for you! Our algorithm offers the best jobs depends on your needs and expectations.
       </p>
       <div className={[styles.ListContainer].join(" ")}>
         <JobList items={items} />
