@@ -55,7 +55,6 @@ export default function Explore() {
       Navigation.goToViewListingPage(router, employerUid, listingId);
     };
   } */
-  console.log(myRecommendedListings);
   return (
     <LayoutSignedInStudent>
       <div className="flex flex-col justify-start mt-16 ml-96">

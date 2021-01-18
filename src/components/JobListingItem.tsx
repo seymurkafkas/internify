@@ -20,10 +20,10 @@ interface Props {
 }
 
 function Stars(props: any) {
-  const starCount = Math.abs(props.score / 26 + 1);
+  const starCount = Math.abs(props.score / 21 + 1);
   const starItems = [];
   for (let i = 0; i < starCount; i++) {
-    starItems.push(<span>★</span>);
+    starItems.push(<span key={i}>★</span>);
   }
   return <span className={styles.star}>{starItems}</span>;
 }

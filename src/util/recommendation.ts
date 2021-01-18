@@ -11,9 +11,6 @@ function getMatchPercentage(reference, incoming) {
       continue;
     }
 
-    console.log(i, "incoming[i].level, reference[i].level");
-    console.log(incoming[i], reference[i]);
-
     const thatBetter = parseInt(incoming[i].level) - parseInt(reference[i].level);
     const mult = range([-2, 2], [0.5, 1.2], thatBetter);
     seen[incoming[i].skill] = mult;
@@ -39,8 +36,8 @@ function range(from, to, s) {
 export function getListingScore(stud, ling, avgComp) {
   // compensation ortalamadan ne kadar yüksek
   const ratio = Math.abs(ling.compensation - avgComp) / avgComp;
-  let compPercent = range([0.1, 1], [1, 95], ratio);
-  if (ratio > 1) {
+  let compPercent = range([0.1, 1.5], [1, 95], ratio);
+  if (ratio > 1.5) {
     compPercent = 95 + ratio;
   }
 
@@ -60,11 +57,16 @@ export function getListingScore(stud, ling, avgComp) {
   //   const locationBonus = Math.abs(Math.random()) * 100;
 
   // ilan ne kadar süredir aktif
-  const activeForPercent = range([1, 30], [100, 1], Math.random() * 29 + 1);
+  const now = new Date();
+  const dayInSec = 60 * 60 * 24;
+  console.log("ling", ling);
+  const dayPassed = Math.floor((now.getTime() / 1000 - ling.timestamp.seconds) / dayInSec);
+  console.log("dayPassed", dayPassed);
+
+  const activeForPercent = range([1, 60], [100, 1], dayPassed);
 
   // kaç kişi başvurdu
-  // const appliedTimesPercent = range([1, 100], [100, 1], ling.applicants.length);
-  const appllicantsPercent = range([1, 100], [100, 1], Math.random() * 99 + 1);
+  const applicantsPercent = range([0, 60], [1, 100], ling.applicationCount);
 
   //comp 30
   //matchPercent 60
@@ -74,7 +76,7 @@ export function getListingScore(stud, ling, avgComp) {
   //   console.log("compPercent, matchPercent, activeForPercent, appllicantsPercent");
   //   console.log(compPercent, matchPercent, activeForPercent, appllicantsPercent);
   return (
-    (compPercent * 30 + matchPercent * 60 + activeForPercent * 10 + appllicantsPercent * 10 + locationBonus * 10) / 100
+    (compPercent * 30 + matchPercent * 60 + activeForPercent * 10 + applicantsPercent * 10 + locationBonus * 10) / 100
   );
 }
 
