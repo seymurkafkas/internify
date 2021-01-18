@@ -288,6 +288,7 @@ export async function createAListing(listingData: any, userId: string) {
       .set({
         ...listingData,
         applicants: [],
+        createdAt: new Date(),
       });
     return;
   } catch (err) {
