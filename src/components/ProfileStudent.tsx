@@ -337,11 +337,11 @@ export default function ProfileStudent() {
   return (
     <>
       <input type="file" ref={hiddenFileInput} onChange={handleUploadChange} className="hidden" />
-      <p className="text-5xl font-light mt-8 ml-48">My Profile</p>
+      <p className="text-5xl font-light mt-16 ml-64">My Profile</p>
 
-      <div className="flex flex-col items-start justify-start space-y-4 ml-48 mt-8">
+      <div className="flex flex-col items-start justify-start space-y-4 ml-64 mt-8">
         <div className="flex flex-row items-start justify-start">
-          <div className="ml-24 flex flex-col justify-start">
+          <div className="flex flex-col justify-start">
             <div className="flex flex-row justify-evenly">
               <Tooltip intent={Intent.NONE} content="Upload Photo" position={Position.TOP}>
                 <Button icon="camera" className="bp3-minimal" onClick={handleUploadClick}></Button>
@@ -350,10 +350,10 @@ export default function ProfileStudent() {
                 <Button icon="trash" className="bp3-minimal" onClick={handlePhotoDelete}></Button>
               </Tooltip>
             </div>
-            <img className=" rounded-full h-36 w-36 " src={profilePicUrl}></img>
+            <img className=" rounded-full h-36 w-36 max-w-none " src={profilePicUrl}></img>
           </div>
           <div>
-            <div className="ml-20">
+            <div className="ml-10 mt-6">
               <div>
                 <b>Name</b>
               </div>
@@ -366,7 +366,7 @@ export default function ProfileStudent() {
                 placeholder="John Smith"
               />
             </div>
-            <div className="ml-20">
+            <div className="ml-10">
               <div className="mt-6">
                 <b>Location</b>
               </div>
@@ -392,9 +392,7 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div className="mt-8">
-            <b>Education</b>
-          </div>
+          <div className="mt-8 font-bold text-lg">Education</div>
           <div>
             <Button
               icon="add"
@@ -412,7 +410,7 @@ export default function ProfileStudent() {
                     range={educationItem.range}
                     educationChangeHandler={handleEducationItemChange(index)}></EnrolledItem>
                   <Button
-                    className="ml-8 place-self-center bp3-minimal"
+                    className="ml-8 place-self-center bp3-outlined"
                     icon="cross"
                     onClick={removeEducationItem(index)}></Button>
                 </div>
@@ -421,10 +419,8 @@ export default function ProfileStudent() {
           </div>
         </div>
         <div>
-          <div>
-            <b>Experience</b>
-          </div>
-          <div className="flex flex-col items-start">
+          <div className="mt-8 font-bold text-lg">Experience</div>
+          <div className="flex flex-col items-start mb-8">
             <Button
               className="mt-4 bp3-outlined"
               icon="add"
@@ -440,18 +436,15 @@ export default function ProfileStudent() {
                   range={experienceItem.range}
                   experienceChangeHandler={handleExperienceItemChange(index)}></EnrolledItem>
                 <Button
-                  className="ml-8 place-self-center bp3-minimal"
+                  className="ml-8 place-self-center bp3-outlined"
                   icon="cross"
                   onClick={removeExperienceItem(index)}></Button>
               </div>
             ))}
           </div>
         </div>
-
-        <div>
-          <b>Skills</b>
-        </div>
-        <div className="flex flex-col items-start">
+        <div className="mt-8 font-bold text-lg">Skills</div>
+        <div className="flex flex-col items-start mb-8">
           <Button
             icon="add"
             className="bp3-outlined"
@@ -476,15 +469,13 @@ export default function ProfileStudent() {
                     <option value="3">Advanced</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-minimal" onClick={removeSkillItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeSkillItem(index)}></Button>
               </div>
             );
           })}
         </div>
-        <div>
-          <b>Languages</b>
-        </div>
-        <div className="flex flex-col items-start">
+        <div className="mt-8 font-bold text-lg">Languages</div>
+        <div className="flex flex-col items-start mb-8">
           <Button
             icon="add"
             className="bp3-outlined"
@@ -511,15 +502,13 @@ export default function ProfileStudent() {
                     <option value="5">Native</option>
                   </select>
                 </div>
-                <Button icon="cross" className="bp3-minimal" onClick={removeLanguageItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeLanguageItem(index)}></Button>
               </div>
             );
           })}
         </div>
-        <div>
-          <b>Interests</b>
-        </div>
-        <div className="flex flex-col items-start">
+        <div className="mt-8 font-bold text-lg">Interests</div>
+        <div className="flex flex-col items-start mb-8">
           <Button
             icon="add"
             className="bp3-outlined"
@@ -537,14 +526,12 @@ export default function ProfileStudent() {
                   value={interestItem}
                   placeholder="Interest"
                 />
-                <Button icon="cross" className="bp3-minimal" onClick={removeInterestItem(index)}></Button>
+                <Button icon="cross" className="bp3-outlined" onClick={removeInterestItem(index)}></Button>
               </div>
             );
           })}
         </div>
-        <div>
-          <b>Description</b>
-        </div>
+        <div className="mt-8 font-bold text-lg">Description</div>
         <EditableText
           className="ml-1 w-128 h-32"
           alwaysRenderInput={true}
@@ -558,9 +545,12 @@ export default function ProfileStudent() {
           value={userData.description}
           selectAllOnFocus={true}
         />
-        <Button intent={Intent.PRIMARY} icon="saved" className="bp3-minimal" onClick={handleSaveProfile}>
-          Update
-        </Button>
+        <div
+          className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-36 h-10"
+          onClick={handleSaveProfile}>
+          <div className="text-lg">Update</div>
+        </div>
+        <div className="mt-24"></div>
       </div>
     </>
   );

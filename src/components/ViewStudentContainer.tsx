@@ -180,51 +180,47 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
   return (
     <div className={[styles.ViewStudentContainer, "flex", "flex-col"].join(" ")}>
       <div className={[styles.ViewStudentContainer, "flex", "justify-between"].join(" ")}>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center space-x-4">
           <img className=" rounded-full h-36 w-36 mr-3" src={profilePicUrl}></img>
           <div>
-            <h3>
-              <b>{applicantData.name}</b>
-            </h3>
-            <p>
-              <span>from </span>
-              <b>{locationString}</b>
-            </p>
+            <div className="text-5xl font-bold">{applicantData.name}</div>
+            <div className="text-lg">
+              from <b>{locationString}</b>
+            </div>
           </div>
           <br />
         </div>
-        <div className={["flex", "justify-between", "flex-col"].join(" ")}></div>
       </div>
       <div className={styles.informationTable}>
         <div className="flex flex-row">
-          <div>Description</div>
-          <div>{applicantData.description}</div>
+          <div className="text-lg">Description</div>
+          <div className="mt-1">{applicantData.description}</div>
         </div>
         <div className="flex flex-row">
-          <div>Experiences</div>
-          <div>
+          <div className="text-lg">Experiences</div>
+          <div className="mt-1">
             <ExperinceList exps={applicantData.experience} />
           </div>
         </div>
         <div className="flex flex-row">
-          <div>Education</div>
-          <div>
+          <div className="text-lg">Education</div>
+          <div className="mt-1">
             <EducationList education={applicantData.education} />
           </div>
         </div>
         <div className="flex flex-row">
-          <div>Interests</div>
-          <div>{applicantData.interests.join(", ")}</div>
+          <div className="text-lg">Interests</div>
+          <div className="mt-1">{applicantData.interests.join(", ")}</div>
         </div>
         <div className="flex flex-row">
-          <div>Skills</div>
-          <div>
+          <div className="text-lg">Skills</div>
+          <div className="mt-1">
             <SkillList skills={applicantData.skills} />
           </div>
         </div>
         <div className="flex flex-row">
-          <div>Languages</div>
-          <div>
+          <div className="text-lg">Languages</div>
+          <div className="mt-1">
             <LanguageList languages={applicantData.languages} />
           </div>
         </div>

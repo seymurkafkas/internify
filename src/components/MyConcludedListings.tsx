@@ -50,8 +50,12 @@ export default function MyConcludedListings() {
 
   return (
     <>
-      <p className="text-5xl font-light mt-24 ml-60">My Matches</p>
-      <div className="flex flex-col justify-start mt-10 ml-60">
+      <p className="text-5xl font-light mt-16 ml-64">My Matches</p>
+      <div className="text-xl mt-8 flex flex-row space-x-96 ml-64">
+        <p>Listings:</p>
+        <p>Students:</p>
+      </div>
+      <div className="flex flex-col justify-start mt-6 ml-64">
         {myConcludedListingAndApplicants.map((applicantListingObject, index) => {
           const { listing, applicant } = applicantListingObject;
 
@@ -70,10 +74,9 @@ export default function MyConcludedListings() {
           };
 
           return (
-            <div className="flex flex-col justify-start items-start " key={index}>
-              <div className="flex flex-row justify-start items-center">
+            <div className="mb-4 flex flex-col justify-start items-start " key={index}>
+              <div className="flex flex-row space-x-20 items-center">
                 <SmallConcludedListingContainer {...listingContainerProps}></SmallConcludedListingContainer>
-                <img src="https://cdn2.vectorstock.com/i/thumb-large/67/21/hand-on-a-white-background-vector-20596721.jpg"></img>
                 <ApplicantConcludedItem {...applicantContainerProps}></ApplicantConcludedItem>
               </div>
             </div>

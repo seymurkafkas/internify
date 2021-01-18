@@ -51,7 +51,13 @@ export default function LayoutSignedInEmployer(props: PropsWithChildren<Props>) 
     <>
       <Navbar className="bp3-dark">
         <NavbarGroup align={Alignment.LEFT}>
-          <NavbarHeading>INTERNIFY</NavbarHeading>
+          <NavbarHeading
+            className="cursor-pointer"
+            onClick={() => {
+              Navigation.goToHome(router);
+            }}>
+            INTERNIFY
+          </NavbarHeading>
           <NavbarDivider />
           <Popover content={applicationContent} minimal position={Position.TOP}>
             <Button className={Classes.MINIMAL} icon="application" text="Listings" />

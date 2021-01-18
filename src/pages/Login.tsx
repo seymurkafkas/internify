@@ -18,7 +18,7 @@ export default function Login() {
   }
   if (!loadingUser && !user) {
     return (
-      <div className="absolute w-full h-full bg-auth-background">
+      <div className="absolute justify-center items-center flex w-full h-full bg-auth-background">
         <SignInForm />
       </div>
     );
