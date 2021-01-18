@@ -1,9 +1,9 @@
 import React from "react";
-import SmallListingContainerStudent from "./SmallListingContainerStudent";
 import { useUser } from "../services/auth/userContext";
 import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
+import SmallConcludedApplicationContainer from "./SmallConcludedApplicationContainer";
 
 export default function MyConcludedApplications() {
   const [loadingData, setLoadingData] = React.useState(true);
@@ -50,9 +50,9 @@ export default function MyConcludedApplications() {
     return <div>loading</div>;
   }
 
-  function listingClickHandler(employerUid, listingId: string) {
+  function listingClickHandler(employerUid) {
     return function () {
-      Navigation.goToViewListingPage(router, employerUid, listingId);
+      Navigation.goToViewEmployerPage(router, employerUid);
     };
   }
 
@@ -64,15 +64,16 @@ export default function MyConcludedApplications() {
         {myApplications.approved.length > 0 &&
           myApplications.approved.map((applicationItem, index) => {
             return (
-              <SmallListingContainerStudent
+              <SmallConcludedApplicationContainer
+                approved={true}
                 key={index}
                 companyName={applicationItem.companyName}
-                navigateToLink={listingClickHandler(applicationItem.employerUid, applicationItem.listingId)}
+                navigateToLink={listingClickHandler(applicationItem.employerUid)}
                 applicationCount={applicationItem.applicationCount}
                 title={applicationItem.title}
                 location={applicationItem.location}
                 deadline={applicationItem.deadline}
-                compensation={applicationItem.compensation}></SmallListingContainerStudent>
+                compensation={applicationItem.compensation}></SmallConcludedApplicationContainer>
             );
           })}
       </div>
@@ -81,15 +82,16 @@ export default function MyConcludedApplications() {
         {myApplications.rejected.length > 0 &&
           myApplications.rejected.map((applicationItem, index) => {
             return (
-              <SmallListingContainerStudent
+              <SmallConcludedApplicationContainer
+                approved={false}
                 key={index}
                 companyName={applicationItem.companyName}
-                navigateToLink={listingClickHandler(applicationItem.employerUid, applicationItem.listingId)}
+                navigateToLink={listingClickHandler(applicationItem.employerUid)}
                 applicationCount={applicationItem.applicationCount}
                 title={applicationItem.title}
                 location={applicationItem.location}
                 deadline={applicationItem.deadline}
-                compensation={applicationItem.compensation}></SmallListingContainerStudent>
+                compensation={applicationItem.compensation}></SmallConcludedApplicationContainer>
             );
           })}
       </div>
