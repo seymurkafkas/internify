@@ -42,9 +42,7 @@ export default function SmallConcludedApplicationContainer(props: Props) {
           in <b>{locationString}</b>
         </Text>
         <div className="flex justify-between">
-          <p>
-            <b>Applicants: {props.applicationCount}</b>
-          </p>
+          <p></p>
           <div className="font-bold">${props.compensation}</div>
         </div>
       </div>

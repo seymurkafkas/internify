@@ -13,7 +13,10 @@ export default function Register() {
   }
 
   if (user) {
-    Navigation.goToHome(router);
+    (async () => {
+      await Navigation.goToHome(router);
+    })();
+
     return <div></div>;
   }
   if (!loadingUser && !user) {

@@ -264,7 +264,6 @@ function UpdatePositionSection(props: Props) {
       <div className="text-xl font-bold mb-4 mt-8">Deadline</div>
 
       <DateInput
-        className="w-32"
         formatDate={(date) => date.getDate() + " " + monthNames[date.getMonth()] + " " + date.getFullYear()}
         onChange={(date) => {
           setDeadline(date);

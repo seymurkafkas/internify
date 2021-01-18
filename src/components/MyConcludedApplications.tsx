@@ -58,10 +58,10 @@ export default function MyConcludedApplications() {
   }
 
   return (
-    <div className="flex flex-col justify-start mt-16 ml-96">
+    <div className="flex flex-row justify-start mt-16 ml-96">
       <div>
         {" "}
-        <div>Approved</div>
+        <div className="mb-14 text-4xl font-light text-green-900">Approved</div>
         {myApplications.approved.length > 0 &&
           myApplications.approved.map((applicationItem, index) => {
             return (
@@ -78,8 +78,8 @@ export default function MyConcludedApplications() {
             );
           })}
       </div>
-      <div>
-        <div>Rejected</div>
+      <div className="ml-40">
+        <div className="mb-14 text-4xl font-light text-gray-300">Rejected</div>
         {myApplications.rejected.length > 0 &&
           myApplications.rejected.map((applicationItem, index) => {
             return (
