@@ -184,9 +184,7 @@ export default function JobsListingDetailContainer(props: any) {
         </div>
         <div>
           <p className="text-xl font-bold mb-2 mt-8">Description</p>
-          <Text className="w-96" ellipsize={true}>
-            {listingDetail.description}
-          </Text>
+          <Text className="w-96">{listingDetail.description}</Text>
           <p className="text-xl font-bold mb-2 mt-8">Requirements</p>
 
           {listingDetail.requirements.map((requirement, index) => {
@@ -194,9 +192,9 @@ export default function JobsListingDetailContainer(props: any) {
               return null;
             }
             return (
-              <div key={index}>
-                <Text className="w-96" ellipsize={true}>
-                  {requirement.skill}
+              <div className="flex flex-row " key={index}>
+                <Text className="w-40" ellipsize={true}>
+                  {requirement.skill}:
                 </Text>
                 <div>{["Beginner", "Intermediate", "Advanced"][Number(requirement.level) - 1]}</div>
               </div>
