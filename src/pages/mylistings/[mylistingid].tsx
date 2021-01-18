@@ -12,7 +12,7 @@ export default function Position() {
   }
   return (
     <LayoutSignedInEmployer>
-      <div className="ml-60 mt-16 flex flex-row justify-between">
+      <div className="ml-60 mt-16 flex flex-row justify-start">
         <ApplicantsContainer listingId={mylistingid} />
         <UpdatePositionSection listingId={mylistingid as string} />
       </div>
