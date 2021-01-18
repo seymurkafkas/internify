@@ -7,6 +7,7 @@ import * as NavigationService from "../services/navigation";
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
 import { AppToaster } from "./Toaster";
+import Spinner from "./Spinner";
 
 const monthNames = [
   "January",
@@ -166,7 +167,7 @@ function UpdatePositionSection(props: Props) {
   }
 
   if (loadingData) {
-    return <div>Loading</div>;
+    return <Spinner size={150}></Spinner>;
   }
 
   if (noDataAvailable) {

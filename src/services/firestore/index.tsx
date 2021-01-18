@@ -289,6 +289,7 @@ export async function createAListing(listingData: any, userId: string) {
         ...listingData,
         timestamp: new Date(),
         applicants: [],
+        createdAt: new Date(),
       });
     return;
   } catch (err) {

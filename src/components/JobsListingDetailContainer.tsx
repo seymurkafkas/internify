@@ -6,6 +6,7 @@ import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
 import * as Navigation from "../services/navigation";
 import { AppToaster } from "../components/Toaster";
+import Spinner from "../components/Spinner";
 
 interface ListingData {
   title: string;
@@ -125,7 +126,7 @@ export default function JobsListingDetailContainer(props: any) {
   }
 
   if (loadingData) {
-    return <div>Loading</div>;
+    return <Spinner size={200}></Spinner>;
   }
 
   if (noDataAvailable) {

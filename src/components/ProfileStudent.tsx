@@ -7,6 +7,7 @@ import { useUser } from "../services/auth/userContext";
 import { enrolledItemTransformDate } from "../util/date";
 import { AppToaster } from "../components/Toaster";
 import * as storage from "../services/storage";
+import Spinner from "./Spinner";
 
 interface EducationItem {
   institutionName: string;
@@ -332,7 +333,7 @@ export default function ProfileStudent() {
   if (loadingUser || !user) {
     return null;
   } else if (loadingData && user) {
-    return <div>Loading ...</div>;
+    return <Spinner size={250}></Spinner>;
   }
   return (
     <>

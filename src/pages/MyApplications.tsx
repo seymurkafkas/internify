@@ -5,6 +5,7 @@ import { useUser } from "../services/auth/userContext";
 import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
+import Spinner from "../components/Spinner";
 
 export default function MyApplications() {
   const [loadingData, setLoadingData] = React.useState(true);
@@ -36,7 +37,7 @@ export default function MyApplications() {
   if (loadingData) {
     return (
       <LayoutSignedInStudent>
-        <div>loading</div>;
+        <Spinner size={200}></Spinner>
       </LayoutSignedInStudent>
     );
   }
