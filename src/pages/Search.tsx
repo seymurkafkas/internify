@@ -21,7 +21,7 @@ const Search = () => {
 
   return (
     <LayoutSignedInStudent>
-      <div className="ml-96 mt-24">
+      <div className="ml-64 mt-16">
         <SearchBar value={keyword} onKeywordChange={handleKeywordChange} onSearchClick={handleSearch} />
         <JobListingContainer items={listingItems} />
       </div>

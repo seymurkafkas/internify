@@ -17,6 +17,7 @@ export default function JobListingContainer(props: any) {
       <div className={[styles.ListContainer].join(" ")}>
         <JobList items={items} />
       </div>
+      <div className="mt-16">.</div>
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import React from "react";
-import classnames from "classnames";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
 import { useRouter } from "next/router";
@@ -61,10 +60,13 @@ export default function SignUpForm() {
   }
 
   return (
-    <Card elevation={Elevation.THREE} className={styles.logInBox}>
+    <Card
+      elevation={Elevation.THREE}
+      className="flex flex-col w-96 h-80 border-xl items-center justify-center space-y-4">
+      <div className="text-4xl font-thin mt-4">INTERNIFY</div>
       <RadioGroup
         name="User Type"
-        className={classnames(styles.form)}
+        className="w-64 ml-20"
         inline={true}
         onChange={handleUserTypeChange}
         selectedValue={userType}>
@@ -72,7 +74,7 @@ export default function SignUpForm() {
         <Radio label="Employer" value="Employer" />
       </RadioGroup>
       <InputGroup
-        className={styles.inside}
+        className="w-64"
         disabled={false}
         placeholder="Enter your email address..."
         small={false}
@@ -81,7 +83,7 @@ export default function SignUpForm() {
         type={"text"}
       />
       <InputGroup
-        className={styles.inside}
+        className="w-64"
         disabled={false}
         placeholder="Enter your password..."
         small={false}
@@ -90,7 +92,7 @@ export default function SignUpForm() {
         type={"password"}
       />
       <InputGroup
-        className={styles.inside}
+        className="w-64"
         disabled={false}
         placeholder="Enter your password..."
         small={false}
@@ -105,7 +107,7 @@ export default function SignUpForm() {
         position={Position.RIGHT_TOP}>
         <Button
           intent={Intent.PRIMARY}
-          className={styles.inside}
+          className="w-64"
           minimal
           icon="log-in"
           disabled={!entriesAreValid}

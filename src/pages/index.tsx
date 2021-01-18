@@ -10,14 +10,14 @@ export default function Home() {
         className="flex flex-col w-96 h-64 border-xl items-center justify-center space-y-4">
         <div className="text-4xl font-thin mb-6">INTERNIFY</div>
         <div
-          className="cursor-pointer flex place-items-center justify-center text-white bg-indigo-800 hover:bg-indigo-600 w-64 h-10"
+          className="rounded cursor-pointer flex place-items-center justify-center text-white bg-green-700 hover:bg-green-500 w-64 h-10"
           onClick={() => {
             Navigation.goToRegister(router);
           }}>
           <div className="text-lg">Register</div>
         </div>
         <div
-          className="cursor-pointer flex place-items-center justify-center text-white bg-indigo-800 hover:bg-indigo-600 w-64 h-10"
+          className="rounded cursor-pointer flex place-items-center justify-center text-white bg-green-700 hover:bg-green-500 w-64 h-10"
           onClick={() => {
             Navigation.goToLogin(router);
           }}>
