@@ -4,6 +4,7 @@ import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import SmallConcludedApplicationContainer from "./SmallConcludedApplicationContainer";
+import Spinner from "./Spinner";
 
 export default function MyConcludedApplications() {
   const [loadingData, setLoadingData] = React.useState(true);
@@ -47,7 +48,7 @@ export default function MyConcludedApplications() {
   }
 
   if (loadingData) {
-    return <div>loading</div>;
+    return <Spinner size={200}></Spinner>;
   }
 
   function listingClickHandler(employerUid) {

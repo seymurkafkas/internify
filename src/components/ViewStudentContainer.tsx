@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./styles.module.css";
 import * as DatabaseService from "../services/firestore";
 import * as Storage from "../services/storage";
-
+import Spinner from "./Spinner";
 import { stringifyDate } from "../util/date";
 
 function ExperinceItem(props: any) {
@@ -174,7 +174,7 @@ export default function ViewStudentContainer(props: { applicantUid: string }) {
   }
 
   if (loadingData) {
-    return <div>loading</div>;
+    return <Spinner size={250}></Spinner>;
   }
 
   return (
