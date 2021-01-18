@@ -3,7 +3,7 @@ import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import { useUser } from "../services/auth/userContext";
 import RecommendedListingContainer from "../components/RecommendedListingContainer";
 import * as DatabaseService from "../services/firestore";
-//import * as Navigation from "../services/navigation";
+import Spinner from "../components/Spinner";
 //import { useRouter } from "next/router";
 
 export default function Explore() {
@@ -47,7 +47,7 @@ export default function Explore() {
   if (loadingData) {
     return (
       <LayoutSignedInStudent>
-        <div>loading</div>;
+        <Spinner size={200}></Spinner>
       </LayoutSignedInStudent>
     );
   }
