@@ -1,7 +1,6 @@
 import React from "react";
 import * as FormUtil from "../util/string";
 import * as Auth from "../services/auth";
-import styles from "./SignInForm.module.css";
 import { Button, InputGroup, Intent, Card, Elevation, Tooltip } from "@blueprintjs/core";
 import { useUser } from "../services/auth/userContext";
 import { useRouter } from "next/router";
@@ -41,17 +40,21 @@ export default function SignInForm() {
   }
 
   function handleSubmit(event: React.MouseEvent) {
-    event.preventDefault();
+    if (!emailIsValid || password === "") {
+      showSignInToaster();
+    } else {
+      event.preventDefault();
 
-    (async () => {
-      try {
-        const userResponse = await Auth.logIn(email, password);
-        setUser(userResponse);
-        await Navigation.goToHome(router);
-      } catch (err) {
-        handleIncorrectPassword();
-      }
-    })();
+      (async () => {
+        try {
+          const userResponse = await Auth.logIn(email, password);
+          setUser(userResponse);
+          await Navigation.goToHome(router);
+        } catch (err) {
+          handleIncorrectPassword();
+        }
+      })();
+    }
   }
 
   const emailIsValid = FormUtil.isEmailValid(email);
@@ -72,8 +75,12 @@ export default function SignInForm() {
   );
 
   return (
-    <Card elevation={Elevation.THREE} className={styles.logInBox}>
+    <Card
+      elevation={Elevation.THREE}
+      className="flex flex-col w-96 h-64 border-xl items-center justify-center space-y-4">
+      <div className="text-4xl font-thin mb-4">INTERNIFY</div>
       <InputGroup
+        className="w-64"
         disabled={false}
         fill={false}
         placeholder="Enter your email address..."
@@ -82,7 +89,7 @@ export default function SignInForm() {
         type={"text"}
       />
       <InputGroup
-        className={styles.inside}
+        className="w-64"
         disabled={false}
         placeholder="Enter your password..."
         rightElement={lockButton}
@@ -90,16 +97,11 @@ export default function SignInForm() {
         value={password}
         type={showPassword ? "text" : "password"}
       />
-      <Button
-        className={styles.inside}
-        minimal
-        value="Sign In"
-        icon="log-in"
-        intent={Intent.PRIMARY}
-        disabled={!emailIsValid || password === ""}
+      <div
+        className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-64 h-10"
         onClick={handleSubmit}>
-        Login
-      </Button>
+        <div className="text-lg">Login</div>
+      </div>
     </Card>
   );
 }

@@ -11,7 +11,7 @@ export default function Listing() {
 
   return (
     <LayoutSignedInStudent>
-      <div className="mt-16 ml-96">
+      <div className="mt-16 ml-64">
         <JobsListingDetailContainer listingId={listingId} employerUid={employerUid}></JobsListingDetailContainer>
       </div>
     </LayoutSignedInStudent>
