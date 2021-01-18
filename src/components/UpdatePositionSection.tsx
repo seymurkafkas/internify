@@ -174,7 +174,7 @@ function UpdatePositionSection(props: Props) {
     return <div>Error!!!! NO DATA</div>;
   }
   return (
-    <div className="flex justify-start flex-col mr-96 w-128">
+    <div className="flex justify-start flex-col ml-32 w-128">
       <div className="flex justify-between flex-col mb-4">
         <div className="flex justify-between mb-8">
           <EditableText
@@ -274,9 +274,11 @@ function UpdatePositionSection(props: Props) {
         value={deadline}
       />
       <div className="flex justify-end">
-        <Button intent={Intent.PRIMARY} icon="saved" onClick={updateListing} className="bp3-minimal">
-          Update
-        </Button>
+        <div
+          className="cursor-pointer flex place-items-center rounded justify-center text-white bg-green-700 hover:bg-green-500 w-36 h-10"
+          onClick={updateListing}>
+          <div className="text-lg">Update</div>
+        </div>
       </div>
       <Alert
         className=""

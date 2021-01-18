@@ -113,7 +113,7 @@ export default function ApplicantsContainer(props: any) {
 
   return (
     <div>
-      <h2 className="text-3xl font-bold mb-8">Applicants</h2>
+      <h2 className="text-3xl w-160 font-bold mb-8">Applicants</h2>
       <div>
         {applicantSmallData.map((item, index) => {
           return (
