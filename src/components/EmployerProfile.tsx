@@ -12,6 +12,7 @@ import * as databaseService from "../services/firestore";
 import { useUser } from "../services/auth/userContext";
 import { AppToaster } from "../components/Toaster";
 import * as storage from "../services/storage";
+import Spinner from "../components/Spinner";
 
 export default function EmployerProfile() {
   const [profileDataState, setProfileDataState] = React.useState({
@@ -116,7 +117,7 @@ export default function EmployerProfile() {
   if (loadingUser || !user) {
     return null;
   } else if (loadingData && user) {
-    return <div>Loading ...</div>;
+    return <Spinner size={250}></Spinner>;
   }
 
   return (
