@@ -24,6 +24,8 @@ export default function Explore() {
                 const listing = await DatabaseService.getListingData(item.employerUid, item.listingId);
                 return {
                   score: item.score,
+                  employerUid: item.employerUid,
+                  listingId: item.listingId,
                   ...listing,
                 };
               })
@@ -50,11 +52,6 @@ export default function Explore() {
     );
   }
 
-  /*   function listingClickHandler(employerUid, listingId: string) {
-    return function () {
-      Navigation.goToViewListingPage(router, employerUid, listingId);
-    };
-  } */
   return (
     <LayoutSignedInStudent>
       <div className="flex flex-col justify-start mt-16 ml-96">
