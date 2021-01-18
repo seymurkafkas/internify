@@ -5,6 +5,7 @@ import SmallListingContainerStudent from "./SmallListingContainerStudent";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import * as Storage from "../services/storage";
+import Spinner from "./Spinner";
 
 interface Props {
   employerUid: string;
@@ -76,7 +77,7 @@ export default function EmployerDataContainer(props: Props) {
   if (loadingUser || !user) {
     return null;
   } else if (loadingData && user) {
-    return <div>Loading ...</div>;
+    return <Spinner size={250}></Spinner>;
   } else if (noDataAvailable) {
     return <div>ERROR! No Data</div>;
   }
@@ -105,7 +106,7 @@ export default function EmployerDataContainer(props: Props) {
       </div>
       <div className="flex flex-col">
         {loadingListingData ? (
-          <div>loading</div>
+          <Spinner size={50}></Spinner>
         ) : (
           <div>
             <div className="text-3xl font-bold mt-8 mb-6">Posted Listings</div>

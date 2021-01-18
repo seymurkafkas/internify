@@ -4,6 +4,7 @@ import * as DatabaseService from "../services/firestore";
 import ApplicantConcludedItem from "./ApplicantConcludedItem";
 import SmallConcludedListingContainer from "./SmallConcludedListingContainer";
 import * as Formatter from "../util/string";
+import Spinner from "./Spinner";
 
 export default function MyConcludedListings() {
   const [loadingData, setLoadingData] = React.useState(true);
@@ -45,7 +46,7 @@ export default function MyConcludedListings() {
   }
 
   if (user && loadingData) {
-    return <div>loading</div>;
+    return <Spinner size={250}></Spinner>;
   }
 
   return (
