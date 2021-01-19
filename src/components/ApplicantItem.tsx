@@ -86,7 +86,10 @@ export default function ApplicantItem(props: Props) {
         onCancel={() => {
           setIsDialogOpen(false);
         }}
-        onConfirm={props.handleReject}>
+        onConfirm={() => {
+          setIsDialogOpen(false);
+          props.handleReject();
+        }}>
         <p>
           Are you sure you want to reject <b>{props.name}</b> ?
         </p>
