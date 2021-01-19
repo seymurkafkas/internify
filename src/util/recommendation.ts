@@ -1,5 +1,13 @@
+function findSkillLevelInReference(reference, skill) {
+  for (let i = 0; i < reference.length; i++) {
+    if (reference[i].skill === skill) {
+      return reference[i].level;
+    }
+  }
+}
+
 function getMatchPercentage(reference, incoming) {
-  if (reference.length < 1) {
+  if (reference.length < 1 || incoming.length < 1) {
     return 50;
   }
   const seen = {};
@@ -10,8 +18,8 @@ function getMatchPercentage(reference, incoming) {
     if (seen[incoming[i].skill] === undefined) {
       continue;
     }
-
-    const thatBetter = parseInt(incoming[i].level) - parseInt(reference[i].level);
+    console.log(incoming[i], reference[i]);
+    const thatBetter = parseInt(incoming[i].level) - parseInt(findSkillLevelInReference(reference, incoming[i].skill));
     const mult = range([-2, 2], [0.5, 1.2], thatBetter);
     seen[incoming[i].skill] = mult;
   }
@@ -45,7 +53,10 @@ export function getListingScore(stud, ling, avgComp) {
   const matchPercent = getMatchPercentage(ling.requirements, stud.skills);
 
   // lokasyon ne kadar yakın
-  const locationBonus = stud.location.city === ling.location.city ? 1 : 0;
+  let locationBonus = false;
+  if (stud.location?.city && ling.location.city) {
+    locationBonus = stud.location.city === ling.location.city;
+  }
 
   // ilan ne kadar süredir aktif
   const now = new Date();
@@ -58,7 +69,12 @@ export function getListingScore(stud, ling, avgComp) {
   const applicantsPercent = range([0, 60], [1, 100], ling.applicationCount);
 
   return (
-    (compPercent * 30 + matchPercent * 60 + activeForPercent * 10 + applicantsPercent * 10 + locationBonus * 10) / 100
+    (compPercent * 30 +
+      matchPercent * 60 +
+      activeForPercent * 10 +
+      applicantsPercent * 10 +
+      Number(locationBonus) * 10) /
+    100
   );
 }
 
