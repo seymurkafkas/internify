@@ -3,11 +3,17 @@ import LayoutSignedInStudent from "../components/LayoutSignedInStudent";
 import JobListingContainer from "../components/JobListingContainer";
 import SearchBar from "../components/SearchBar";
 import * as Query from "../util/query";
+import { studentAuthCheck } from "../services/auth/AuthCheck";
+import { useUser } from "../services/auth/userContext";
+import { useRouter } from "next/router";
 
 const Search = () => {
   const [keyword, setKeyword] = React.useState("");
   const [listingItems, setListingItems] = useState([]);
-
+  const user = useUser();
+  const router = useRouter();
+  const isAuthChecked = studentAuthCheck(user, router);
+  console.log(isAuthChecked);
   function handleSearch() {
     (async function () {
       const returnedListings = await Query.getSearchResult(keyword);
@@ -18,7 +24,9 @@ const Search = () => {
   function handleKeywordChange(event: React.ChangeEvent<HTMLInputElement>) {
     setKeyword(event.target.value);
   }
-
+  if (!isAuthChecked) {
+    return null;
+  }
   return (
     <LayoutSignedInStudent>
       <div className="ml-64 mt-16">

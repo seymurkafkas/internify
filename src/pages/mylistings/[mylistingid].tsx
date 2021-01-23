@@ -3,11 +3,17 @@ import { useRouter } from "next/router";
 import LayoutSignedInEmployer from "../../components/LayoutSignedInEmployer";
 import ApplicantsContainer from "../../components/ApplicantsContainer";
 import UpdatePositionSection from "../../components/UpdatePositionSection";
+import { useUser } from "../../services/auth/userContext";
+import { employerAuthCheck } from "../../services/auth/AuthCheck";
 
 export default function Position() {
   const router = useRouter();
   const { mylistingid } = router.query; //Use this to fetch data
-  if (!mylistingid) {
+  const user = useUser();
+
+  const isAuthChecked = employerAuthCheck(user, router);
+
+  if (!mylistingid || !isAuthChecked) {
     return null;
   }
   return (
