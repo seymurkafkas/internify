@@ -6,12 +6,15 @@ import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import Spinner from "../components/Spinner";
+import { employerAuthCheck } from "../services/auth/AuthCheck";
 
 export default function MyListingsPage() {
   const [loadingData, setLoadingData] = React.useState(true);
   const [myListings, setMyListings] = React.useState([]);
   const router = useRouter();
   const { user, loadingUser } = useUser();
+
+  const isAuthChecked = employerAuthCheck({ user, loadingUser }, router);
 
   const userId = user?.uid ?? null;
 
@@ -30,7 +33,7 @@ export default function MyListingsPage() {
     })();
   }, [userId]);
 
-  if (loadingUser) {
+  if (!isAuthChecked) {
     return null;
   }
 

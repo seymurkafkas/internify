@@ -6,6 +6,7 @@ import * as DatabaseService from "../services/firestore";
 import * as Navigation from "../services/navigation";
 import { useRouter } from "next/router";
 import Spinner from "../components/Spinner";
+import { studentAuthCheck } from "../services/auth/AuthCheck";
 
 export default function MyApplications() {
   const [loadingData, setLoadingData] = React.useState(true);
@@ -13,6 +14,8 @@ export default function MyApplications() {
   const router = useRouter();
   const { user, loadingUser } = useUser();
   const userId = user?.uid ?? null;
+
+  const isAuthChecked = studentAuthCheck({ user, loadingUser }, router);
 
   React.useEffect(() => {
     (async () => {
@@ -30,7 +33,7 @@ export default function MyApplications() {
     })();
   }, [userId]);
 
-  if (loadingUser) {
+  if (!isAuthChecked) {
     return null;
   }
 

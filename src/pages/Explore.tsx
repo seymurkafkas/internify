@@ -4,14 +4,17 @@ import { useUser } from "../services/auth/userContext";
 import RecommendedListingContainer from "../components/RecommendedListingContainer";
 import * as DatabaseService from "../services/firestore";
 import Spinner from "../components/Spinner";
-//import { useRouter } from "next/router";
+import { studentAuthCheck } from "../services/auth/AuthCheck";
+import { useRouter } from "next/router";
 
 export default function Explore() {
   const [loadingData, setLoadingData] = React.useState(true);
   const [myRecommendedListings, setMyRecommendedListings] = React.useState([]);
-  //const router = useRouter();
+  const router = useRouter();
   const { user, loadingUser } = useUser();
   const userId = user?.uid ?? null;
+
+  const isAuthChecked = studentAuthCheck({ user, loadingUser }, router);
 
   React.useEffect(() => {
     (async () => {
@@ -40,7 +43,7 @@ export default function Explore() {
     })();
   }, [userId]);
 
-  if (loadingUser || !user) {
+  if (!isAuthChecked) {
     return null;
   }
 
