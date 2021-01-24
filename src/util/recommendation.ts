@@ -18,7 +18,7 @@ function getMatchPercentage(reference, incoming) {
     if (seen[incoming[i].skill] === undefined) {
       continue;
     }
-    console.log(incoming[i], reference[i]);
+    // console.log(incoming[i], reference[i]);
     const thatBetter = parseInt(incoming[i].level) - parseInt(findSkillLevelInReference(reference, incoming[i].skill));
     const mult = range([-2, 2], [0.5, 1.2], thatBetter);
     seen[incoming[i].skill] = mult;
@@ -78,6 +78,7 @@ export function getListingScore(stud, ling, avgComp) {
   );
 }
 
+/* istanbul ignore next */
 export function getAverageCompensation(lings) {
   let sum = 0;
   lings.forEach((ling) => {

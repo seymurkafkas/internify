@@ -1,6 +1,7 @@
 import * as db from "../services/firestore/index";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+/* istanbul ignore next */
 export async function getSearchResult(searchKeyWord: string) {
   const results = await db.getAllListings();
   console.log(results);
@@ -21,14 +22,13 @@ interface ListingData {
   compensation: number;
 }
 
-function keywordMatchesListing(searchKeyWord: string, listingData: ListingData) {
+export function keywordMatchesListing(searchKeyWord: string, listingData: ListingData) {
   if (!searchKeyWord) {
     return true;
   }
 
   let keyword = searchKeyWord.replace(/\s+/g, "");
   keyword = keyword.toLowerCase();
-  console.log(keyword, listingData);
 
   if (listingData.title?.toLowerCase().includes(keyword) ?? false) {
     return true;
