@@ -4,6 +4,7 @@ import { stringifyDate } from "./date";
  * @param {string} email- Email which will be checked
  * @returns {boolean} -The email matches the email format
  */
+
 export function isEmailValid(email: string) {
   if (email === "") {
     return false;
@@ -18,8 +19,9 @@ export function isEmailValid(email: string) {
 /**
  * @param {string} string1 - The first string
  * @param {string} string2 - The second string
- * @returns {boolean} - The strings are equal
+ * @returns {boolean} - Whether the strings are equal
  */
+
 export function areEqual(string1: string, string2: string) {
   if (string1 === "" || string2 === "") {
     return false;
@@ -52,7 +54,7 @@ export function formatEducation(education) {
         educationString = education[0].degreeName;
       }
     } else if (education[0].institutionName) {
-      educationString = `$Studied at ${education[0].institutionName}`;
+      educationString = `Studied at ${education[0].institutionName}`;
     }
   }
 
@@ -69,7 +71,7 @@ export function formatPosition(experience) {
         positionString = experience[0].positionName;
       }
     } else if (experience[0].companyName) {
-      positionString = `$Works at ${experience[0].companyName}`;
+      positionString = `Works at ${experience[0].companyName}`;
     }
   }
   return positionString;
@@ -80,6 +82,8 @@ export function formatLocation(location) {
 
   if (location.city && location.country) {
     locationString = `${location.city}, ${location.country}`;
+  } else if (!location.city && !location.country) {
+    return locationString;
   } else {
     locationString = `${location?.city ?? ""}${location?.country ?? ""}`;
   }
@@ -87,6 +91,7 @@ export function formatLocation(location) {
   return locationString;
 }
 
+/* istanbul ignore next */
 export function formatDeadline(deadline) {
   return stringifyDate(deadline?.toDate() ?? null);
 }
