@@ -5,4 +5,5 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
+  coveragePathIgnorePatterns: ["<rootDir>/src/services", "<rootDir>/node_modules/"],
 };
