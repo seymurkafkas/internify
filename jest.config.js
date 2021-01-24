@@ -6,4 +6,5 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest",
   },
   coveragePathIgnorePatterns: ["<rootDir>/src/services", "<rootDir>/node_modules/"],
+  coverageReporters: ["json", "html"],
 };
