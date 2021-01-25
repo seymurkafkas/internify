@@ -16,8 +16,6 @@ export default function ViewEmployerPage() {
     return null;
   }
 
-  console.log(employerUid);
-
   return (
     <LayoutSignedInStudent>
       <EmployerDataContainer employerUid={employerUid as string} />

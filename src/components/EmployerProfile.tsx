@@ -106,7 +106,6 @@ export default function EmployerProfile() {
   const handleProfileUpdate = () => {
     (async () => {
       try {
-        console.log(profileDataState, uid);
         await databaseService.saveEmployerProfile(profileDataState, uid)();
         showUpdateToaster();
       } catch (err) {

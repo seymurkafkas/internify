@@ -83,7 +83,6 @@ export default function ProfileStudent() {
       if (user) {
         try {
           const studentProfileData = await databaseService.getStudentProfile(uid);
-          console.log(studentProfileData);
           if (studentProfileData) {
             enrolledItemTransformDate(studentProfileData.experience);
             enrolledItemTransformDate(studentProfileData.education);
@@ -322,12 +321,10 @@ export default function ProfileStudent() {
       try {
         await databaseService.saveStudentProfile(userData, uid);
         showSuccessMessage();
-        console.log("success");
       } catch (err) {
         showFailureMessage();
       }
     })();
-    console.log(userData);
   }
 
   if (loadingUser || !user) {

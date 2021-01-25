@@ -12,13 +12,11 @@ export default function MyConcludedApplications() {
   const router = useRouter();
   const { user, loadingUser } = useUser();
   const userId = user?.uid ?? null;
-  console.log(myApplications);
   React.useEffect(() => {
     (async () => {
       if (userId) {
         try {
           const myApprovedListingsData = await DatabaseService.getMyApprovedApplications(userId);
-          console.log(myApprovedListingsData);
           if (myApprovedListingsData) {
             setMyApplications((myPrevApplications) => {
               const newApplications = { ...myPrevApplications };

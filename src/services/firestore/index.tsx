@@ -463,7 +463,6 @@ export async function getMyRejectedApplications(studentUid: string) {
       return null;
     }
 
-    console.log(appliedListings);
     const appliedListingsData = appliedListings.map(async ({ employerUid, listingId }) => {
       const listingData = (
         await db.collection("Employers").doc(employerUid).collection("Listings").doc(listingId).get()
