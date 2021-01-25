@@ -92,7 +92,6 @@ export default function JobsListingDetailContainer(props: any) {
       if (user) {
         try {
           const fetchedListingData = (await DatabaseService.getListingData(employerUid, listingId)) as ListingData;
-          console.log(fetchedListingData);
 
           if (fetchedListingData) {
             setListingDetail({ ...fetchedListingData });
@@ -112,7 +111,6 @@ export default function JobsListingDetailContainer(props: any) {
       if (user) {
         try {
           const fetchedIsAnApplicant = await DatabaseService.isStudentAnApplicant(listingId, employerUid, user.uid);
-          console.log(fetchedIsAnApplicant);
           setIsAnApplicant(fetchedIsAnApplicant);
         } catch (err) {
           console.log(err);
@@ -132,7 +130,6 @@ export default function JobsListingDetailContainer(props: any) {
   if (noDataAvailable) {
     return <div>Error!!!! NO DATA</div>;
   }
-  console.log(noDataAvailable);
   let locationString = "Undeclared";
   const deadlineString = stringifyDate(listingDetail.deadline?.toDate() ?? null);
 

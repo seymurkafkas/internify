@@ -23,7 +23,6 @@ export default function MyListingsPage() {
       if (userId) {
         try {
           const myListingsData = await DatabaseService.getMyListings(userId);
-          console.log(myListingsData);
           setMyListings(myListingsData);
         } catch (err) {
           console.log(err);

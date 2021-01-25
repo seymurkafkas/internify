@@ -12,7 +12,6 @@ export default function MyConcludedListings() {
 
   const { user, loadingUser } = useUser();
   const userId = user?.uid ?? null;
-  console.log(myConcludedListingAndApplicants);
   React.useEffect(() => {
     (async () => {
       if (userId) {

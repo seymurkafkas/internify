@@ -4,7 +4,6 @@ import * as db from "../services/firestore/index";
 /* istanbul ignore next */
 export async function getSearchResult(searchKeyWord: string) {
   const results = await db.getAllListings();
-  console.log(results);
   const filteredResults = results.filter((listingData) => {
     return keywordMatchesListing(searchKeyWord, listingData as any);
   });

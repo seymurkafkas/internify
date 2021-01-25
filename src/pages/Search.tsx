@@ -13,7 +13,6 @@ const Search = () => {
   const user = useUser();
   const router = useRouter();
   const isAuthChecked = studentAuthCheck(user, router);
-  console.log(isAuthChecked);
   function handleSearch() {
     (async function () {
       const returnedListings = await Query.getSearchResult(keyword);

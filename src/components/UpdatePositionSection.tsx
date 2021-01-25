@@ -56,7 +56,6 @@ function UpdatePositionSection(props: Props) {
   const router = useRouter();
   const userId = user?.uid ?? null;
   const listingId = props.listingId;
-  console.log(listingId, userId);
 
   const showUpdateToaster = () => {
     AppToaster.show({
@@ -110,7 +109,6 @@ function UpdatePositionSection(props: Props) {
   function updateListing() {
     (async function () {
       try {
-        console.log(userId, listingId);
         await DatabaseService.updateListing(
           { title, description, requirements, compensation, deadline, location },
           userId,
