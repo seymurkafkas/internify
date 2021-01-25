@@ -2,7 +2,7 @@ import firebase from "firebase";
 import * as Recommendation from "../util/recommendation";
 const Timestamp = firebase.firestore.Timestamp;
 
-describe("enrolledItemTransformDate", () => {
+describe("getListingScore", () => {
   const testCases = [
     {
       input: [
