@@ -35,8 +35,6 @@ export async function setRecommendationsforAll() {
 
   const avgComp = Recommendation.getAverageCompensation(listings);
 
-  // const allRecs = [];
-
   students.forEach(async (stud) => {
     const recs = [];
 
@@ -56,9 +54,6 @@ export async function setRecommendationsforAll() {
 
     const trimmedRecs = recs.slice(0, 3); //get top 4
 
-    // allRecs.push(recs);
-
-    //save for each student
     try {
       await saveRecommendations(trimmedRecs, stud.id);
     } catch (err) {
@@ -80,7 +75,6 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
   const recs = [];
 
   listings.forEach((ling) => {
-    //compare them and add to recs with a score
     const score = Recommendation.getListingScore(studentData, ling, avgComp);
     recs.push({
       score,
@@ -95,10 +89,8 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
 
   const trimmedRecs = recs.slice(0, 5); //get top N
 
-  //save for student
   try {
     await saveRecommendations(trimmedRecs, studentUid);
-
     const recommendedListings = {};
 
     trimmedRecs.forEach((listing) => {
@@ -111,7 +103,6 @@ export async function setOrGetRecommendationsforStudent(studentUid: string) {
 
     const recordRecommendedStudentsPromises = Object.keys(recommendedListings).map(async (stringifieldListing) => {
       const recommendedStudentsAndScores = recommendedListings[stringifieldListing];
-
       const { listingId: currentListingUid, employerUid: currentEmployerUid } = ListingUtil.getListingFromString(
         stringifieldListing
       );
@@ -475,7 +466,6 @@ export async function getMyRejectedApplications(studentUid: string) {
       const { companyName } = queryResult.data(); //Also email here
       const newListingData = {
         ...rest,
-        //  applicationCount: applicants.length,
         employerUid,
         listingId,
         companyName,
